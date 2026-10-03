@@ -1,4 +1,4 @@
-"""Step 4 - Misconception generators.
+﻿"""Step 4 - Misconception generators.
 
 Each function takes the *previous* student step (a string such as "2(x+3)=14")
 and returns the *wrong* next step that a student carrying that misconception
@@ -706,7 +706,7 @@ def arithmetic_slip(prev_step: str, rng=None):
 
         norm = normalise(prev_step)
 
-        tokens = list(re.finditer(r"(?<![a-zA-Z])(\d+)", norm))
+        tokens = list(re.finditer(r"(?<![a-zA-Z^\d])(\d+)", norm))
         if not tokens:
             return None
 
