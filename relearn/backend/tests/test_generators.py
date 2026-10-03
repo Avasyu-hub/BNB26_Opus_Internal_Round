@@ -23,6 +23,16 @@ class TestPartialDistribution:
         norm = _strip(result)
         assert '5x' in norm and '-10' not in norm
 
+    def test_negative_multiplier_preserves_order(self):
+        # -2(x+3)=8  ->  -2x+3=8  (bracket original term order preserved)
+        result = partial_distribution('-2(x+3)=8')
+        assert result == '-2x+3=8'
+
+    def test_variable_second_preserves_order(self):
+        # 2(3+x)=14  ->  3+2x=14  (bracket original term order preserved)
+        result = partial_distribution('2(3+x)=14')
+        assert result == '3+2x=14'
+
     def test_none_case(self):
         assert partial_distribution('x+3=14') is None
 
@@ -79,6 +89,11 @@ class TestNegativeDistribution:
         result = negative_distribution('-(2x+5)=1')
         assert result == '-2x+5=1'
 
+    def test_no_leading_plus(self):
+        # -(-x+3)=2  ->  x+3=2  (no output may start with '+')
+        result = negative_distribution('-(-x+3)=2')
+        assert result == 'x+3=2'
+
     def test_none_case(self):
         assert negative_distribution('x+4=6') is None
 
@@ -102,6 +117,16 @@ class TestTransposition:
         # x-4=9  ->  x=9-4  (moves -4 without flipping sign, no 1* or +- artifacts)
         result = transposition('x-4=9')
         assert result == 'x=9-4'
+
+    def test_constant_on_rhs(self):
+        # 5=x+2  ->  5+2=x
+        result = transposition('5=x+2')
+        assert result == '5+2=x'
+
+    def test_constant_subtraction_on_rhs(self):
+        # 9=x-4  ->  9-4=x
+        result = transposition('9=x-4')
+        assert result == '9-4=x'
 
     def test_none_case(self):
         assert transposition('x=10') is None
@@ -236,3 +261,5 @@ def test_no_generator_outputs_artifacts_or_spaces():
                 assert '*1' not in res, f"{label} on {eq!r} produced '*1': {res!r}"
                 assert '+-' not in res, f"{label} on {eq!r} produced '+-': {res!r}"
                 assert ' ' not in res, f"{label} on {eq!r} produced spaces: {res!r}"
+                assert not res.startswith('+'), f"{label} on {eq!r} starts with '+': {res!r}"
+                assert '=+' not in res, f"{label} on {eq!r} has '=+' on RHS: {res!r}"

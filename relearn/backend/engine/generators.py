@@ -90,6 +90,15 @@ def _clean_output(s: str) -> str:
     while "-+" in s:
         s = s.replace("-+", "-")
 
+    # No output may start with '+' on either side of '='
+    if "=" in s:
+        parts = s.split("=")
+        cleaned_parts = [p.lstrip("+") for p in parts]
+        s = "=".join(cleaned_parts)
+    else:
+        s = s.lstrip("+")
+    s = s.replace("(+", "(")
+
     return normalise(s)
 
 
@@ -175,10 +184,45 @@ def _find_neg_bracket(expr):
 #    2(x+3)=14  ->  2x+3=14   (multiplies only the variable term)
 # ---------------------------------------------------------------------------
 
+def _multiply_var_term(t: str, c: int, is_first: bool) -> str:
+    """
+    Multiply a variable term string (e.g. 'x', '+x', '-x', '2x', '-3x')
+    by integer coefficient c.
+    Preserves sign formatting:
+      multiply_var_term('x', 2, True)   -> '2x'
+      multiply_var_term('+x', 2, False) -> '+2x'
+      multiply_var_term('x', -2, True)  -> '-2x'
+      multiply_var_term('+x', -2, False) -> '-2x'
+      multiply_var_term('-x', 2, True)  -> '-2x'
+      multiply_var_term('-x', -2, True) -> '2x'
+    """
+    m = re.match(r"^([+-]?)(\d*)([a-zA-Z]+.*)$", t)
+    if not m:
+        return t
+    sign_str, digits_str, var_str = m.groups()
+    orig_c = -1 if sign_str == "-" else 1
+    if digits_str:
+        orig_c = int(digits_str) if sign_str != "-" else -int(digits_str)
+    new_c = orig_c * c
+    if new_c == 1:
+        return var_str if is_first else "+" + var_str
+    elif new_c == -1:
+        return "-" + var_str
+    elif new_c > 1:
+        return f"{new_c}{var_str}" if is_first else f"+{new_c}{var_str}"
+    else:  # new_c < -1
+        return f"{new_c}{var_str}"
+
+
 def partial_distribution(prev_step: str):
     """
     Detect coeff*(var + const) and multiply only the variable term by coeff,
     leaving the constant un-multiplied (the misconception).
+    Preserves the bracket's original term order:
+      2(x+3)=14  ->  2x+3=14
+      5(x-2)=20  ->  5x-2=20
+      -2(x+3)=8  ->  -2x+3=8
+      2(3+x)=14  ->  3+2x=14
     """
     try:
         norm = normalise(prev_step)
@@ -186,37 +230,90 @@ def partial_distribution(prev_step: str):
         if lhs_s is None:
             return None
 
-        def _apply(side_str: str):
-            expr = _parse(side_str)
-            if expr is None:
-                return side_str, False
+        def _apply_string(side_str: str):
+            pos = 0
+            while pos < len(side_str):
+                idx = side_str.find("(", pos)
+                if idx == -1:
+                    break
 
-            result = _find_unevaluated_product(expr)
-            if result is None:
-                return side_str, False
+                num_end = idx
+                if num_end > 0 and side_str[num_end - 1] == "*":
+                    num_end -= 1
 
-            coeff, bracket = result
-            if not isinstance(bracket, Add):
-                return side_str, False
+                k = num_end - 1
+                while k >= 0 and side_str[k].isdigit():
+                    k -= 1
 
-            var_terms = [t for t in bracket.args if t.free_symbols]
-            const_terms = [t for t in bracket.args if not t.free_symbols]
-            if not var_terms or not const_terms:
-                return side_str, False
+                if k == num_end - 1:
+                    # No digits immediately preceding the '('
+                    pos = idx + 1
+                    continue
 
-            partial_result = Mul(coeff, Add(*var_terms), evaluate=True) + Add(*const_terms)
+                if k == 0 and side_str[0] in "+-":
+                    coeff_start = 0
+                elif k > 0 and side_str[k] in "+-" and side_str[k - 1] in "+-*/=^(":
+                    coeff_start = k
+                elif k >= 0 and side_str[k] == "-":
+                    coeff_start = k
+                else:
+                    coeff_start = k + 1
 
-            # If the whole side IS the Mul node
-            if isinstance(expr, Mul):
-                return _fmt(partial_result), True
-            # Additive context: replace just that Mul term
-            mul_node = Mul(coeff, bracket, evaluate=False)
-            remaining = expr - mul_node
-            new_expr = remaining + partial_result
-            return _fmt(new_expr), True
+                coeff_str = side_str[coeff_start:num_end]
+                try:
+                    coeff = int(coeff_str)
+                except ValueError:
+                    pos = idx + 1
+                    continue
 
-        new_lhs, l_changed = _apply(lhs_s)
-        new_rhs, r_changed = _apply(rhs_s)
+                depth = 0
+                end = -1
+                for j in range(idx, len(side_str)):
+                    if side_str[j] == "(":
+                        depth += 1
+                    elif side_str[j] == ")":
+                        depth -= 1
+                        if depth == 0:
+                            end = j
+                            break
+
+                if end == -1:
+                    pos = idx + 1
+                    continue
+
+                suffix = side_str[end + 1:]
+                if suffix.startswith("^"):
+                    pos = idx + 1
+                    continue
+
+                inner = side_str[idx + 1:end]
+                terms = _split_inner_terms(inner)
+                if len(terms) < 2:
+                    pos = idx + 1
+                    continue
+
+                var_terms = [t for t in terms if re.search(r"[a-zA-Z]", t)]
+                const_terms = [t for t in terms if not re.search(r"[a-zA-Z]", t)]
+                if not var_terms or not const_terms:
+                    pos = idx + 1
+                    continue
+
+                new_terms = []
+                for i, t in enumerate(terms):
+                    if re.search(r"[a-zA-Z]", t):
+                        new_terms.append(_multiply_var_term(t, coeff, is_first=(i == 0)))
+                    else:
+                        new_terms.append(t)
+
+                replacement = "".join(new_terms)
+                prefix = side_str[:coeff_start]
+                new_side = prefix + replacement + suffix
+                return new_side, True
+
+            return side_str, False
+
+        new_lhs, l_changed = _apply_string(lhs_s)
+        new_rhs, r_changed = _apply_string(rhs_s)
 
         if not l_changed and not r_changed:
             return None
@@ -419,10 +516,12 @@ def negative_distribution(prev_step: str):
 
 def transposition(prev_step: str):
     """
-    Find a constant additive term on the LHS and move it to the RHS
+    Find a constant additive term next to the variable and move it to the other side
     WITHOUT negating it (the misconception).
     E.g. x+5=10 -> x=10+5
          x-4=9  -> x=9-4
+         5=x+2  -> 5+2=x
+         9=x-4  -> 9-4=x
     """
     try:
         norm = normalise(prev_step)
@@ -430,44 +529,53 @@ def transposition(prev_step: str):
         if lhs_s is None:
             return None
 
-        lhs_expr = _parse(lhs_s)
-        rhs_expr = _parse(rhs_s)
-        if lhs_expr is None or rhs_expr is None:
-            return None
+        def _transpose_side(from_side: str, to_side: str):
+            from_expr = _parse(from_side)
+            to_expr = _parse(to_side)
+            if from_expr is None or to_expr is None:
+                return None
 
-        if not isinstance(lhs_expr, Add):
-            return None
+            if not isinstance(from_expr, Add):
+                return None
 
-        # Split LHS into signed terms preserving original order
-        terms = _split_inner_terms(lhs_s)
-        const_indices = [i for i, t in enumerate(terms) if not re.search(r"[a-zA-Z]", t)]
-        var_indices = [i for i, t in enumerate(terms) if re.search(r"[a-zA-Z]", t)]
+            terms = _split_inner_terms(from_side)
+            const_indices = [i for i, t in enumerate(terms) if not re.search(r"[a-zA-Z]", t)]
+            var_indices = [i for i, t in enumerate(terms) if re.search(r"[a-zA-Z]", t)]
 
-        if not const_indices or not var_indices:
-            return None
+            if not const_indices or not var_indices:
+                return None
 
-        # Move the first constant term across to RHS
-        c_idx = const_indices[0]
-        c_tok = terms[c_idx]
+            c_idx = const_indices[0]
+            c_tok = terms[c_idx]
 
-        rem_terms = [t for i, t in enumerate(terms) if i != c_idx]
-        if not rem_terms:
-            return None
+            rem_terms = [t for i, t in enumerate(terms) if i != c_idx]
+            if not rem_terms:
+                return None
 
-        rem_lhs = "".join(rem_terms)
-        if rem_lhs.startswith("+"):
-            rem_lhs = rem_lhs[1:]
+            rem_side = "".join(rem_terms)
+            if rem_side.startswith("+"):
+                rem_side = rem_side[1:]
 
-        # Student appends the term to RHS without changing sign
-        # e.g. rhs_s='9', c_tok='-4' -> '9-4'
-        # e.g. rhs_s='10', c_tok='+5' -> '10+5'
-        # e.g. rhs_s='10', c_tok='5' -> '10+5'
-        if c_tok.startswith("+") or c_tok.startswith("-"):
-            new_rhs = rhs_s + c_tok
-        else:
-            new_rhs = rhs_s + "+" + c_tok
+            if c_tok.startswith("+") or c_tok.startswith("-"):
+                new_to_side = to_side + c_tok
+            else:
+                new_to_side = to_side + "+" + c_tok
 
-        return _clean_output(f"{rem_lhs}={new_rhs}")
+            return rem_side, new_to_side
+
+        # Try LHS -> RHS first
+        res = _transpose_side(lhs_s, rhs_s)
+        if res is not None:
+            rem_lhs, new_rhs = res
+            return _clean_output(f"{rem_lhs}={new_rhs}")
+
+        # If LHS has no constant next to variable, try RHS -> LHS
+        res = _transpose_side(rhs_s, lhs_s)
+        if res is not None:
+            rem_rhs, new_lhs = res
+            return _clean_output(f"{new_lhs}={rem_rhs}")
+
+        return None
     except Exception:
         return None
 
