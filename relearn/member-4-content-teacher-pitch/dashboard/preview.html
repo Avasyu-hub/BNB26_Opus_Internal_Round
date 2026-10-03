@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Re:Learn — Teacher Analytical Cockpit (W7 Demo Preview)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500 selection:text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+
+    const SEEDED_DATA = {
+      class_name: "Class 8-B (Simulated Cohort)",
+      total_students: 40,
+      data_disclaimer: "Simulated Research Data (Class 8-B, 40 Students)",
+      misconception_heatmap: [
+        { label: "PARTIAL_DISTRIBUTION", title: "Partial Distribution", count: 6, percentage: 15.0, color: "#f97316", domain: "Geometry", formula: "2(x+3) -> 2x+3" },
+        { label: "SQUARE_OF_SUM", title: "Square of Sum", count: 8, percentage: 20.0, color: "#a855f7", domain: "Geometry", formula: "(a+b)² -> a²+b²" },
+        { label: "NEGATIVE_DISTRIBUTION", title: "Negative Distribution", count: 4, percentage: 10.0, color: "#ec4899", domain: "Physics", formula: "-(x+5) -> -x+5" },
+        { label: "TRANSPOSITION", title: "Transposition Error", count: 5, percentage: 12.5, color: "#eab308", domain: "Programming", formula: "x+5=10 -> x=10+5" },
+        { label: "UNLIKE_TERMS", title: "Combining Unlike Terms", count: 3, percentage: 7.5, color: "#06b6d4", domain: "Physics", formula: "3x+5 -> 8x" },
+        { label: "NEG_TIMES_NEG", title: "Negative Times Negative", count: 2, percentage: 5.0, color: "#6366f1", domain: "Physics", formula: "(-3)(-4) -> -12" }
+      ],
+      peer_groups: [
+        {
+          misconception: "PARTIAL_DISTRIBUTION",
+          title: "Partial Distribution (Distributive Law)",
+          student_ids: ["s_04", "s_07", "s_12", "s_29"],
+          student_names: ["Diya Roy", "Rohan Gupta", "Priya Das", "Lavanya Nambiar"],
+          recommended_action: "Peer review: Rectangle Area Model workshop (Visual proof C4)"
+        },
+        {
+          misconception: "SQUARE_OF_SUM",
+          title: "Square of Sum Expansion",
+          student_ids: ["s_06", "s_18", "s_33"],
+          student_names: ["Kavya Patel", "Vidya Iyer", "Ritika Banerjee"],
+          recommended_action: "Peer review: Split Square Geometric Tiles lab"
+        },
+        {
+          misconception: "NEGATIVE_DISTRIBUTION",
+          title: "Negative Sign Distribution",
+          student_ids: ["s_10", "s_25"],
+          student_names: ["Pooja Hegde", "Gaurav Chopra"],
+          recommended_action: "Peer review: Number-Line Vector Directional Reversals"
+        },
+        {
+          misconception: "TRANSPOSITION",
+          title: "Transposition & Balance",
+          student_ids: ["s_13", "s_15"],
+          student_names: ["Sameer Khan", "Tanvi Rao"],
+          recommended_action: "Peer review: Two-Pan Balance Scale equation workshop"
+        },
+        {
+          misconception: "UNLIKE_TERMS",
+          title: "Combining Unlike Terms",
+          student_ids: ["s_20", "s_31"],
+          student_names: ["Zoya Siddiqui", "Nandini Ghosh"],
+          recommended_action: "Peer review: Physical Attribute Tiles & Dimensional Units lab"
+        },
+        {
+          misconception: "NEG_TIMES_NEG",
+          title: "Negative Times Negative",
+          student_ids: ["s_23", "s_36"],
+          student_names: ["Chirag Bhatt", "Urvi Chauhan"],
+          recommended_action: "Peer review: Rate of Change & Direction Analysis workshop"
+        }
+      ],
+      transfer_failure_alerts: [
+        {
+          student_id: "s_07",
+          student_name: "Rohan Gupta",
+          misconception: "PARTIAL_DISTRIBUTION",
+          transfer_domain: "geometry",
+          formula: "2(x+3) = 14",
+          notes: "Passed algebraic retry 5(x-2)=20, but failed rectangle area model (wrote 2x+3 instead of 2x+6). Hero alert candidate."
+        },
+        {
+          student_id: "s_13",
+          student_name: "Sameer Khan",
+          misconception: "TRANSPOSITION",
+          transfer_domain: "programming",
+          formula: "x+6 = 15",
+          notes: "Solved x+6=15 by memorizing steps, but wrote 'price = total + tax' in Python checkout transfer."
+        },
+        {
+          student_id: "s_18",
+          student_name: "Vidya Iyer",
+          misconception: "SQUARE_OF_SUM",
+          transfer_domain: "geometry",
+          formula: "(x+3)²",
+          notes: "Passed algebra retry (x+3)^2 = x^2+6x+9, but wrote added area as 4 m^2 in garden problem (neglected 4s)."
+        },
+        {
+          student_id: "s_25",
+          student_name: "Gaurav Chopra",
+          misconception: "NEGATIVE_DISTRIBUTION",
+          transfer_domain: "physics",
+          formula: "-(x+8) = 10",
+          notes: "Aced retry -(x+8) = -x-8, but in physics drone reversal wrote displacement as -3 + 2 = -1 m instead of -5 m."
+        },
+        {
+          student_id: "s_31",
+          student_name: "Nandini Ghosh",
+          misconception: "UNLIKE_TERMS",
+          transfer_domain: "physics",
+          formula: "2x+5x+3 = 17",
+          notes: "Got 7x+3 on retry, but when asked if 3 m + 5 s can be combined, answered 'yes, 8 ms'."
+        },
+        {
+          student_id: "s_36",
+          student_name: "Urvi Chauhan",
+          misconception: "NEG_TIMES_NEG",
+          transfer_domain: "physics",
+          formula: "(-2)(-9) = 18",
+          notes: "Calculated (-2)*(-9)=18 on algebra retry, but in physics cooling chamber question answered -12°C instead of +12°C."
+        }
+      ],
+      students: [
+        { id: "s_01", name: "Aarav Sharma", status: "mastered", misc: null, domain: "geometry", attempts: 4, conf: "high" },
+        { id: "s_02", name: "Ananya Sen", status: "mastered", misc: null, domain: "physics", attempts: 3, conf: "high" },
+        { id: "s_03", name: "Aditya Verma", status: "mastered", misc: null, domain: "programming", attempts: 5, conf: "medium" },
+        { id: "s_04", name: "Diya Roy", status: "active", misc: "PARTIAL_DISTRIBUTION", domain: "geometry", attempts: 2, conf: "low" },
+        { id: "s_05", name: "Ishan Mukherjee", status: "mastered", misc: null, domain: "physics", attempts: 3, conf: "high" },
+        { id: "s_06", name: "Kavya Patel", status: "active", misc: "SQUARE_OF_SUM", domain: "geometry", attempts: 3, conf: "medium" },
+        { id: "s_07", name: "Rohan Gupta", status: "transfer_failed", misc: "PARTIAL_DISTRIBUTION", domain: "geometry", attempts: 6, conf: "low" },
+        { id: "s_08", name: "Meera Joshi", status: "mastered", misc: null, domain: "geometry", attempts: 2, conf: "high" },
+        { id: "s_09", name: "Nikhil Nair", status: "mastered", misc: null, domain: "programming", attempts: 3, conf: "high" },
+        { id: "s_10", name: "Pooja Hegde", status: "active", misc: "NEGATIVE_DISTRIBUTION", domain: "physics", attempts: 2, conf: "medium" },
+        { id: "s_11", name: "Rahul Bose", status: "mastered", misc: null, domain: "physics", attempts: 4, conf: "high" },
+        { id: "s_12", name: "Priya Das", status: "active", misc: "PARTIAL_DISTRIBUTION", domain: "geometry", attempts: 3, conf: "low" },
+        { id: "s_13", name: "Sameer Khan", status: "transfer_failed", misc: "TRANSPOSITION", domain: "programming", attempts: 5, conf: "low" },
+        { id: "s_14", name: "Sneha Kulkarni", status: "mastered", misc: null, domain: "geometry", attempts: 2, conf: "high" },
+        { id: "s_15", name: "Tanvi Rao", status: "active", misc: "TRANSPOSITION", domain: "programming", attempts: 3, conf: "medium" },
+        { id: "s_16", name: "Utkarsh Singh", status: "mastered", misc: null, domain: "physics", attempts: 3, conf: "high" },
+        { id: "s_17", name: "Varun Menon", status: "mastered", misc: null, domain: "programming", attempts: 2, conf: "high" },
+        { id: "s_18", name: "Vidya Iyer", status: "transfer_failed", misc: "SQUARE_OF_SUM", domain: "geometry", attempts: 5, conf: "medium" },
+        { id: "s_19", name: "Yash Kapoor", status: "mastered", misc: null, domain: "geometry", attempts: 3, conf: "high" },
+        { id: "s_20", name: "Zoya Siddiqui", status: "active", misc: "UNLIKE_TERMS", domain: "physics", attempts: 2, conf: "low" },
+        { id: "s_21", name: "Abhinav Reddy", status: "mastered", misc: null, domain: "physics", attempts: 4, conf: "high" },
+        { id: "s_22", name: "Bhavna Mishra", status: "mastered", misc: null, domain: "geometry", attempts: 3, conf: "high" },
+        { id: "s_23", name: "Chirag Bhatt", status: "active", misc: "NEG_TIMES_NEG", domain: "physics", attempts: 3, conf: "medium" },
+        { id: "s_24", name: "Deepika Pillai", status: "mastered", misc: null, domain: "programming", attempts: 2, conf: "high" },
+        { id: "s_25", name: "Gaurav Chopra", status: "transfer_failed", misc: "NEGATIVE_DISTRIBUTION", domain: "physics", attempts: 5, conf: "low" },
+        { id: "s_26", name: "Harsh Vardhan", status: "mastered", misc: null, domain: "geometry", attempts: 3, conf: "high" },
+        { id: "s_27", name: "Ishita Saxena", status: "mastered", misc: null, domain: "physics", attempts: 2, conf: "high" },
+        { id: "s_28", name: "Karan Singhal", status: "mastered", misc: null, domain: "programming", attempts: 4, conf: "medium" },
+        { id: "s_29", name: "Lavanya Nambiar", status: "active", misc: "PARTIAL_DISTRIBUTION", domain: "geometry", attempts: 2, conf: "low" },
+        { id: "s_30", name: "Manish Tiwari", status: "mastered", misc: null, domain: "physics", attempts: 3, conf: "high" },
+        { id: "s_31", name: "Nandini Ghosh", status: "transfer_failed", misc: "UNLIKE_TERMS", domain: "physics", attempts: 6, conf: "low" },
+        { id: "s_32", name: "Pranav Deshmukh", status: "mastered", misc: null, domain: "geometry", attempts: 2, conf: "high" },
+        { id: "s_33", name: "Ritika Banerjee", status: "active", misc: "SQUARE_OF_SUM", domain: "geometry", attempts: 3, conf: "medium" },
+        { id: "s_34", name: "Siddharth Jain", status: "mastered", misc: null, domain: "programming", attempts: 3, conf: "high" },
+        { id: "s_35", name: "Tarun Mehra", status: "mastered", misc: null, domain: "physics", attempts: 4, conf: "high" },
+        { id: "s_36", name: "Urvi Chauhan", status: "transfer_failed", misc: "NEG_TIMES_NEG", domain: "physics", attempts: 5, conf: "low" },
+        { id: "s_37", name: "Vaibhav Pandey", status: "mastered", misc: null, domain: "geometry", attempts: 3, conf: "high" },
+        { id: "s_38", name: "Yamini Rawat", status: "mastered", misc: null, domain: "programming", attempts: 2, conf: "high" },
+        { id: "s_39", name: "Zaheer Ali", status: "mastered", misc: null, domain: "physics", attempts: 3, conf: "high" },
+        { id: "s_40", name: "Shreya Bhattacharya", status: "mastered", misc: null, domain: "geometry", attempts: 2, conf: "high" }
+      ]
+    };
+
+    function App() {
+      const [tab, setTab] = useState('overview');
+      const [filter, setFilter] = useState('all');
+      const [search, setSearch] = useState('');
+      const [modalStudent, setModalStudent] = useState(null);
+
+      const filtered = useMemo(() => {
+        return SEEDED_DATA.students.filter(s => {
+          const matchQ = s.name.toLowerCase().includes(search.toLowerCase()) || s.id.toLowerCase().includes(search.toLowerCase());
+          const matchF = filter === 'all' || s.status === filter;
+          return matchQ && matchF;
+        });
+      }, [search, filter]);
+
+      return (
+        <div className="min-h-screen bg-slate-950 text-slate-100 p-4 sm:p-8">
+          <div className="max-w-7xl mx-auto space-y-6">
+            
+            {/* Top Mandatory Research Banner */}
+            <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border border-amber-500/40 rounded-2xl px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-amber-300 shadow-lg backdrop-blur">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                </span>
+                <span className="font-bold tracking-wider uppercase text-[11px] px-2.5 py-1 rounded bg-amber-500/30 border border-amber-500/50">
+                  Simulated Research Data
+                </span>
+                <span className="text-sm font-semibold">{SEEDED_DATA.data_disclaimer}</span>
+              </div>
+              <div className="text-xs text-amber-400/90 font-medium">
+                Targeting CBSE/ICSE Classes 7-10 &bull; Local SQLite Persistence
+              </div>
+            </div>
+
+            {/* Header Title Bar */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+              <div>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-3xl font-extrabold tracking-tight text-white">Teacher Analytical Cockpit</h1>
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                    {SEEDED_DATA.class_name}
+                  </span>
+                </div>
+                <p className="text-sm text-slate-400 mt-1 max-w-2xl">
+                  Deterministic step-error tracking, cross-domain transfer verification, and algorithmic peer remedial grouping.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="bg-slate-900 border border-slate-800/80 px-4 py-2.5 rounded-xl shadow">
+                  <div className="text-[11px] font-semibold uppercase text-slate-400">Cohort Size</div>
+                  <div className="text-2xl font-black text-white">{SEEDED_DATA.total_students}</div>
+                </div>
+                <div className="bg-slate-900 border border-slate-800/80 px-4 py-2.5 rounded-xl shadow">
+                  <div className="text-[11px] font-semibold uppercase text-orange-400">Active Misconceptions</div>
+                  <div className="text-2xl font-black text-orange-400">8 (20%)</div>
+                </div>
+                <div className="bg-slate-900 border border-slate-800/80 px-4 py-2.5 rounded-xl shadow">
+                  <div className="text-[11px] font-semibold uppercase text-red-400">Transfer Alerts (T4)</div>
+                  <div className="text-2xl font-black text-red-400">6 (15%)</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Navigation Tabs */}
+            <div className="flex border-b border-slate-800 gap-1 overflow-x-auto">
+              {[
+                { id: 'overview', label: 'T1 Class Heatmap & Overview' },
+                { id: 'peers', label: `T3 Peer Remedial Groups (${SEEDED_DATA.peer_groups.length})` },
+                { id: 'alerts', label: `T4 Cross-Domain Alerts (${SEEDED_DATA.transfer_failure_alerts.length})` },
+                { id: 'roster', label: `T2 Student Roster Deep-Dive (40)` },
+              ].map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`px-5 py-3 text-sm font-semibold border-b-2 transition whitespace-nowrap ${
+                    tab === t.id
+                      ? 'border-emerald-500 text-emerald-400 bg-emerald-500/5'
+                      : 'border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            {/* TAB: OVERVIEW */}
+            {tab === 'overview' && (
+              <div className="space-y-6">
+                {/* Heatmap Section */}
+                <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl backdrop-blur">
+                  <div className="flex items-center justify-between mb-5">
+                    <div>
+                      <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                        T1: Class Misconception Prevalence Heatmap
+                      </h2>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        Proportion of students demonstrating active or latent breakdown across the 6 core mathematical patterns.
+                      </p>
+                    </div>
+                    <span className="text-xs text-slate-400 font-mono">Cohort N = 40</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {SEEDED_DATA.misconception_heatmap.map(item => (
+                      <div
+                        key={item.label}
+                        className="p-5 rounded-2xl border border-slate-800 bg-slate-950/70 hover:border-slate-700 transition space-y-3"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                              Transfer: {item.domain}
+                            </span>
+                            <h3 className="text-base font-bold text-white mt-1.5">{item.title}</h3>
+                            <code className="text-xs text-slate-400 block mt-0.5">{item.formula}</code>
+                          </div>
+                          <span className="text-2xl font-black text-white">{item.percentage}%</span>
+                        </div>
+
+                        <div className="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{ width: `${Math.max(item.percentage, 8)}%`, backgroundColor: item.color }}
+                          ></div>
+                        </div>
+
+                        <div className="flex items-center justify-between text-xs text-slate-400 pt-1">
+                          <span>Prevalence: <strong className="text-white">{item.count} students</strong></span>
+                          <span className="font-semibold" style={{ color: item.color }}>Action Needed</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Highlights Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Peer Group Card */}
+                  <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-bold text-white text-base">T3 Remedial Peer Clusters</h3>
+                      <button onClick={() => setTab('peers')} className="text-xs text-emerald-400 hover:underline">
+                        View all &rarr;
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      {SEEDED_DATA.peer_groups.slice(0, 3).map((g, i) => (
+                        <div key={i} className="p-4 bg-slate-950 rounded-xl border border-slate-800/80 space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-orange-400 uppercase tracking-wide">{g.title}</span>
+                            <span className="text-xs text-slate-400">{g.student_names.length} Students</span>
+                          </div>
+                          <p className="text-xs font-medium text-emerald-300">{g.recommended_action}</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {g.student_names.map((name, idx) => (
+                              <span key={idx} className="px-2 py-0.5 bg-slate-800 text-slate-200 rounded text-[11px]">
+                                {name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Transfer Alert Card */}
+                  <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-red-400 animate-ping"></span>
+                        <h3 className="font-bold text-white text-base">T4 Transfer Failure Alerts</h3>
+                      </div>
+                      <button onClick={() => setTab('alerts')} className="text-xs text-red-400 hover:underline">
+                        View all &rarr;
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      {SEEDED_DATA.transfer_failure_alerts.slice(0, 3).map((a, i) => (
+                        <div key={i} className="p-4 bg-red-500/5 rounded-xl border border-red-500/20 space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <div className="font-bold text-sm text-red-300">
+                              {a.student_name} <span className="text-xs text-slate-400 font-mono">({a.student_id})</span>
+                            </div>
+                            <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-red-500/20 text-red-300 border border-red-500/30">
+                              {a.transfer_domain}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-400">{a.notes}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB: PEER GROUPS */}
+            {tab === 'peers' && (
+              <div className="space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h2 className="text-xl font-bold text-white">T3: Dynamic Peer Remedial Clusters</h2>
+                    <p className="text-xs text-slate-400">
+                      Students clustered together by identical mathematical transformation failure.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => alert("Workshop invites and visual proof packets dispatched to students!")}
+                    className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl shadow transition"
+                  >
+                    Schedule Peer Labs (All 6 Groups)
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  {SEEDED_DATA.peer_groups.map((group, idx) => (
+                    <div key={idx} className="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-lg">
+                      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div>
+                          <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest">Group {String.fromCharCode(65 + idx)}</span>
+                          <h3 className="text-lg font-bold text-white mt-0.5">{group.title}</h3>
+                        </div>
+                        <span className="px-3 py-1 bg-slate-800 rounded-full text-xs font-bold text-slate-200">
+                          {group.student_names.length} Students
+                        </span>
+                      </div>
+
+                      <div className="p-3.5 bg-slate-950 rounded-2xl border border-slate-800">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
+                          Recommended Action & Visual Tool
+                        </span>
+                        <div className="text-xs font-semibold text-emerald-300">
+                          {group.recommended_action}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="text-xs text-slate-400 font-semibold mb-2">Cohort Members:</div>
+                        <div className="grid grid-cols-2 gap-2">
+                          {group.student_names.map((name, i) => (
+                            <div key={i} className="flex items-center justify-between px-3 py-2 bg-slate-800/60 rounded-xl text-xs">
+                              <span className="font-semibold text-white">{name}</span>
+                              <span className="text-[10px] text-slate-400 font-mono">{group.student_ids[i]}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* TAB: TRANSFER ALERTS */}
+            {tab === 'alerts' && (
+              <div className="space-y-5">
+                <div className="bg-gradient-to-r from-red-500/10 via-red-500/15 to-red-500/10 border border-red-500/30 rounded-3xl p-6 text-red-200 shadow-xl">
+                  <div className="flex items-center gap-3">
+                    <span className="w-3 h-3 rounded-full bg-red-400 animate-ping"></span>
+                    <h2 className="text-lg font-extrabold text-red-300 tracking-wide">
+                      T4: The Hero Feature &bull; Cross-Domain Transfer Failure Alerts
+                    </h2>
+                  </div>
+                  <p className="text-xs text-red-300/80 mt-2 leading-relaxed max-w-4xl">
+                    Every traditional platform assumes that because a student aced the mechanical algebra drill, the concept is learned.
+                    Re:Learn rigorously tests whether the repaired mental model survives in physics, geometry, and code.
+                    The 6 students below passed the algebraic drill, but failed the isomorphic transfer question.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {SEEDED_DATA.transfer_failure_alerts.map((alert, idx) => (
+                    <div
+                      key={idx}
+                      className="p-5 bg-slate-900 border border-slate-800 hover:border-red-500/40 rounded-2xl transition flex flex-col md:flex-row md:items-center justify-between gap-4 shadow"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg font-bold text-white">{alert.student_name}</span>
+                          <span className="text-xs text-slate-400 font-mono px-2 py-0.5 bg-slate-800 rounded">{alert.student_id}</span>
+                          <span className="px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-red-500/20 text-red-300 border border-red-500/40">
+                            {alert.transfer_domain} Transfer Failure
+                          </span>
+                        </div>
+                        <div className="text-xs text-slate-300">
+                          Root Misconception: <strong className="text-orange-400">{alert.misconception}</strong> &bull; Initial Equation: <code className="text-slate-300">{alert.formula}</code>
+                        </div>
+                        <p className="text-xs text-slate-400 max-w-4xl bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+                          <strong className="text-slate-300">Diagnostic Clinical Trace:</strong> {alert.notes}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2 self-end md:self-center">
+                        <button
+                          onClick={() => setModalStudent(alert)}
+                          className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 rounded-xl transition"
+                        >
+                          Deep Dive
+                        </button>
+                        <button
+                          onClick={() => alert(`Domain bridging module sent to ${alert.student_name}`)}
+                          className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white rounded-xl shadow transition"
+                        >
+                          Bridge Domain
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* TAB: ROSTER */}
+            {tab === 'roster' && (
+              <div className="space-y-5">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+                  <input
+                    type="text"
+                    placeholder="Search student by name or ID (e.g. Rohan, s_07)..."
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    className="w-full sm:w-80 px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  />
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <span className="text-xs text-slate-400 font-semibold">Cohort Filter:</span>
+                    <select
+                      value={filter}
+                      onChange={e => setFilter(e.target.value)}
+                      className="px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
+                    >
+                      <option value="all">All 40 Students</option>
+                      <option value="active">Active Misconceptions (8)</option>
+                      <option value="transfer_failed">Transfer Failures (6)</option>
+                      <option value="mastered">Mastered / Cleared (26)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-slate-950 text-slate-400 border-b border-slate-800 font-semibold">
+                      <tr>
+                        <th className="py-3.5 px-4">Student ID</th>
+                        <th className="py-3.5 px-4">Student Name</th>
+                        <th className="py-3.5 px-4">Status</th>
+                        <th className="py-3.5 px-4">Active Misconception</th>
+                        <th className="py-3.5 px-4">Transfer Domain</th>
+                        <th className="py-3.5 px-4 text-center">Telemetry Conf.</th>
+                        <th className="py-3.5 px-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/80">
+                      {filtered.map(s => (
+                        <tr key={s.id} className="hover:bg-slate-800/40 transition">
+                          <td className="py-3 px-4 font-mono font-bold text-slate-300">{s.id}</td>
+                          <td className="py-3 px-4 font-bold text-white">{s.name}</td>
+                          <td className="py-3 px-4">
+                            <span className={`px-2 py-0.5 rounded text-[11px] font-bold uppercase ${
+                              s.status === 'mastered'
+                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                : s.status === 'transfer_failed'
+                                ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                                : 'bg-orange-500/20 text-orange-300 border border-orange-500/30'
+                            }`}>
+                              {s.status.replace('_', ' ')}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4">
+                            {s.misc ? (
+                              <span className="text-orange-300 font-medium">{s.misc}</span>
+                            ) : (
+                              <span className="text-slate-500">&mdash; Clear &mdash;</span>
+                            )}
+                          </td>
+                          <td className="py-3 px-4 capitalize text-slate-400">{s.domain || 'N/A'}</td>
+                          <td className="py-3 px-4 text-center">
+                            <span className={`font-mono text-[10px] uppercase font-bold px-2 py-0.5 rounded ${
+                              s.conf === 'high' ? 'text-emerald-400 bg-emerald-500/10' :
+                              s.conf === 'medium' ? 'text-amber-400 bg-amber-500/10' :
+                              'text-red-400 bg-red-500/10'
+                            }`}>
+                              {s.conf}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4 text-right">
+                            <button
+                              onClick={() => setModalStudent(s)}
+                              className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition"
+                            >
+                              Inspect
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* Modal */}
+            {modalStudent && (
+              <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm">
+                <div className="bg-slate-900 border border-slate-700 rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{modalStudent.student_name || modalStudent.name}</h3>
+                      <span className="text-xs text-slate-400 font-mono">{modalStudent.student_id || modalStudent.id} &bull; Class 8-B</span>
+                    </div>
+                    <button
+                      onClick={() => setModalStudent(null)}
+                      className="text-slate-400 hover:text-white text-2xl font-bold"
+                    >
+                      &times;
+                    </button>
+                  </div>
+
+                  <div className="space-y-3 text-xs">
+                    <div>
+                      <span className="text-slate-400 font-semibold block mb-1">Diagnostic Profile:</span>
+                      <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-slate-200 font-medium">
+                        {modalStudent.misconception || modalStudent.misc ? (
+                          <span className="text-orange-400 font-bold">{modalStudent.misconception || modalStudent.misc}</span>
+                        ) : (
+                          <span className="text-emerald-400 font-bold">Concept Mastered &bull; Zero Active Misconceptions</span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="text-slate-400 font-semibold block mb-1">Clinical Observation Notes:</span>
+                      <p className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-slate-300 leading-relaxed">
+                        {modalStudent.notes || "Demonstrates strong retention of symbolic equivalence. Successfully completed cross-domain transfer scenario."}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-3">
+                    <button
+                      onClick={() => setModalStudent(null)}
+                      className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold"
+                    >
+                      Close
+                    </button>
+                    <button
+                      onClick={() => {
+                        alert("Remedial visual proof assignment dispatched!");
+                        setModalStudent(null);
+                      }}
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow"
+                    >
+                      Dispatch Intervention
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

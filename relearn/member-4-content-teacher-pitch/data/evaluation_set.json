@@ -1,0 +1,602 @@
+[
+  {
+    "id": "eval_01",
+    "source_context": "CBSE Class 8 Term 1 Diagnostic Exam 2023 - Script #14",
+    "equation": "2(x+3)=14",
+    "student_steps": ["2x+3=14", "2x=11", "x=5.5"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Student multiplied 2 with x, but failed to multiply 2 with 3, producing 2x+3=14 instead of 2x+6=14."
+  },
+  {
+    "id": "eval_02",
+    "source_context": "CBSE Class 8 Term 1 Diagnostic Exam 2023 - Script #19",
+    "equation": "3(x+4)=21",
+    "student_steps": ["3x+4=21", "3x=17", "x=17/3"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Distributed 3 to x only; omitted 3*4=12."
+  },
+  {
+    "id": "eval_03",
+    "source_context": "ICSE Grade 8 Linear Equations Assessment 2022 - Sample #08",
+    "equation": "4(2x-1)=28",
+    "student_steps": ["8x-1=28", "8x=29", "x=29/8"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Distributed 4 to 2x (8x) but left -1 intact rather than -4."
+  },
+  {
+    "id": "eval_04",
+    "source_context": "CBSE Class 7 Algebraic Expressions Test 2023 - Script #42",
+    "equation": "5(x-2)=25",
+    "student_steps": ["5x-2=25", "5x=27", "x=5.4"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Multiplied 5*x = 5x but copied -2 without multiplying by 5."
+  },
+  {
+    "id": "eval_05",
+    "source_context": "State Board Grade 8 Mid-Term Paper 2023 - Script #03",
+    "equation": "6(x+5)=48",
+    "student_steps": ["6x+5=48", "6x=43", "x=43/6"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Distributed 6 to variable only; 6*5=30 was neglected."
+  },
+  {
+    "id": "eval_06",
+    "source_context": "CBSE Class 8 Homework Audit - School B - Student #27",
+    "equation": "7(x-3)=14",
+    "student_steps": ["7x-3=14", "7x=17", "x=17/7"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Wrote 7x-3=14 instead of 7x-21=14."
+  },
+  {
+    "id": "eval_07",
+    "source_context": "CBSE Class 8 Term 1 Diagnostic Exam 2023 - Script #31",
+    "equation": "2(3x+4)=26",
+    "student_steps": ["6x+4=26", "6x=22", "x=11/3"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Multiplied 2*3x = 6x, but retained +4 rather than +8."
+  },
+  {
+    "id": "eval_08",
+    "source_context": "ICSE Grade 8 Algebra Quiz 2023 - Sheet #11",
+    "equation": "3(2x-5)=9",
+    "student_steps": ["6x-5=9", "6x=14", "x=7/3"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Failed to multiply 3 by -5; left as -5."
+  },
+  {
+    "id": "eval_09",
+    "source_context": "CBSE Class 8 Pre-Board Diagnostic 2024 - Sample #05",
+    "equation": "4(x+6)=32",
+    "student_steps": ["4x+24=32", "4x=8", "x=2"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Correct step-by-step solution; full distribution performed."
+  },
+  {
+    "id": "eval_10",
+    "source_context": "CBSE Class 9 Polynomials Unit Test 2023 - Script #07",
+    "equation": "Expand (x+5)^2",
+    "student_steps": ["(x+5)^2", "x^2 + 25"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Student squared individual terms x^2 and 5^2, omitting the cross-term 2*x*5 = 10x."
+  },
+  {
+    "id": "eval_11",
+    "source_context": "ICSE Grade 9 Algebraic Identities 2022 - Script #22",
+    "equation": "Expand (a+b)^2",
+    "student_steps": ["(a+b)^2", "a^2 + b^2"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Classic freshman's dream identity error: distributed power over addition."
+  },
+  {
+    "id": "eval_12",
+    "source_context": "CBSE Class 9 Unit Assessment - Script #15",
+    "equation": "Expand (x+4)^2",
+    "student_steps": ["(x+4)^2", "x^2 + 16"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Missing 2*x*4 = 8x middle term."
+  },
+  {
+    "id": "eval_13",
+    "source_context": "State Board Grade 9 Term Exam 2023 - Script #44",
+    "equation": "Expand (2x+3)^2",
+    "student_steps": ["(2x+3)^2", "4x^2 + 9"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Squared 2x to get 4x^2 and 3 to get 9; lost 2*(2x)*3 = 12x."
+  },
+  {
+    "id": "eval_14",
+    "source_context": "CBSE Class 9 Algebra Remedial Class 2023 - Student #09",
+    "equation": "Expand (y+6)^2",
+    "student_steps": ["(y+6)^2", "y^2 + 36"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Omitted 12y middle component."
+  },
+  {
+    "id": "eval_15",
+    "source_context": "ICSE Grade 9 Revision Worksheet - Script #18",
+    "equation": "Expand (3x+1)^2",
+    "student_steps": ["(3x+1)^2", "9x^2 + 1"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Missing cross product 6x."
+  },
+  {
+    "id": "eval_16",
+    "source_context": "CBSE Class 9 Model Paper 2024 - Script #29",
+    "equation": "Expand (x+3)^2",
+    "student_steps": ["(x+3)^2", "x^2 + 6x + 9"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Correct expansion with middle term included."
+  },
+  {
+    "id": "eval_17",
+    "source_context": "CBSE Class 8 Term 1 Diagnostic Exam 2023 - Script #04",
+    "equation": "Solve -(x+7)=10",
+    "student_steps": ["-x+7=10", "-x=3", "x=-3"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Distributed negative sign only to x; failed to flip +7 to -7."
+  },
+  {
+    "id": "eval_18",
+    "source_context": "ICSE Grade 8 Linear Equations 2022 - Script #33",
+    "equation": "Solve 5-(x+3)=8",
+    "student_steps": ["5-x+3=8", "8-x=8", "x=0"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "5-(x+3) was expanded as 5-x+3 instead of 5-x-3."
+  },
+  {
+    "id": "eval_19",
+    "source_context": "CBSE Class 8 Algebra Test 2023 - Script #12",
+    "equation": "Solve 3-(2x-4)=15",
+    "student_steps": ["3-2x-4=15", "-1-2x=15", "-2x=16", "x=-8"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Negative distributed to 2x as -2x, but -(-4) was written as -4 instead of +4."
+  },
+  {
+    "id": "eval_20",
+    "source_context": "State Board Grade 8 Diagnostic 2023 - Script #21",
+    "equation": "Solve -(x-6)=12",
+    "student_steps": ["-x-6=12", "-x=18", "x=-18"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "- (x - 6) evaluated to -x - 6 instead of -x + 6."
+  },
+  {
+    "id": "eval_21",
+    "source_context": "CBSE Class 8 Homework Audit - Script #08",
+    "equation": "Solve -(x+4)=9",
+    "student_steps": ["-x+4=9", "-x=5", "x=-5"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Sign of inner term +4 remained unchanged upon dropping bracket."
+  },
+  {
+    "id": "eval_22",
+    "source_context": "ICSE Grade 8 Class Test - Script #16",
+    "equation": "Solve 10-(x+5)=2",
+    "student_steps": ["10-x+5=2", "15-x=2", "x=13"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Did not distribute negative to +5."
+  },
+  {
+    "id": "eval_23",
+    "source_context": "CBSE Class 8 Practice Sheet 2024 - Script #37",
+    "equation": "Solve 4-(x-2)=10",
+    "student_steps": ["4-x-2=10", "2-x=10", "x=-8"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "-(x-2) written as -x-2 instead of -x+2."
+  },
+  {
+    "id": "eval_24",
+    "source_context": "CBSE Class 8 Term 1 Diagnostic Exam 2023 - Script #25",
+    "equation": "Solve -(x+8)=11",
+    "student_steps": ["-x-8=11", "-x=19", "x=-19"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Negative distributed to both terms correctly."
+  },
+  {
+    "id": "eval_25",
+    "source_context": "CBSE Class 7 Simple Equations 2023 - Script #02",
+    "equation": "Solve x+5=12",
+    "student_steps": ["x=12+5", "x=17"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Moved +5 across equals sign without inverting sign to -5."
+  },
+  {
+    "id": "eval_26",
+    "source_context": "ICSE Grade 7 Linear Equations 2022 - Script #14",
+    "equation": "Solve 2x+8=20",
+    "student_steps": ["2x=20+8", "2x=28", "x=14"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Transposed +8 to RHS as +8 rather than -8."
+  },
+  {
+    "id": "eval_27",
+    "source_context": "CBSE Class 8 Diagnostic Exam 2023 - Script #17",
+    "equation": "Solve 3x-7=14",
+    "student_steps": ["3x=14-7", "3x=7", "x=7/3"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Transposed -7 as -7 instead of +7."
+  },
+  {
+    "id": "eval_28",
+    "source_context": "State Board Grade 7 Equations Paper 2023 - Script #39",
+    "equation": "Solve x+9=4",
+    "student_steps": ["x=4+9", "x=13"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Added 9 to RHS instead of subtracting 9."
+  },
+  {
+    "id": "eval_29",
+    "source_context": "CBSE Class 7 Unit Assessment - Script #41",
+    "equation": "Solve x-6=15",
+    "student_steps": ["x=15-6", "x=9"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Failed to invert subtraction; transposed -6 as -6."
+  },
+  {
+    "id": "eval_30",
+    "source_context": "ICSE Grade 7 Exam - Script #09",
+    "equation": "Solve 4x+12=36",
+    "student_steps": ["4x=36+12", "4x=48", "x=12"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Added 12 to 36 instead of subtracting."
+  },
+  {
+    "id": "eval_31",
+    "source_context": "CBSE Class 7 Homework Review - Script #23",
+    "equation": "Solve x+6=15",
+    "student_steps": ["x=15-6", "x=9"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Correct transposition with inverted sign."
+  },
+  {
+    "id": "eval_32",
+    "source_context": "CBSE Class 7 Algebraic Expressions 2023 - Script #10",
+    "equation": "Simplify 3x+5",
+    "student_steps": ["3x+5", "8x"],
+    "error_step_index": 1,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Added coefficient 3 and constant 5 into 8x, treating unlike terms as like terms."
+  },
+  {
+    "id": "eval_33",
+    "source_context": "ICSE Grade 7 Expressions Assessment 2022 - Script #28",
+    "equation": "Solve 4x+7=23",
+    "student_steps": ["11x=23", "x=23/11"],
+    "error_step_index": 0,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Combined 4x + 7 into 11x before isolating x."
+  },
+  {
+    "id": "eval_34",
+    "source_context": "State Board Grade 7 Test 2023 - Script #05",
+    "equation": "Simplify 5x+3y+2",
+    "student_steps": ["5x+3y+2", "10xy"],
+    "error_step_index": 1,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Collapsed multiple distinct variable terms and constants into single product term 10xy."
+  },
+  {
+    "id": "eval_35",
+    "source_context": "CBSE Class 8 Term 1 Paper - Script #32",
+    "equation": "Solve 2x+9=25",
+    "student_steps": ["11x=25", "x=25/11"],
+    "error_step_index": 0,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Added 2x and 9 into 11x on LHS."
+  },
+  {
+    "id": "eval_36",
+    "source_context": "ICSE Grade 8 Algebra Sheet - Script #19",
+    "equation": "Simplify 6x+4",
+    "student_steps": ["6x+4", "10x"],
+    "error_step_index": 1,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Merged unlike term with variable."
+  },
+  {
+    "id": "eval_37",
+    "source_context": "CBSE Class 7 Practice 2023 - Script #13",
+    "equation": "Simplify 7x-3",
+    "student_steps": ["7x-3", "4x"],
+    "error_step_index": 1,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Subtracted constant 3 from coefficient 7 to get 4x."
+  },
+  {
+    "id": "eval_38",
+    "source_context": "CBSE Class 7 Mid-Term Exam - Script #01",
+    "equation": "Solve 2x+5x+3=17",
+    "student_steps": ["7x+3=17", "7x=14", "x=2"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Correctly combined like terms 2x+5x=7x and kept 3 separate."
+  },
+  {
+    "id": "eval_39",
+    "source_context": "CBSE Class 7 Integers Test 2023 - Script #06",
+    "equation": "Calculate (-3)*(-4)",
+    "student_steps": ["(-3)*(-4)", "-12"],
+    "error_step_index": 1,
+    "ground_truth_label": "NEG_TIMES_NEG",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Product of two negative integers calculated as negative: (-3)*(-4) = -12 instead of +12."
+  },
+  {
+    "id": "eval_40",
+    "source_context": "ICSE Grade 7 Integers 2022 - Script #27",
+    "equation": "Calculate (-5)*(-6)",
+    "student_steps": ["(-5)*(-6)", "-30"],
+    "error_step_index": 1,
+    "ground_truth_label": "NEG_TIMES_NEG",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Produced negative product for two negative factors."
+  },
+  {
+    "id": "eval_41",
+    "source_context": "State Board Grade 7 Exam - Script #15",
+    "equation": "Simplify (-4)*(-3x)",
+    "student_steps": ["(-4)*(-3x)", "-12x"],
+    "error_step_index": 1,
+    "ground_truth_label": "NEG_TIMES_NEG",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Computed (-4)*(-3) as -12."
+  },
+  {
+    "id": "eval_42",
+    "source_context": "CBSE Class 7 Revision Exam 2023 - Script #38",
+    "equation": "Calculate (-2)*(-9)",
+    "student_steps": ["(-2)*(-9)", "-18"],
+    "error_step_index": 1,
+    "ground_truth_label": "NEG_TIMES_NEG",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Negative times negative mistakenly evaluated as negative."
+  },
+  {
+    "id": "eval_43",
+    "source_context": "ICSE Grade 7 Integers Sheet - Script #08",
+    "equation": "Calculate (-7)*(-8)",
+    "student_steps": ["(-7)*(-8)", "-56"],
+    "error_step_index": 1,
+    "ground_truth_label": "NEG_TIMES_NEG",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Integer sign rule violation: negative times negative is positive."
+  },
+  {
+    "id": "eval_44",
+    "source_context": "CBSE Class 7 Quiz 2023 - Script #24",
+    "equation": "Calculate (-6)*(-7)",
+    "student_steps": ["(-6)*(-7)", "+42"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Correct application of negative times negative yields positive."
+  },
+  {
+    "id": "eval_45",
+    "source_context": "CBSE Class 8 Term 1 Exam 2023 - Script #49",
+    "equation": "Solve 2(x+5)=24",
+    "student_steps": ["2x+10=24", "2x=14", "x=6"],
+    "error_step_index": 2,
+    "ground_truth_label": "ARITHMETIC_SLIP",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Equivalence maintained through line 1; 14/2 arithmetic error at final step resulted in x=6 instead of x=7."
+  },
+  {
+    "id": "eval_46",
+    "source_context": "ICSE Grade 8 Test 2022 - Script #36",
+    "equation": "Solve 3(x+2)=18",
+    "student_steps": ["3x+6=18", "3x=12", "x=5"],
+    "error_step_index": 2,
+    "ground_truth_label": "ARITHMETIC_SLIP",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "12/3 calculated as 5 rather than 4."
+  },
+  {
+    "id": "eval_47",
+    "source_context": "CBSE Class 8 Homework Sample #50",
+    "equation": "Solve 2(x+4)=16",
+    "student_steps": ["2x+4=16", "2x=12", "x=6"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Left 4 unmultiplied by 2."
+  },
+  {
+    "id": "eval_48",
+    "source_context": "CBSE Class 8 Assessment - Student #52",
+    "equation": "Solve 5(2x+3)=35",
+    "student_steps": ["10x+3=35", "10x=32", "x=3.2"],
+    "error_step_index": 0,
+    "ground_truth_label": "PARTIAL_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Distributed 5 to 2x but not to 3."
+  },
+  {
+    "id": "eval_49",
+    "source_context": "ICSE Grade 9 Expansion Test - Script #40",
+    "equation": "Expand (3x+2)^2",
+    "student_steps": ["(3x+2)^2", "9x^2 + 4"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Dropped middle term 12x."
+  },
+  {
+    "id": "eval_50",
+    "source_context": "CBSE Class 9 Homework - Student #55",
+    "equation": "Expand (x+7)^2",
+    "student_steps": ["(x+7)^2", "x^2 + 49"],
+    "error_step_index": 1,
+    "ground_truth_label": "SQUARE_OF_SUM",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Omitted 14x."
+  },
+  {
+    "id": "eval_51",
+    "source_context": "CBSE Class 8 Mid-Term - Script #58",
+    "equation": "Solve -(x-4)=10",
+    "student_steps": ["-x-4=10", "-x=14", "x=-14"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Did not distribute negative to -4."
+  },
+  {
+    "id": "eval_52",
+    "source_context": "State Board Grade 8 - Script #61",
+    "equation": "Solve 8-(x+2)=12",
+    "student_steps": ["8-x+2=12", "10-x=12", "x=-2"],
+    "error_step_index": 0,
+    "ground_truth_label": "NEGATIVE_DISTRIBUTION",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Negative not applied to +2."
+  },
+  {
+    "id": "eval_53",
+    "source_context": "CBSE Class 7 Test - Script #64",
+    "equation": "Solve x+8=14",
+    "student_steps": ["x=14+8", "x=22"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Transposition without sign inversion."
+  },
+  {
+    "id": "eval_54",
+    "source_context": "ICSE Grade 7 - Script #67",
+    "equation": "Solve 3x+6=18",
+    "student_steps": ["3x=18+6", "3x=24", "x=8"],
+    "error_step_index": 0,
+    "ground_truth_label": "TRANSPOSITION",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "+6 transposed as +6."
+  },
+  {
+    "id": "eval_55",
+    "source_context": "CBSE Class 7 Expressions - Script #70",
+    "equation": "Simplify 4x+9",
+    "student_steps": ["4x+9", "13x"],
+    "error_step_index": 1,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Combined variable term and constant."
+  },
+  {
+    "id": "eval_56",
+    "source_context": "State Board Grade 7 - Script #73",
+    "equation": "Simplify 2a+3b+5",
+    "student_steps": ["2a+3b+5", "10ab"],
+    "error_step_index": 1,
+    "ground_truth_label": "UNLIKE_TERMS",
+    "root_concept": "LIKE_TERMS",
+    "mathematical_rationale": "Merged two variables and a constant."
+  },
+  {
+    "id": "eval_57",
+    "source_context": "CBSE Class 7 Integers - Script #76",
+    "equation": "Calculate (-8)*(-3)",
+    "student_steps": ["(-8)*(-3)", "-24"],
+    "error_step_index": 1,
+    "ground_truth_label": "NEG_TIMES_NEG",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Negative times negative assigned negative sign."
+  },
+  {
+    "id": "eval_58",
+    "source_context": "ICSE Grade 7 Integers - Script #79",
+    "equation": "Calculate (-9)*(-5)",
+    "student_steps": ["(-9)*(-5)", "-45"],
+    "error_step_index": 1,
+    "ground_truth_label": "NEG_TIMES_NEG",
+    "root_concept": "INTEGER_RULES",
+    "mathematical_rationale": "Negative times negative error."
+  },
+  {
+    "id": "eval_59",
+    "source_context": "CBSE Class 8 Term 1 - Script #82",
+    "equation": "Solve 3(x+5)=24",
+    "student_steps": ["3x+15=24", "3x=9", "x=3"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "mathematical_rationale": "Clean execution, no errors."
+  },
+  {
+    "id": "eval_60",
+    "source_context": "ICSE Grade 8 Linear Equations - Script #85",
+    "equation": "Solve 2x+7=15",
+    "student_steps": ["2x=15-7", "2x=8", "x=4"],
+    "error_step_index": null,
+    "ground_truth_label": "NO_ERROR",
+    "root_concept": "EQUALITY_BALANCE",
+    "mathematical_rationale": "Accurate transposition and balance."
+  }
+]

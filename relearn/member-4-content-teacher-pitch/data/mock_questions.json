@@ -1,0 +1,20 @@
+[
+  {
+    "question_id": "PD_02",
+    "misconception_id": "PARTIAL_DISTRIBUTION",
+    "prompt": "Solve 2(x+3)=14",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "PD_02_R1",
+      "prompt": "Solve 5(x-2)=20",
+      "canonical_answer": "x=6"
+    },
+    "transfer_question": {
+      "question_id": "PD_02_T1",
+      "domain": "geometry",
+      "scenario": "A rectangular garden has a width of 2 meters and a length of (x + 3) meters. Express its total area in square meters.",
+      "canonical_answer": "2x + 6",
+      "rubric": "Must expand both terms with correct units"
+    }
+  }
+]
