@@ -98,6 +98,11 @@ class TestTransposition:
         lhs, rhs = norm.split('=')
         assert 'x' in lhs and '15' in rhs and '8' in rhs
 
+    def test_subtraction(self):
+        # x-4=9  ->  x=9-4  (moves -4 without flipping sign, no 1* or +- artifacts)
+        result = transposition('x-4=9')
+        assert result == 'x=9-4'
+
     def test_none_case(self):
         assert transposition('x=10') is None
 
@@ -131,6 +136,18 @@ class TestNegTimesNeg:
         norm = _strip(result)
         lhs, _ = norm.split('=')
         assert lhs.startswith('-') and '12x' in lhs
+
+    def test_bare_negative_variable(self):
+        # (-3)(-x)=9  ->  -3x=9  (treat bare variable as coeff 1)
+        assert neg_times_neg('(-3)(-x)=9') == '-3x=9'
+
+    def test_bare_variable_first(self):
+        # (-x)(-4)=8  ->  -4x=8
+        assert neg_times_neg('(-x)(-4)=8') == '-4x=8'
+
+    def test_two_negative_constants_rhs_variable(self):
+        # (-5)(-2)=y  ->  -10=y
+        assert neg_times_neg('(-5)(-2)=y') == '-10=y'
 
     def test_none_case(self):
         assert neg_times_neg('(-2)(3x)=12') is None
@@ -191,3 +208,31 @@ def test_all_outputs_have_no_spaces():
         assert ' ' not in result, (
             f'{label}({eq!r}) contains a space: {result!r}'
         )
+
+
+def test_no_generator_outputs_artifacts_or_spaces():
+    """
+    Loop over every generator on 10 different equations and check
+    that no output contains '1*', '*1', '+-', or spaces.
+    """
+    equations = [
+        '2(x+3)=14',
+        '(x+2)^2=25',
+        '-(x+4)=6',
+        '3-(x+2)=10',
+        'x-4=9',
+        'x+5=10',
+        '3x+5=16',
+        '(-3)(-x)=9',
+        '(-x)(-4)=8',
+        '(-5)(-2)=y',
+    ]
+    rng = random.Random(42)
+    for label, fn in GENERATORS.items():
+        for eq in equations:
+            res = fn(eq, rng) if label == 'ARITHMETIC_SLIP' else fn(eq)
+            if res is not None:
+                assert '1*' not in res, f"{label} on {eq!r} produced '1*': {res!r}"
+                assert '*1' not in res, f"{label} on {eq!r} produced '*1': {res!r}"
+                assert '+-' not in res, f"{label} on {eq!r} produced '+-': {res!r}"
+                assert ' ' not in res, f"{label} on {eq!r} produced spaces: {res!r}"

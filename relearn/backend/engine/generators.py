@@ -57,12 +57,49 @@ def _split_equation(norm: str):
     return parts[0], parts[1]
 
 
+def _clean_output(s: str) -> str:
+    """
+    Format output string in student style and eliminate artifacts:
+    - No spaces
+    - No '+-' or '-+' (e.g. 9+-4 -> 9-4)
+    - No '1*' or '*1' artifacts (e.g. -1*4 -> -4, 9-1*4 -> 9-4, 1*x -> x, 4*1 -> 4)
+    """
+    if not s:
+        return s
+    s = normalise(s)
+    while "+-" in s:
+        s = s.replace("+-", "-")
+    while "-+" in s:
+        s = s.replace("-+", "-")
+    while "++" in s:
+        s = s.replace("++", "+")
+
+    # Clean -1* -> - (e.g. -1*4 -> -4, -1*x -> -x)
+    s = re.sub(r"(?<!\d)-1\*", "-", s)
+    # Clean +1* -> + (e.g. +1*4 -> +4, +1*x -> +x)
+    s = re.sub(r"(?<!\d)\+1\*", "+", s)
+    # Clean 1* at start or after (=, +, -, *, /, ^, ()
+    s = re.sub(r"(^|(?<=[=+\-*/^(]))1\*", r"\1", s)
+    # Clean *1 before (=, +, -, *, /, ^, ), or end of string
+    s = re.sub(r"\*1(?!\d)", "", s)
+    # Clean any remaining 1* not preceded by a digit
+    s = re.sub(r"(?<!\d)1\*", "", s)
+
+    while "+-" in s:
+        s = s.replace("+-", "-")
+    while "-+" in s:
+        s = s.replace("-+", "-")
+
+    return normalise(s)
+
+
 def _fmt(expr) -> str:
     """
     Format a SymPy expression back to student-style string.
     - Uses ^ for power (not **)
     - Drops '*' in implicit multiplications: 2*x -> 2x
     - Strips all spaces via normalise() so output is always compact
+    - Removes '1*', '*1', and '+-' artifacts
     """
     s = str(expr)
     # SymPy uses ** for power -> convert to ^
@@ -71,7 +108,7 @@ def _fmt(expr) -> str:
     s = re.sub(r"(\d)\*([a-zA-Z])", r"\1\2", s)
     # x*2 -> 2x (SymPy rarely does this but be safe)
     s = re.sub(r"([a-zA-Z])\*(\d)", r"\2\1", s)
-    return normalise(s)
+    return _clean_output(s)
 
 
 # ---------------------------------------------------------------------------
@@ -183,7 +220,7 @@ def partial_distribution(prev_step: str):
 
         if not l_changed and not r_changed:
             return None
-        return f"{new_lhs}={new_rhs}"
+        return _clean_output(f"{new_lhs}={new_rhs}")
     except Exception:
         return None
 
@@ -227,7 +264,7 @@ def square_of_sum(prev_step: str):
 
         if not l_changed and not r_changed:
             return None
-        return f"{new_lhs}={new_rhs}"
+        return _clean_output(f"{new_lhs}={new_rhs}")
     except Exception:
         return None
 
@@ -370,7 +407,7 @@ def negative_distribution(prev_step: str):
 
         if not l_changed and not r_changed:
             return None
-        return f"{new_lhs}={new_rhs}"
+        return _clean_output(f"{new_lhs}={new_rhs}")
     except Exception:
         return None
 
@@ -384,6 +421,8 @@ def transposition(prev_step: str):
     """
     Find a constant additive term on the LHS and move it to the RHS
     WITHOUT negating it (the misconception).
+    E.g. x+5=10 -> x=10+5
+         x-4=9  -> x=9-4
     """
     try:
         norm = normalise(prev_step)
@@ -399,18 +438,36 @@ def transposition(prev_step: str):
         if not isinstance(lhs_expr, Add):
             return None
 
-        const_terms = [t for t in lhs_expr.args if not t.free_symbols]
-        var_terms = [t for t in lhs_expr.args if t.free_symbols]
+        # Split LHS into signed terms preserving original order
+        terms = _split_inner_terms(lhs_s)
+        const_indices = [i for i, t in enumerate(terms) if not re.search(r"[a-zA-Z]", t)]
+        var_indices = [i for i, t in enumerate(terms) if re.search(r"[a-zA-Z]", t)]
 
-        if not const_terms or not var_terms:
+        if not const_indices or not var_indices:
             return None
 
-        c = const_terms[0]
-        remaining_lhs = Add(*var_terms, *const_terms[1:], evaluate=True)
-        # Wrong: add c to RHS instead of subtracting it
-        wrong_rhs = Add(rhs_expr, c, evaluate=False)
+        # Move the first constant term across to RHS
+        c_idx = const_indices[0]
+        c_tok = terms[c_idx]
 
-        return f"{_fmt(remaining_lhs)}={_fmt(wrong_rhs)}"
+        rem_terms = [t for i, t in enumerate(terms) if i != c_idx]
+        if not rem_terms:
+            return None
+
+        rem_lhs = "".join(rem_terms)
+        if rem_lhs.startswith("+"):
+            rem_lhs = rem_lhs[1:]
+
+        # Student appends the term to RHS without changing sign
+        # e.g. rhs_s='9', c_tok='-4' -> '9-4'
+        # e.g. rhs_s='10', c_tok='+5' -> '10+5'
+        # e.g. rhs_s='10', c_tok='5' -> '10+5'
+        if c_tok.startswith("+") or c_tok.startswith("-"):
+            new_rhs = rhs_s + c_tok
+        else:
+            new_rhs = rhs_s + "+" + c_tok
+
+        return _clean_output(f"{rem_lhs}={new_rhs}")
     except Exception:
         return None
 
@@ -452,14 +509,18 @@ def unlike_terms(prev_step: str):
             return None
         v = var_syms[0]
 
-        coeff = var_term / v
+        coeff = (var_term / v).doit()
         if not coeff.is_number:
             return None
 
-        wrong_coeff = coeff + const_term
+        const_val = const_term.doit()
+        if not const_val.is_number:
+            return None
+
+        wrong_coeff = coeff + const_val
         wrong_lhs = Mul(wrong_coeff, v, evaluate=True)
 
-        return f"{_fmt(wrong_lhs)}={_fmt(rhs_expr)}"
+        return _clean_output(f"{_fmt(wrong_lhs)}={_fmt(rhs_expr)}")
     except Exception:
         return None
 
@@ -472,7 +533,11 @@ def unlike_terms(prev_step: str):
 def neg_times_neg(prev_step: str):
     """
     Detect a product of two negative factors and flip the sign of the correct
-    result (positive -> negative), simulating the misconception.
+    result (positive -> negative), simulating the misconception:
+    (-2)(-3x)=12  ->  -6x=12
+    (-3)(-x)=9    ->  -3x=9
+    (-x)(-4)=8    ->  -4x=8
+    (-5)(-2)=y    ->  -10=y
     """
     try:
         norm = normalise(prev_step)
@@ -488,9 +553,16 @@ def neg_times_neg(prev_step: str):
             if not isinstance(expr, Mul):
                 return side_str, False
 
-            args = list(expr.args)
-            neg_nums = [a for a in args if isinstance(a, Number) and a < 0]
-            if len(neg_nums) < 2:
+            neg_factors = []
+            for a in expr.args:
+                try:
+                    coeff, _ = a.as_coeff_Mul()
+                    if coeff < 0:
+                        neg_factors.append(a)
+                except Exception:
+                    pass
+
+            if len(neg_factors) < 2:
                 return side_str, False
 
             correct = expr.doit()
@@ -502,7 +574,7 @@ def neg_times_neg(prev_step: str):
 
         if not l_changed and not r_changed:
             return None
-        return f"{new_lhs}={new_rhs}"
+        return _clean_output(f"{new_lhs}={new_rhs}")
     except Exception:
         return None
 
@@ -543,7 +615,7 @@ def arithmetic_slip(prev_step: str, rng=None):
 
         start, end = token.span(1)
         new_norm = norm[:start] + str(replacement) + norm[end:]
-        return new_norm
+        return _clean_output(new_norm)
     except Exception:
         return None
 
