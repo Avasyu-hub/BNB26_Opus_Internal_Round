@@ -1,0 +1,15 @@
+{
+  "_note": "MOCK — diagnosis payload with the new optional `candidates` field (Member 1)",
+  "misconception_id": "PARTIAL_DISTRIBUTION",
+  "root_concept": "DISTRIBUTIVE_LAW",
+  "confidence": 0.91,
+  "error_step": 2,
+  "evidence": "Step 2 multiplies 2 by x but leaves +3 unchanged: 2(x+3) → 2x+3.",
+  "decided_by": "model + rule verifier",
+  "candidates": [
+    { "label": "PARTIAL_DISTRIBUTION", "score": 0.91 },
+    { "label": "NEGATIVE_DISTRIBUTION", "score": 0.05 },
+    { "label": "ARITHMETIC_SLIP", "score": 0.02 },
+    { "label": "UNKNOWN", "score": 0.02 }
+  ]
+}
