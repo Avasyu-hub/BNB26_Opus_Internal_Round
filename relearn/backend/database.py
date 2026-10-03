@@ -85,6 +85,7 @@ def record_diagnosis(student_id: str, misconception_id: str, attempt_id: str) ->
                 "WHERE student_id=? AND misconception_id=?",
                 (stage, attempt_id, _now(), student_id, misconception_id),
             )
+        conn.execute("UPDATE attempts SET stage=? WHERE attempt_id=?", (stage, attempt_id))
         conn.commit()
         return stage
 

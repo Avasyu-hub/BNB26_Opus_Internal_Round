@@ -1,0 +1,434 @@
+[
+  {
+    "question_id": "PD_01",
+    "misconception_id": "PARTIAL_DISTRIBUTION",
+    "prompt": "Solve 3(x+4)=21",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "PD_01_R1",
+      "prompt": "Solve 4(x+2)=24",
+      "canonical_answer": "x=4"
+    },
+    "transfer_question": {
+      "question_id": "PD_01_T1",
+      "domain": "geometry",
+      "scenario": "A rectangular billboard has a height of 3 meters and a length of (x + 4) meters. Calculate the algebraic expression for its total surface area in square meters.",
+      "canonical_answer": "3x + 12",
+      "rubric": "Must distribute 3 to both terms: 3*x + 3*4 = 3x + 12 m^2"
+    }
+  },
+  {
+    "question_id": "PD_02",
+    "misconception_id": "PARTIAL_DISTRIBUTION",
+    "prompt": "Solve 2(x+3)=14",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "PD_02_R1",
+      "prompt": "Solve 5(x-2)=20",
+      "canonical_answer": "x=6"
+    },
+    "transfer_question": {
+      "question_id": "PD_02_T1",
+      "domain": "geometry",
+      "scenario": "A rectangular garden has a width of 2 meters and a length of (x + 3) meters. Express its total area in square meters.",
+      "canonical_answer": "2x + 6",
+      "rubric": "Must expand both terms with correct units: 2*x + 2*3 = 2x + 6 m^2"
+    }
+  },
+  {
+    "question_id": "PD_03",
+    "misconception_id": "PARTIAL_DISTRIBUTION",
+    "prompt": "Solve 4(2x-1)=28",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "PD_03_R1",
+      "prompt": "Solve 3(2x+1)=21",
+      "canonical_answer": "x=3"
+    },
+    "transfer_question": {
+      "question_id": "PD_03_T1",
+      "domain": "geometry",
+      "scenario": "A parcel of land has width 4 meters and length (2x - 1) meters. Determine its total area.",
+      "canonical_answer": "8x - 4",
+      "rubric": "Must multiply 4 by both 2x and -1 to obtain 8x - 4 m^2"
+    }
+  },
+  {
+    "question_id": "PD_04",
+    "misconception_id": "PARTIAL_DISTRIBUTION",
+    "prompt": "Solve 6(x+5)=48",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "PD_04_R1",
+      "prompt": "Solve 2(3x+4)=26",
+      "canonical_answer": "x=3"
+    },
+    "transfer_question": {
+      "question_id": "PD_04_T1",
+      "domain": "geometry",
+      "scenario": "A storage unit floor is 6 meters wide and (x + 5) meters long. Write an expression for the total floor area.",
+      "canonical_answer": "6x + 30",
+      "rubric": "Must expand to 6*x + 6*5 = 6x + 30 m^2"
+    }
+  },
+  {
+    "question_id": "SS_01",
+    "misconception_id": "SQUARE_OF_SUM",
+    "prompt": "Expand (x+5)^2",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "SS_01_R1",
+      "prompt": "Expand (x+4)^2",
+      "canonical_answer": "x^2 + 8x + 16"
+    },
+    "transfer_question": {
+      "question_id": "SS_01_T1",
+      "domain": "geometry",
+      "scenario": "A square courtyard of side length s meters is enlarged by extending both dimensions by 5 meters. Express the newly added area in square meters.",
+      "canonical_answer": "10s + 25",
+      "rubric": "New area is (s+5)^2 = s^2 + 10s + 25; added area is (s+5)^2 - s^2 = 10s + 25"
+    }
+  },
+  {
+    "question_id": "SS_02",
+    "misconception_id": "SQUARE_OF_SUM",
+    "prompt": "Expand (a+b)^2",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "SS_02_R1",
+      "prompt": "Expand (x+3)^2",
+      "canonical_answer": "x^2 + 6x + 9"
+    },
+    "transfer_question": {
+      "question_id": "SS_02_T1",
+      "domain": "geometry",
+      "scenario": "A square garden of side s is extended by 2 m in both directions. Express the added area in square meters.",
+      "canonical_answer": "4s + 4",
+      "rubric": "Added area is (s+2)^2 - s^2 = (s^2 + 4s + 4) - s^2 = 4s + 4"
+    }
+  },
+  {
+    "question_id": "SS_03",
+    "misconception_id": "SQUARE_OF_SUM",
+    "prompt": "Expand (2x+3)^2",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "SS_03_R1",
+      "prompt": "Expand (3x+2)^2",
+      "canonical_answer": "9x^2 + 12x + 4"
+    },
+    "transfer_question": {
+      "question_id": "SS_03_T1",
+      "domain": "geometry",
+      "scenario": "A solar panel array forms a square of side (2x + 3) meters. Express its total power generating area in square meters.",
+      "canonical_answer": "4x^2 + 12x + 9",
+      "rubric": "Must include square of first term (4x^2), middle term (2*2x*3 = 12x), and square of second term (9)"
+    }
+  },
+  {
+    "question_id": "SS_04",
+    "misconception_id": "SQUARE_OF_SUM",
+    "prompt": "Expand (y+6)^2",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "SS_04_R1",
+      "prompt": "Expand (m+7)^2",
+      "canonical_answer": "m^2 + 14m + 49"
+    },
+    "transfer_question": {
+      "question_id": "SS_04_T1",
+      "domain": "geometry",
+      "scenario": "A square park has side length y. If both length and width are increased by 6 meters, express the additional area added to the park.",
+      "canonical_answer": "12y + 36",
+      "rubric": "Additional area = (y+6)^2 - y^2 = 12y + 36 m^2"
+    }
+  },
+  {
+    "question_id": "ND_01",
+    "misconception_id": "NEGATIVE_DISTRIBUTION",
+    "prompt": "Solve -(x+7)=10",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "ND_01_R1",
+      "prompt": "Solve -(x+4)=9",
+      "canonical_answer": "x=-13"
+    },
+    "transfer_question": {
+      "question_id": "ND_01_T1",
+      "domain": "physics",
+      "scenario": "A particle undergoes two consecutive displacements of +x meters and +7 meters along a 1D track. If the entire sequence of motions is completely reversed in direction, write the net displacement expression.",
+      "canonical_answer": "-x - 7",
+      "rubric": "Reversing the displacement means -(x + 7) = -x - 7 meters"
+    }
+  },
+  {
+    "question_id": "ND_02",
+    "misconception_id": "NEGATIVE_DISTRIBUTION",
+    "prompt": "Solve 5-(x+3)=8",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "ND_02_R1",
+      "prompt": "Simplify -(x+8)",
+      "canonical_answer": "-x - 8"
+    },
+    "transfer_question": {
+      "question_id": "ND_02_T1",
+      "domain": "physics",
+      "scenario": "An object travels +3 m then +2 m forward; entire journey reversed. What is the net displacement from the starting point?",
+      "canonical_answer": "-5 m",
+      "rubric": "Entire journey forward was +(3 + 2) = +5 m. Reversing the entire motion yields -(3 + 2) = -5 m"
+    }
+  },
+  {
+    "question_id": "ND_03",
+    "misconception_id": "NEGATIVE_DISTRIBUTION",
+    "prompt": "Solve 3-(2x-4)=15",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "ND_03_R1",
+      "prompt": "Simplify -(2x-5)",
+      "canonical_answer": "-2x + 5"
+    },
+    "transfer_question": {
+      "question_id": "ND_03_T1",
+      "domain": "physics",
+      "scenario": "A rover experiences a propulsion force of +3 N and a resistive drag force of (2x - 4) N. Express the resultant net force when subtracting the entire drag force: 3 - (2x - 4).",
+      "canonical_answer": "7 - 2x",
+      "rubric": "Subtracting (2x - 4) yields 3 - 2x + 4 = 7 - 2x N"
+    }
+  },
+  {
+    "question_id": "ND_04",
+    "misconception_id": "NEGATIVE_DISTRIBUTION",
+    "prompt": "Solve -(x-6)=12",
+    "root_concept": "DISTRIBUTIVE_LAW",
+    "retry_question": {
+      "question_id": "ND_04_R1",
+      "prompt": "Solve -(x-5)=8",
+      "canonical_answer": "x=-3"
+    },
+    "transfer_question": {
+      "question_id": "ND_04_T1",
+      "domain": "physics",
+      "scenario": "An aerial drone ascends by x meters and then descends by 6 meters. If an autopilot reversal command inverts the whole trajectory -(x - 6), express the resulting vertical shift.",
+      "canonical_answer": "-x + 6",
+      "rubric": "Inverting (x - 6) gives -(x) - (-6) = -x + 6 meters"
+    }
+  },
+  {
+    "question_id": "TR_01",
+    "misconception_id": "TRANSPOSITION",
+    "prompt": "Solve x+5=12",
+    "root_concept": "EQUALITY_BALANCE",
+    "retry_question": {
+      "question_id": "TR_01_R1",
+      "prompt": "Solve x+7=15",
+      "canonical_answer": "x=8"
+    },
+    "transfer_question": {
+      "question_id": "TR_01_T1",
+      "domain": "programming",
+      "scenario": "In a banking software ledger, balance = deposit + bonus. Write a Python assignment statement to compute deposit from balance and bonus.",
+      "canonical_answer": "deposit = balance - bonus",
+      "rubric": "To isolate deposit, subtract bonus from both sides: deposit = balance - bonus"
+    }
+  },
+  {
+    "question_id": "TR_02",
+    "misconception_id": "TRANSPOSITION",
+    "prompt": "Solve 2x+8=20",
+    "root_concept": "EQUALITY_BALANCE",
+    "retry_question": {
+      "question_id": "TR_02_R1",
+      "prompt": "Solve x+6=15",
+      "canonical_answer": "x=9"
+    },
+    "transfer_question": {
+      "question_id": "TR_02_T1",
+      "domain": "programming",
+      "scenario": "Code has total = price + tax. Write an assignment statement to compute price.",
+      "canonical_answer": "price = total - tax",
+      "rubric": "Must subtract tax from total to invert the addition: price = total - tax"
+    }
+  },
+  {
+    "question_id": "TR_03",
+    "misconception_id": "TRANSPOSITION",
+    "prompt": "Solve 3x-7=14",
+    "root_concept": "EQUALITY_BALANCE",
+    "retry_question": {
+      "question_id": "TR_03_R1",
+      "prompt": "Solve x-4=11",
+      "canonical_answer": "x=15"
+    },
+    "transfer_question": {
+      "question_id": "TR_03_T1",
+      "domain": "programming",
+      "scenario": "A game engine calculates final_score = base_score - penalty. Write an assignment statement to compute base_score from final_score and penalty.",
+      "canonical_answer": "base_score = final_score + penalty",
+      "rubric": "Must add penalty to both sides: base_score = final_score + penalty"
+    }
+  },
+  {
+    "question_id": "TR_04",
+    "misconception_id": "TRANSPOSITION",
+    "prompt": "Solve x+9=4",
+    "root_concept": "EQUALITY_BALANCE",
+    "retry_question": {
+      "question_id": "TR_04_R1",
+      "prompt": "Solve 2x+5=11",
+      "canonical_answer": "x=3"
+    },
+    "transfer_question": {
+      "question_id": "TR_04_T1",
+      "domain": "programming",
+      "scenario": "In a freight shipping module, gross_weight = net_weight + packaging. Write an assignment statement to compute net_weight.",
+      "canonical_answer": "net_weight = gross_weight - packaging",
+      "rubric": "Subtract packaging from gross_weight: net_weight = gross_weight - packaging"
+    }
+  },
+  {
+    "question_id": "UT_01",
+    "misconception_id": "UNLIKE_TERMS",
+    "prompt": "Simplify 3x+5",
+    "root_concept": "LIKE_TERMS",
+    "retry_question": {
+      "question_id": "UT_01_R1",
+      "prompt": "Simplify 4x+7",
+      "canonical_answer": "4x + 7"
+    },
+    "transfer_question": {
+      "question_id": "UT_01_T1",
+      "domain": "physics",
+      "scenario": "Can you evaluate 3 m + 5 s? What does 3x + 5 mean if x is in meters and 5 is a scalar time in seconds?",
+      "canonical_answer": "No; units mismatch. 3x + 5 remains unchanged.",
+      "rubric": "Meters and seconds have different physical dimensions and cannot be added. 3x + 5 cannot be combined into 8x."
+    }
+  },
+  {
+    "question_id": "UT_02",
+    "misconception_id": "UNLIKE_TERMS",
+    "prompt": "Solve 4x+7=23",
+    "root_concept": "LIKE_TERMS",
+    "retry_question": {
+      "question_id": "UT_02_R1",
+      "prompt": "Simplify 6x+4",
+      "canonical_answer": "6x + 4"
+    },
+    "transfer_question": {
+      "question_id": "UT_02_T1",
+      "domain": "physics",
+      "scenario": "In a physics laboratory, a sensor records 4 Newtons of force and a constant offset of 7 meters. Can these quantities be combined into 11 N*m or 11 N?",
+      "canonical_answer": "No; incompatible units. 4 N + 7 m cannot be added.",
+      "rubric": "Quantities with different dimensions (Force vs Distance) cannot be summed algebraically."
+    }
+  },
+  {
+    "question_id": "UT_03",
+    "misconception_id": "UNLIKE_TERMS",
+    "prompt": "Simplify 5x+3y+2",
+    "root_concept": "LIKE_TERMS",
+    "retry_question": {
+      "question_id": "UT_03_R1",
+      "prompt": "Simplify 2x+5x+3",
+      "canonical_answer": "7x + 3"
+    },
+    "transfer_question": {
+      "question_id": "UT_03_T1",
+      "domain": "physics",
+      "scenario": "An aircraft logs 5 km/h eastward (x), 3 liters of fuel consumed (y), and a 2-degree temperature rise. Can 5x + 3y + 2 be simplified into a single combined coefficient like 10xy?",
+      "canonical_answer": "No; unlike quantities cannot be combined into a single term.",
+      "rubric": "Terms representing distinct variables and physical dimensions must remain separate."
+    }
+  },
+  {
+    "question_id": "UT_04",
+    "misconception_id": "UNLIKE_TERMS",
+    "prompt": "Solve 2x+9=25",
+    "root_concept": "LIKE_TERMS",
+    "retry_question": {
+      "question_id": "UT_04_R1",
+      "prompt": "Simplify 3a+4b",
+      "canonical_answer": "3a + 4b"
+    },
+    "transfer_question": {
+      "question_id": "UT_04_T1",
+      "domain": "physics",
+      "scenario": "A student attempts to combine 2 kg of mass with 9 meters of wire into 11 kg*m. Is this operation physically valid?",
+      "canonical_answer": "No; mass and length cannot be added together.",
+      "rubric": "Dimensional homogeneity prohibits adding scalar mass to length."
+    }
+  },
+  {
+    "question_id": "NN_01",
+    "misconception_id": "NEG_TIMES_NEG",
+    "prompt": "Calculate (-3)*(-4)",
+    "root_concept": "INTEGER_RULES",
+    "retry_question": {
+      "question_id": "NN_01_R1",
+      "prompt": "Calculate (-6)*(-7)",
+      "canonical_answer": "42"
+    },
+    "transfer_question": {
+      "question_id": "NN_01_T1",
+      "domain": "physics",
+      "scenario": "Temperature rate is -3°C/hr. Compare temperature at delta t = -4 hr (4 hours ago). How many degrees warmer was it?",
+      "canonical_answer": "+12 (12°C warmer)",
+      "rubric": "Rate of change (-3 °C/hr) multiplied by negative time displacement (-4 hr) gives (-3)*(-4) = +12°C"
+    }
+  },
+  {
+    "question_id": "NN_02",
+    "misconception_id": "NEG_TIMES_NEG",
+    "prompt": "Solve -2(-x-5)=16",
+    "root_concept": "INTEGER_RULES",
+    "retry_question": {
+      "question_id": "NN_02_R1",
+      "prompt": "Calculate (-2)*(-9)",
+      "canonical_answer": "18"
+    },
+    "transfer_question": {
+      "question_id": "NN_02_T1",
+      "domain": "physics",
+      "scenario": "A submarine is descending at -2 meters per second. Looking back 5 seconds ago (delta t = -5 s), what was its depth relative to its current position?",
+      "canonical_answer": "+10 m (10 meters higher)",
+      "rubric": "Velocity (-2 m/s) * time delta (-5 s) = +10 meters relative to present position"
+    }
+  },
+  {
+    "question_id": "NN_03",
+    "misconception_id": "NEG_TIMES_NEG",
+    "prompt": "Calculate (-5)*(-6)",
+    "root_concept": "INTEGER_RULES",
+    "retry_question": {
+      "question_id": "NN_03_R1",
+      "prompt": "Calculate (-4)*(-8)",
+      "canonical_answer": "32"
+    },
+    "transfer_question": {
+      "question_id": "NN_03_T1",
+      "domain": "physics",
+      "scenario": "A vehicle drives backward at -5 m/s along a test track. Determine its position relative to current mark 6 seconds ago (delta t = -6 s).",
+      "canonical_answer": "+30 m (30 meters ahead)",
+      "rubric": "Negative velocity (-5) multiplied by negative elapsed time (-6) equals +30 meters"
+    }
+  },
+  {
+    "question_id": "NN_04",
+    "misconception_id": "NEG_TIMES_NEG",
+    "prompt": "Simplify (-4)*(-3x)",
+    "root_concept": "INTEGER_RULES",
+    "retry_question": {
+      "question_id": "NN_04_R1",
+      "prompt": "Calculate (-8)*(-3)",
+      "canonical_answer": "24"
+    },
+    "transfer_question": {
+      "question_id": "NN_04_T1",
+      "domain": "physics",
+      "scenario": "A cooling chamber loses heat at -4 kW. A model reverses time by -5 minutes. What is the calculated heat accumulation?",
+      "canonical_answer": "+20 kW*min",
+      "rubric": "Product of negative rate (-4) and negative time delta (-5) is positive: +20 kW*min"
+    }
+  }
+]
