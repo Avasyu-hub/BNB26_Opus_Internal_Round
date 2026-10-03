@@ -1,4 +1,4 @@
-"""Tests for Step 5 (matcher) and Step 6 (API integration)."""
+﻿"""Tests for Step 5 (matcher) and Step 6 (API integration)."""
 import os
 import tempfile
 from pathlib import Path
@@ -93,7 +93,7 @@ def test_api_attempt_partial_distribution():
         assert diag["root_concept"] == "DISTRIBUTIVE_LAW"
         assert len(diag["candidates"]) >= 1
         assert diag["candidates"][0]["label"] == "PARTIAL_DISTRIBUTION"
-        assert diag["candidates"][0]["prob"] == 1.0
+        assert diag["candidates"][0]["prob"] > 0.9  # real model probability
 
 
 def test_api_attempt_error_at_step_1_uses_step_0_as_prev_line():

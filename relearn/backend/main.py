@@ -2,6 +2,7 @@
     uvicorn backend.main:app --reload --port 8000
 """
 import json
+import logging
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -11,11 +12,15 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import database as db
 from .engine.checker import check_attempt
-from .engine.matcher import match
 from .engine.parser import StepParseError, extract_math
-from .schemas import AttemptRequest, AttemptResponse, Candidate, Diagnosis
+from .engine.pipeline import diagnose
+from .schemas import AttemptRequest, AttemptResponse, Diagnosis
 
 DATA = Path(__file__).parent / "data"
+log = logging.getLogger("relearn")
+
+# Labels that are not misconceptions, so they never enter the learner profile.
+NOT_A_MISCONCEPTION = {"unknown", "ARITHMETIC_SLIP"}
 
 
 def load_questions() -> list[dict]:
@@ -67,6 +72,19 @@ def get_questions():
     return list(QUESTIONS.values())
 
 
+def _safe_diagnose(prev_line: str, student_line: str) -> Diagnosis:
+    """Run the pipeline; never let an internal error turn into an HTTP 500."""
+    try:
+        result, _trace = diagnose(prev_line, student_line)
+        return Diagnosis(**result)
+    except Exception:
+        log.exception("diagnosis pipeline failed for %r -> %r", prev_line, student_line)
+        return Diagnosis(
+            label="unknown", source="rule", confidence=0.0,
+            evidence="This mistake could not be analysed automatically.",
+        )
+
+
 @app.post("/attempt", response_model=AttemptResponse)
 def post_attempt(req: AttemptRequest):
     question_text = req.question or QUESTIONS.get(req.question_id, {}).get("prompt")
@@ -82,30 +100,8 @@ def post_attempt(req: AttemptRequest):
     if result.error_step_index is not None:
         k = result.error_step_index
         prev_line = extract_math(question_text) if k == 0 else req.steps[k - 1]
-        student_line = req.steps[k]
-
-        matches = match(prev_line, student_line)
-        if matches:
-            first = matches[0]
-            prob = 1.0 / len(matches)
-            candidates = [Candidate(label=m["label"], prob=prob) for m in matches]
-            diagnosis = Diagnosis(
-                label=first["label"],
-                source=first["source"],
-                confidence=first["confidence"],
-                evidence=first["evidence"],
-                root_concept=first.get("root_concept"),
-                candidates=candidates,
-            )
-            stage = "diagnosed"
-        else:
-            diagnosis = Diagnosis(
-                label="unknown",
-                source="rule",
-                confidence=0.0,
-                evidence="Error step found; diagnosis engine not connected yet.",
-            )
-            stage = "diagnosed"
+        diagnosis = _safe_diagnose(prev_line, req.steps[k])
+        stage = "diagnosed"
 
     response = AttemptResponse(
         **req.model_dump(exclude={"question"}),
@@ -118,8 +114,7 @@ def post_attempt(req: AttemptRequest):
     )
     db.save_attempt(response)
 
-    if diagnosis and diagnosis.label != "unknown":
-        new_stage = db.record_diagnosis(req.student_id, diagnosis.label, response.attempt_id)
-        response.stage = new_stage
+    if diagnosis and diagnosis.label not in NOT_A_MISCONCEPTION:
+        response.stage = db.record_diagnosis(req.student_id, diagnosis.label, response.attempt_id)
 
     return response

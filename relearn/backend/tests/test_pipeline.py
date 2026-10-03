@@ -100,3 +100,42 @@ def test_rule_tie_broken_by_model(monkeypatch):
         {"label": "TRANSPOSITION", "evidence": "t", "root_concept": "EQUALITY_BALANCE", "source": "rule", "confidence": 0.95}])
     d, _ = pipeline.diagnose("a", "b")
     assert d["label"] == "TRANSPOSITION" and d["evidence"] == "t"
+
+
+# ---------- /attempt uses the pipeline ----------
+@needs_model
+def test_attempt_endpoint_uses_pipeline():
+    from fastapi.testclient import TestClient
+    from backend.main import app
+
+    with TestClient(app) as client:
+        def attempt(question, steps, student="s_pipe"):
+            r = client.post("/attempt", json={"student_id": student, "question_id": "X",
+                                              "question": question, "steps": steps})
+            assert r.status_code == 200
+            return r.json()
+
+        d = attempt("Solve 2(x+3)=14", ["2x+3=14", "2x=11", "x=5.5"])["diagnosis"]
+        assert (d["label"], d["source"], d["confidence"]) == ("PARTIAL_DISTRIBUTION", "rule", 0.95)
+        assert len(d["candidates"]) >= 1 and d["candidates"][0]["prob"] > 0.5  # real model probabilities
+
+        d = attempt("Solve 2(x+3)=14", ["x=5.5"])["diagnosis"]                 # jumped to the answer
+        assert (d["label"], d["confidence"]) == ("PARTIAL_DISTRIBUTION", 0.80)
+
+        body = attempt("Solve x+5=10", ["x=7"], student="s_slip")               # slip: not recorded
+        assert body["diagnosis"]["label"] == "ARITHMETIC_SLIP"
+        assert body["stage"] == "diagnosed"
+
+
+def test_attempt_never_500s_when_pipeline_crashes(monkeypatch):
+    from fastapi.testclient import TestClient
+    import backend.main as main
+
+    def boom(*a):
+        raise RuntimeError("pipeline exploded")
+    monkeypatch.setattr(main, "diagnose", boom)
+    with TestClient(main.app) as client:
+        r = client.post("/attempt", json={"student_id": "s", "question_id": "X",
+                                          "question": "Solve 2(x+3)=14", "steps": ["2x+3=14"]})
+    assert r.status_code == 200
+    assert r.json()["diagnosis"]["label"] == "unknown"
