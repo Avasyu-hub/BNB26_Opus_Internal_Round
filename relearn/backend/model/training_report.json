@@ -1,0 +1,218 @@
+{
+  "rows": 5766,
+  "features": [
+    "p_bracket",
+    "p_sq_bracket",
+    "p_neg_bracket",
+    "p_coef_bracket",
+    "p_neg_times_neg",
+    "p_terms",
+    "p_degree",
+    "s_bracket",
+    "s_power",
+    "s_terms",
+    "s_degree",
+    "s_rhs_has_op",
+    "s_lhs_single_term",
+    "terms_change",
+    "len_ratio",
+    "scale",
+    "res2",
+    "res1",
+    "res0",
+    "equivalent",
+    "x_coef_ratio",
+    "x_coef_sign_flip",
+    "lost_x_term",
+    "const_ratio",
+    "both_linear",
+    "root_diff",
+    "root_sign_flip",
+    "root_is_integer",
+    "shared_numbers",
+    "has_product",
+    "has_sum",
+    "has_difference",
+    "new_numbers"
+  ],
+  "unseen_equations": {
+    "test_rows": 1152,
+    "model_accuracy": 0.9905,
+    "baseline_accuracy": 0.7509,
+    "per_label": {
+      "ARITHMETIC_SLIP": 0.9701,
+      "NEGATIVE_DISTRIBUTION": 0.9922,
+      "NEG_TIMES_NEG": 1.0,
+      "NONE": 1.0,
+      "PARTIAL_DISTRIBUTION": 0.9968,
+      "SQUARE_OF_SUM": 1.0,
+      "TRANSPOSITION": 0.9821,
+      "UNLIKE_TERMS": 0.9882
+    },
+    "confusion_matrix": {
+      "labels": [
+        "ARITHMETIC_SLIP",
+        "NEGATIVE_DISTRIBUTION",
+        "NEG_TIMES_NEG",
+        "NONE",
+        "PARTIAL_DISTRIBUTION",
+        "SQUARE_OF_SUM",
+        "TRANSPOSITION",
+        "UNLIKE_TERMS"
+      ],
+      "matrix": [
+        [
+          146,
+          1,
+          0,
+          0,
+          1,
+          0,
+          3,
+          2
+        ],
+        [
+          1,
+          128,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          155,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          149,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          156,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          75,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          165,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          167
+        ]
+      ]
+    }
+  },
+  "unseen_templates": {
+    "model_accuracy": 0.8199,
+    "baseline_accuracy": 0.414,
+    "per_template": {
+      "T01": {
+        "rows": 317,
+        "model": 0.9685,
+        "baseline": 0.5962
+      },
+      "T02": {
+        "rows": 319,
+        "model": 0.5893,
+        "baseline": 0.2665
+      },
+      "T03": {
+        "rows": 319,
+        "model": 0.9843,
+        "baseline": 0.2633
+      },
+      "T04": {
+        "rows": 509,
+        "model": 0.7917,
+        "baseline": 0.5128
+      },
+      "T05": {
+        "rows": 695,
+        "model": 0.6432,
+        "baseline": 0.3741
+      },
+      "T06": {
+        "rows": 271,
+        "model": 1.0,
+        "baseline": 0.7306
+      },
+      "T07": {
+        "rows": 203,
+        "model": 1.0,
+        "baseline": 0.7094
+      },
+      "T08": {
+        "rows": 442,
+        "model": 0.9683,
+        "baseline": 0.4887
+      },
+      "T09": {
+        "rows": 424,
+        "model": 0.5684,
+        "baseline": 0.3962
+      },
+      "T10": {
+        "rows": 608,
+        "model": 0.8026,
+        "baseline": 0.3207
+      },
+      "T11": {
+        "rows": 90,
+        "model": 0.9556,
+        "baseline": 0.0222
+      },
+      "T12": {
+        "rows": 475,
+        "model": 0.7368,
+        "baseline": 0.1432
+      },
+      "T13": {
+        "rows": 294,
+        "model": 0.6497,
+        "baseline": 0.5578
+      }
+    }
+  }
+}
