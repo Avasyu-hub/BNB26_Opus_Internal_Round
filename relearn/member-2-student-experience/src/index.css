@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "./styles/tokens.css";
+
+@theme {
+  --color-white: #FFFFFF;
+  --color-mist: #F4F9FC;
+  --color-ocean: #1E6FD9;
+  --color-sky: #DCEBFA;
+  --color-teal: #14A3A3;
+  --color-leaf: #22B573;
+  --color-mint: #DDF5E9;
+  --color-navy: #0F2A44;
+  --color-slate: #5B6B7C;
+  --color-error: #E5484D;
+  --color-highlight: #FFF3B0;
+  --color-panel-border: #E3EEF7;
+
+  --font-display: 'Bricolage Grotesque', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Lexend', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Lexend', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-pen: 'Kalam', cursive, sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --font-devanagari: 'Noto Sans Devanagari', 'Lexend', sans-serif;
+  --font-bengali: 'Noto Sans Bengali', 'Lexend', sans-serif;
+}

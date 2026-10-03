@@ -1,0 +1,344 @@
+:root {
+  /* Color Tokens */
+  --color-white: #FFFFFF;
+  --color-mist: #F4F9FC;
+  --color-ocean: #1E6FD9;
+  --color-ocean-bright: #2B7FF0;
+  --color-sky: #DCEBFA;
+  --color-teal: #14A3A3;
+  --color-teal-bright: #17BFBF;
+  --color-leaf: #22B573;
+  --color-leaf-bright: #28CF84;
+  --color-mint: #DDF5E9;
+  --color-navy: #0F2A44;
+  --color-slate: #5B6B7C;
+  --color-error: #E5484D;
+  --color-highlight: #FFF3B0;
+  --color-border-panel: #E3EEF7;
+
+  /* Radiant Gradients */
+  --gradient-brand: linear-gradient(135deg, #1E6FD9 0%, #14A3A3 45%, #22B573 100%);
+  --gradient-brand-bright: linear-gradient(135deg, #2B7FF0 0%, #17BFBF 45%, #28CF84 100%);
+  --gradient-brand-radiant: linear-gradient(135deg, #1254B8 0%, #1E6FD9 25%, #14A3A3 60%, #22B573 85%, #34D399 100%);
+  --gradient-page: linear-gradient(180deg, #FFFFFF 0%, #F1F8FC 55%, #EEF9F3 100%);
+  --gradient-soft: linear-gradient(135deg, #DCEBFA 0%, #DDF5E9 100%);
+  --gradient-progress: linear-gradient(90deg, #1E6FD9 0%, #14A3A3 50%, #22B573 100%);
+  --gradient-aurora: radial-gradient(circle at 20% 20%, rgba(30, 111, 217, 0.25) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(34, 181, 115, 0.25) 0%, transparent 50%);
+
+  /* Radiant Multi-Layered Shadows & Glows */
+  --shadow-panel: 0 12px 36px -10px rgba(30, 111, 217, 0.18), 0 2px 8px -1px rgba(15, 42, 68, 0.05);
+  --shadow-panel-hover: 0 22px 50px -12px rgba(30, 111, 217, 0.28), 0 6px 16px -2px rgba(30, 111, 217, 0.12);
+  --shadow-glow-ocean: 0 0 30px -4px rgba(30, 111, 217, 0.45);
+  --shadow-glow-leaf: 0 0 30px -4px rgba(34, 181, 115, 0.45);
+  --shadow-glow-teal: 0 0 30px -4px rgba(20, 163, 163, 0.45);
+  --shadow-button: 0 6px 20px -2px rgba(30, 111, 217, 0.38), 0 2px 6px 0 rgba(15, 42, 68, 0.1);
+  --shadow-button-hover: 0 10px 30px -2px rgba(30, 111, 217, 0.5), 0 4px 10px 0 rgba(34, 181, 115, 0.25);
+
+  /* Radius Tokens */
+  --radius-main-panel: 20px;
+  --radius-small-panel: 12px;
+  --radius-button: 14px;
+
+  /* Typography Stacks */
+  --font-brand: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-ui: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bricolage Grotesque', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-pen: 'Kalam', cursive, sans-serif;
+  --font-code: 'JetBrains Mono', monospace;
+  --font-devanagari: 'Noto Sans Devanagari', 'Inter', sans-serif;
+  --font-bengali: 'Noto Sans Bengali', 'Inter', sans-serif;
+}
+
+/* Base Typographic Rendering & Hierarchy */
+html {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-navy);
+  background: var(--gradient-page);
+  min-height: 100vh;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Typography Scale */
+.text-display-xl {
+  font-family: var(--font-display);
+  font-size: 3.05rem;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.text-display-lg {
+  font-family: var(--font-display);
+  font-size: 2.44rem;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-h1 {
+  font-family: var(--font-display);
+  font-size: 1.95rem;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.text-h2 {
+  font-family: var(--font-display);
+  font-size: 1.56rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-h3 {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.text-small {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.font-pen {
+  font-family: var(--font-pen);
+}
+
+.font-code {
+  font-family: var(--font-code);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* KaTeX Math Styling */
+.katex {
+  font-size: 1.1em;
+  text-rendering: auto;
+}
+
+.katex-large {
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+
+/* Gradient Utility Classes */
+.bg-brand-gradient {
+  background: var(--gradient-brand);
+}
+
+.bg-brand-radiant {
+  background: var(--gradient-brand-radiant);
+}
+
+.bg-page-gradient {
+  background: var(--gradient-page);
+}
+
+.bg-soft-gradient {
+  background: var(--gradient-soft);
+}
+
+.bg-progress-gradient {
+  background: var(--gradient-progress);
+}
+
+.glow-ocean {
+  box-shadow: var(--shadow-glow-ocean);
+}
+
+.glow-leaf {
+  box-shadow: var(--shadow-glow-leaf);
+}
+
+/* Radiant Panels */
+.main-panel {
+  background-color: var(--color-white);
+  border-radius: var(--radius-main-panel);
+  border: 1px solid var(--color-border-panel);
+  box-shadow: var(--shadow-panel);
+}
+
+.main-panel-hover {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.main-panel-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-panel-hover);
+  border-color: rgba(30, 111, 217, 0.35);
+}
+
+.small-panel {
+  background-color: var(--color-white);
+  border-radius: var(--radius-small-panel);
+  border: 1px solid var(--color-border-panel);
+  box-shadow: 0 2px 8px -2px rgba(30, 111, 217, 0.08);
+}
+
+/* Radiant Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--gradient-brand);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  height: 48px;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-button);
+  box-shadow: var(--shadow-button);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background: var(--gradient-brand-bright);
+  transform: translateY(-1.5px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px 0 rgba(30, 111, 217, 0.2);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-white);
+  color: var(--color-ocean);
+  border: 1.5px solid var(--color-ocean);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  height: 48px;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-button);
+  box-shadow: 0 4px 14px 0 rgba(30, 111, 217, 0.1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-mist);
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px 0 rgba(30, 111, 217, 0.2);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Focus Ring */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-white), 0 0 0 5px rgba(30, 111, 217, 0.45);
+}
+
+/* Animations & Transitions */
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 400;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-float {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: pulseGlow 5s ease-in-out infinite;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
