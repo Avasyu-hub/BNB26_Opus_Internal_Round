@@ -1,0 +1,130 @@
+{
+  "scope_note": "Q01-Q16 are the core dataset items. The transfer variants below are evaluation templates and are not additional QIDs; they are used to reduce memorization and test concept transfer.",
+  "resolution_policy": {
+    "required_sequence": [
+      "Identify a candidate misconception from posterior evidence.",
+      "Teach using a contrast case that exposes why the faulty rule is unreliable.",
+      "Present transfer_variant_1 and require a correct answer plus valid mathematical working.",
+      "Immediately present transfer_variant_2 that changes the surface form or context while preserving the same concept.",
+      "Count the misconception as resolved only if both answers are correct, the working is independently checked, and the two responses are consecutive.",
+      "If either answer is wrong, missing, or lacks adequate working, do not resolve the label; trigger re-diagnosis and teaching."
+    ],
+    "anti_memorization_controls": [
+      "Use different numbers from the teaching examples.",
+      "Change surface wording or representation where possible.",
+      "Require intermediate working, not just the final answer.",
+      "Do not reuse the exact contrast-case wording as the transfer question.",
+      "Treat repeated correct final answers without valid work as insufficient evidence."
+    ]
+  },
+  "transfer_tests": [
+    {
+      "transfer_id": "T01",
+      "target_misconception_ids": [
+        "M01",
+        "M02"
+      ],
+      "based_on_core_item_ids": [
+        "Q16"
+      ],
+      "transfer_variant_1": {
+        "question": "Solve: -3(x+2)=15. Show the distribution.",
+        "answer": "x=-7",
+        "working_check": "Expected expansion: -3x-6=15; -3x=21; x=-7."
+      },
+      "transfer_variant_2": {
+        "question": "A rectangle expression is -2(y-5)=14. Solve for y and show how the -2 is applied to both terms.",
+        "answer": "y=-2",
+        "working_check": "Expected expansion: -2y+10=14; -2y=4; y=-2."
+      },
+      "coverage_note": "Useful for M01/M02, but both variants remain close to distribution tasks; a future dataset should add a non-equation representation."
+    },
+    {
+      "transfer_id": "T02",
+      "target_misconception_ids": [
+        "M05"
+      ],
+      "based_on_core_item_ids": [
+        "Q15"
+      ],
+      "transfer_variant_1": {
+        "question": "Simplify: 4a+2a+7.",
+        "answer": "6a+7",
+        "working_check": "Only 4a and 2a combine; 7 remains separate."
+      },
+      "transfer_variant_2": {
+        "question": "Simplify: 5b+3+2b.",
+        "answer": "7b+3",
+        "working_check": "Only b-terms combine; 3 remains separate."
+      },
+      "coverage_note": "Different variables and ordering reduce simple recall."
+    },
+    {
+      "transfer_id": "T03",
+      "target_misconception_ids": [
+        "M08"
+      ],
+      "based_on_core_item_ids": [
+        "Q14"
+      ],
+      "transfer_variant_1": {
+        "question": "Half of a number plus 5 is 11. Find the number.",
+        "answer": "12",
+        "working_check": "x/2+5=11; x/2=6; x=12."
+      },
+      "transfer_variant_2": {
+        "question": "A number divided by 3 equals 5. Find the number.",
+        "answer": "15",
+        "working_check": "x/3=5; multiply both sides by 3; x=15."
+      },
+      "coverage_note": "Uses verbal and symbolic forms to reduce pattern matching."
+    },
+    {
+      "transfer_id": "T04",
+      "target_misconception_ids": [
+        "M06"
+      ],
+      "based_on_core_item_ids": [
+        "Q06",
+        "Q16"
+      ],
+      "transfer_variant_1": {
+        "question": "Compute: -7+12.",
+        "answer": "5",
+        "working_check": "12 has greater magnitude; 12-7=5."
+      },
+      "transfer_variant_2": {
+        "question": "Compute: 6+(-9).",
+        "answer": "-3",
+        "working_check": "9 has greater magnitude and is negative; 9-6=3, so -3."
+      },
+      "coverage_note": "Two sign patterns test the underlying signed-number rule."
+    },
+    {
+      "transfer_id": "T05",
+      "target_misconception_ids": [
+        "M11",
+        "M12"
+      ],
+      "based_on_core_item_ids": [
+        "Q12"
+      ],
+      "transfer_variant_1": {
+        "question": "Evaluate: 3^2+5*2.",
+        "answer": "19",
+        "working_check": "3^2=9; 5*2=10; total 19."
+      },
+      "transfer_variant_2": {
+        "question": "Evaluate: 20-2^2*3.",
+        "answer": "8",
+        "working_check": "2^2=4; 4*3=12; 20-12=8."
+      },
+      "coverage_note": "Tests exponent interpretation and precedence together; if diagnosis is ambiguous, use separate diagnostic items before mastery."
+    }
+  ],
+  "dataset_coverage_limitations": [
+    "The 16-item core set does not contain two independent transfer items for every misconception.",
+    "M10 and M04 have especially narrow core-item coverage and should be expanded before deployment if those labels require strong mastery claims.",
+    "The policy therefore treats the transfer variants as evaluation templates rather than pretending that the 16 core items alone can establish mastery for all 12 labels."
+  ]
+}

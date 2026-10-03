@@ -1,0 +1,206 @@
+[
+  {
+    "id": "C01",
+    "misconception_id": "M01",
+    "concept": "negative-factor distribution",
+    "accidental_case": {
+      "question": "-2(x+0)=10",
+      "correct_answer": "x=-5",
+      "faulty_response": "x=-5",
+      "explanation": "The omitted effect on the zero term changes nothing."
+    },
+    "failure_case": {
+      "question": "-2(x+3)=10",
+      "correct_answer": "x=-8",
+      "faulty_response": "x=-7/2",
+      "explanation": "Faulty expansion -2x+3=10 gives x=-7/2."
+    }
+  },
+  {
+    "id": "C02",
+    "misconception_id": "M02",
+    "concept": "partial distribution",
+    "accidental_case": {
+      "question": "1(x+4)=9",
+      "correct_answer": "x=5",
+      "faulty_response": "x=5",
+      "explanation": "Copying the second term is harmless when the factor is 1."
+    },
+    "failure_case": {
+      "question": "3(x+4)=21",
+      "correct_answer": "x=3",
+      "faulty_response": "x=17/3",
+      "explanation": "Faulty 3x+4=21 gives x=17/3."
+    }
+  },
+  {
+    "id": "C03",
+    "misconception_id": "M03",
+    "concept": "inverse operations",
+    "accidental_case": {
+      "question": "x+0=7",
+      "correct_answer": "x=7",
+      "faulty_response": "x=7",
+      "explanation": "There is no nonzero operation to undo."
+    },
+    "failure_case": {
+      "question": "x+5=7",
+      "correct_answer": "x=2",
+      "faulty_response": "x=12",
+      "explanation": "Adding 5 instead of subtracting 5."
+    }
+  },
+  {
+    "id": "C04",
+    "misconception_id": "M04",
+    "concept": "moving-term sign error",
+    "accidental_case": {
+      "question": "x-0=7",
+      "correct_answer": "x=7",
+      "faulty_response": "x=7",
+      "explanation": "Moving zero has no visible sign effect."
+    },
+    "failure_case": {
+      "question": "x-5=7",
+      "correct_answer": "x=12",
+      "faulty_response": "x=2",
+      "explanation": "Treating subtraction as a sign to carry gives 7-5."
+    }
+  },
+  {
+    "id": "C05",
+    "misconception_id": "M05",
+    "concept": "unlike terms",
+    "accidental_case": {
+      "question": "2x+3x=10",
+      "correct_answer": "x=2",
+      "faulty_response": "x=2",
+      "explanation": "Both terms are x-terms, so combining coefficients is valid."
+    },
+    "failure_case": {
+      "question": "2x+3=10",
+      "correct_answer": "x=7/2",
+      "faulty_response": "x=2",
+      "explanation": "Treating 3 as 3x gives 5x=10."
+    }
+  },
+  {
+    "id": "C06",
+    "misconception_id": "M06",
+    "concept": "signed integer arithmetic",
+    "accidental_case": {
+      "question": "-4-9",
+      "correct_answer": "-13",
+      "faulty_response": "-13",
+      "explanation": "Two negatives can mask an incorrect sign rule."
+    },
+    "failure_case": {
+      "question": "-4+9",
+      "correct_answer": "5",
+      "faulty_response": "-13",
+      "explanation": "Treating +9 as another negative."
+    }
+  },
+  {
+    "id": "C07",
+    "misconception_id": "M07",
+    "concept": "multiplication versus addition",
+    "accidental_case": {
+      "question": "1x=18",
+      "correct_answer": "x=18",
+      "faulty_response": "x=18",
+      "explanation": "Coefficient 1 makes division by 1 invisible."
+    },
+    "failure_case": {
+      "question": "3x=18",
+      "correct_answer": "x=6",
+      "faulty_response": "x=15",
+      "explanation": "Subtracting 3 instead of dividing by 3."
+    }
+  },
+  {
+    "id": "C08",
+    "misconception_id": "M08",
+    "concept": "fraction operation",
+    "accidental_case": {
+      "question": "x/1=6",
+      "correct_answer": "x=6",
+      "faulty_response": "x=6",
+      "explanation": "Adding 1 or multiplying by 1 leaves the value unchanged."
+    },
+    "failure_case": {
+      "question": "x/4=6",
+      "correct_answer": "x=24",
+      "faulty_response": "x=10",
+      "explanation": "Adding the denominator instead of multiplying by it."
+    }
+  },
+  {
+    "id": "C09",
+    "misconception_id": "M09",
+    "concept": "variables on both sides",
+    "accidental_case": {
+      "question": "x+2=x+2",
+      "correct_answer": "all x",
+      "faulty_response": "all x",
+      "explanation": "Identical variable terms cancel correctly."
+    },
+    "failure_case": {
+      "question": "3x+2=2x+7",
+      "correct_answer": "x=5",
+      "faulty_response": "x=9/5",
+      "explanation": "Combining terms across both sides gives 5x=9."
+    }
+  },
+  {
+    "id": "C10",
+    "misconception_id": "M10",
+    "concept": "expression versus equation",
+    "accidental_case": {
+      "question": "5+2x",
+      "correct_answer": "expression",
+      "faulty_response": "expression",
+      "explanation": "There is no equality claim to misread."
+    },
+    "failure_case": {
+      "question": "5+2x=11",
+      "correct_answer": "equation",
+      "faulty_response": "expression",
+      "explanation": "Ignoring the equality relation loses the defining feature of an equation."
+    }
+  },
+  {
+    "id": "C11",
+    "misconception_id": "M11",
+    "concept": "exponent interpretation",
+    "accidental_case": {
+      "question": "2^1",
+      "correct_answer": "2",
+      "faulty_response": "2",
+      "explanation": "2*1 also equals 2."
+    },
+    "failure_case": {
+      "question": "2^3",
+      "correct_answer": "8",
+      "faulty_response": "6",
+      "explanation": "Interpreting the exponent as multiplication by 3."
+    }
+  },
+  {
+    "id": "C12",
+    "misconception_id": "M12",
+    "concept": "order of operations",
+    "accidental_case": {
+      "question": "18-2*1",
+      "correct_answer": "16",
+      "faulty_response": "16",
+      "explanation": "Multiplication by 1 does not alter the value."
+    },
+    "failure_case": {
+      "question": "2^3+4*2",
+      "correct_answer": "16",
+      "faulty_response": "24",
+      "explanation": "Left-to-right evaluation gives (8+4)*2=24."
+    }
+  }
+]

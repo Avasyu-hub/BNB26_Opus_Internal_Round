@@ -1,0 +1,603 @@
+[
+  {
+    "id": "Q01",
+    "topic": "Distributive property; linear equation",
+    "question": "Solve: -3(x - 4) = 18.",
+    "purpose": "initial",
+    "correct_answer": "x = -2",
+    "verified_solution_steps": [
+      "-3(x-4)=18",
+      "-3x+12=18",
+      "-3x=6",
+      "x=-2"
+    ],
+    "relevant_misconceptions": [
+      "M01",
+      "M02"
+    ],
+    "difficulty": "medium",
+    "prerequisites": [
+      "integer arithmetic",
+      "distributive property",
+      "one-step equations"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "A correct expansion followed by an arithmetic slip.",
+      "M01 and M02 intentionally predict the same wrong expansion on this item."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M01",
+        "category": "wrong",
+        "response": "x=-22/3",
+        "reasoning": "Expand as -3x-4=18, so -3x=22 and x=-22/3."
+      },
+      {
+        "misconception_id": "M02",
+        "category": "wrong",
+        "response": "x=-22/3",
+        "reasoning": "Multiply -3 by x but copy -4 unchanged: -3x-4=18, giving x=-22/3."
+      }
+    ]
+  },
+  {
+    "id": "Q02",
+    "topic": "Distributive property",
+    "question": "Solve: 3(x + 2) = 21.",
+    "purpose": "diagnostic",
+    "correct_answer": "x = 5",
+    "verified_solution_steps": [
+      "3x+6=21",
+      "3x=15",
+      "x=5"
+    ],
+    "relevant_misconceptions": [
+      "M02"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "distributive property",
+      "division"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic error after correct distribution.",
+      "Failure to divide 15 by 3 correctly."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M02",
+        "category": "wrong",
+        "response": "x=19/3",
+        "reasoning": "Multiply 3 by x but copy +2 unchanged: 3x+2=21, giving x=19/3."
+      }
+    ]
+  },
+  {
+    "id": "Q03",
+    "topic": "Inverse operations",
+    "question": "Solve: x + 5 = 12. Show the operation used to undo +5.",
+    "purpose": "diagnostic",
+    "correct_answer": "x = 7",
+    "verified_solution_steps": [
+      "Subtract 5 from both sides.",
+      "x=12-5",
+      "x=7"
+    ],
+    "relevant_misconceptions": [
+      "M03"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "addition",
+      "subtraction"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic slip in 12-5.",
+      "A student could know the inverse operation but calculate it incorrectly."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M03",
+        "category": "wrong",
+        "response": "x=17",
+        "reasoning": "Add 5 instead of subtracting 5: x=12+5=17."
+      }
+    ]
+  },
+  {
+    "id": "Q04",
+    "topic": "Equality and inverse operations",
+    "question": "Solve: x - 7 = 3. Show what is done to both sides.",
+    "purpose": "diagnostic",
+    "correct_answer": "x = 10",
+    "verified_solution_steps": [
+      "Add 7 to both sides.",
+      "x=3+7",
+      "x=10"
+    ],
+    "relevant_misconceptions": [
+      "M04"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "addition",
+      "subtraction"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic slip in 3+7.",
+      "A student may use a 'move terms' shortcut correctly or incorrectly."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M04",
+        "category": "wrong",
+        "response": "x=-4",
+        "reasoning": "Treat the subtraction as a sign to carry across: x=3-7=-4."
+      }
+    ]
+  },
+  {
+    "id": "Q05",
+    "topic": "Like terms",
+    "question": "Solve: 2x + 3 = 11. Keep unlike terms separate.",
+    "purpose": "diagnostic",
+    "correct_answer": "x = 4",
+    "verified_solution_steps": [
+      "Subtract 3 from both sides: 2x=8.",
+      "Divide by 2: x=4."
+    ],
+    "relevant_misconceptions": [
+      "M05"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "like terms",
+      "one-step equations"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic slip after subtracting 3.",
+      "Failure to divide 8 by 2."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M05",
+        "category": "wrong",
+        "response": "x=11/5",
+        "reasoning": "Combine 2x and 3 as if like terms: 5x=11."
+      }
+    ]
+  },
+  {
+    "id": "Q06",
+    "topic": "Integers",
+    "question": "Compute: -4 + 9. Show the signed-number reasoning.",
+    "purpose": "diagnostic",
+    "correct_answer": "5",
+    "verified_solution_steps": [
+      "Starting at -4 and moving 9 units right gives 5.",
+      "Equivalently, 9 has greater magnitude, so 9-4=5."
+    ],
+    "relevant_misconceptions": [
+      "M06"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "signed integers"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "A sign error caused by reading +9 as negative.",
+      "A number-line direction error."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M06",
+        "category": "wrong",
+        "response": "-13",
+        "reasoning": "Treat +9 as if it were another negative: -4-9=-13."
+      }
+    ]
+  },
+  {
+    "id": "Q07",
+    "topic": "Multiplication and inverse operations",
+    "question": "Solve: 3x = 18. Explain why you divide by 3 rather than subtract 3.",
+    "purpose": "diagnostic",
+    "correct_answer": "x = 6",
+    "verified_solution_steps": [
+      "Divide both sides by 3.",
+      "x=18/3",
+      "x=6"
+    ],
+    "relevant_misconceptions": [
+      "M03",
+      "M07"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "multiplication",
+      "division"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic error in 18/3.",
+      "M03 and M07 are intentionally confusable here because both may subtract 3."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M03",
+        "category": "wrong",
+        "response": "x=15",
+        "reasoning": "Subtract 3 instead of dividing by 3: x=18-3=15."
+      },
+      {
+        "misconception_id": "M07",
+        "category": "wrong",
+        "response": "x=15",
+        "reasoning": "Subtract 3 instead of dividing by 3: x=18-3=15."
+      }
+    ]
+  },
+  {
+    "id": "Q08",
+    "topic": "Division and fractions",
+    "question": "Solve: x/4 = 6. Explain how you undo division by 4.",
+    "purpose": "diagnostic",
+    "correct_answer": "x = 24",
+    "verified_solution_steps": [
+      "Multiply both sides by 4.",
+      "x=24"
+    ],
+    "relevant_misconceptions": [
+      "M03",
+      "M08"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "division",
+      "fractions"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic error after multiplying by 4.",
+      "M03 and M08 are intentionally confusable because both may add 4."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M03",
+        "category": "wrong",
+        "response": "x=10",
+        "reasoning": "Add 4 instead of multiplying by 4: x=6+4=10."
+      },
+      {
+        "misconception_id": "M08",
+        "category": "wrong",
+        "response": "x=10",
+        "reasoning": "Add denominator 4 to 6 instead of multiplying by 4."
+      }
+    ]
+  },
+  {
+    "id": "Q09",
+    "topic": "Variables on both sides",
+    "question": "Solve: 3x + 2 = 2x + 7. Show the same operation on both sides.",
+    "purpose": "initial",
+    "correct_answer": "x = 5",
+    "verified_solution_steps": [
+      "Subtract 2x from both sides: x+2=7.",
+      "Subtract 2 from both sides: x=5."
+    ],
+    "relevant_misconceptions": [
+      "M05",
+      "M09"
+    ],
+    "difficulty": "medium",
+    "prerequisites": [
+      "like terms",
+      "inverse operations",
+      "equality"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Sign error while moving 2x or 2.",
+      "Correct variable collection followed by an arithmetic error."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M05",
+        "category": "wrong",
+        "response": "x=9/5",
+        "reasoning": "Combine 3x and 2x as 5x and 2 and 7 as 9, giving 5x=9."
+      },
+      {
+        "misconception_id": "M09",
+        "category": "wrong",
+        "response": "x=9/5",
+        "reasoning": "Combine variable terms and constants across the equality: 3x+2x=5x and 2+7=9, giving 5x=9."
+      }
+    ]
+  },
+  {
+    "id": "Q10",
+    "topic": "Distributive property and like terms",
+    "question": "Simplify and solve: 2(x + 3) + x = 15.",
+    "purpose": "contrast",
+    "correct_answer": "x = 3",
+    "verified_solution_steps": [
+      "2x+6+x=15",
+      "3x+6=15",
+      "3x=9",
+      "x=3"
+    ],
+    "relevant_misconceptions": [
+      "M01",
+      "M02",
+      "M05",
+      "M07"
+    ],
+    "difficulty": "medium",
+    "prerequisites": [
+      "distribution",
+      "like terms",
+      "division"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Distribution or arithmetic slip.",
+      "A student may correctly combine 2x+x but mishandle the constant 6."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M01",
+        "category": "unknown",
+        "response": null,
+        "reasoning": "The item has a positive distribution factor, so M01 is not meaningfully triggered."
+      },
+      {
+        "misconception_id": "M02",
+        "category": "wrong",
+        "response": "x=4",
+        "reasoning": "Multiply 2 by x but copy +3 unchanged: 2x+3+x=15, so 3x=12 and x=4."
+      },
+      {
+        "misconception_id": "M05",
+        "category": "correct",
+        "response": "x=3",
+        "reasoning": "2x and x are like terms, so combining them as 3x is valid."
+      },
+      {
+        "misconception_id": "M07",
+        "category": "wrong",
+        "response": "x=6",
+        "reasoning": "After 3x+6=15 and 3x=9, subtract 3 from 9 instead of dividing."
+      }
+    ]
+  },
+  {
+    "id": "Q11",
+    "topic": "Exponents",
+    "question": "Evaluate: 2^3. Explain what the exponent 3 tells you to do.",
+    "purpose": "diagnostic",
+    "correct_answer": "8",
+    "verified_solution_steps": [
+      "2^3 means 2*2*2.",
+      "2*2*2=8."
+    ],
+    "relevant_misconceptions": [
+      "M11"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "whole-number multiplication"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic error in 2*2*2.",
+      "Confusion between exponentiation and repeated addition."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M11",
+        "category": "wrong",
+        "response": "6",
+        "reasoning": "Interpret 2^3 as 2*3."
+      }
+    ]
+  },
+  {
+    "id": "Q12",
+    "topic": "Exponents and order of operations",
+    "question": "Evaluate: 2^3 + 4*2.",
+    "purpose": "diagnostic",
+    "correct_answer": "16",
+    "verified_solution_steps": [
+      "Evaluate the exponent: 2^3=8.",
+      "Multiply: 4*2=8.",
+      "Add: 8+8=16."
+    ],
+    "relevant_misconceptions": [
+      "M11",
+      "M12"
+    ],
+    "difficulty": "medium",
+    "prerequisites": [
+      "exponents",
+      "multiplication",
+      "order of operations"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Arithmetic error in 4*2.",
+      "Misreading the expression or ignoring one operation."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M11",
+        "category": "wrong",
+        "response": "14",
+        "reasoning": "Interpret 2^3 as 2*3=6, then add 4*2=8, giving 14."
+      },
+      {
+        "misconception_id": "M12",
+        "category": "wrong",
+        "response": "24",
+        "reasoning": "Evaluate strictly left to right: (2^3+4)*2=(8+4)*2=24."
+      }
+    ]
+  },
+  {
+    "id": "Q13",
+    "topic": "Expressions and equations",
+    "question": "Which is an equation, and why: (A) 3x + 2 or (B) 3x + 2 = 11?",
+    "purpose": "diagnostic",
+    "correct_answer": "B",
+    "verified_solution_steps": [
+      "B is an equation because it states that two expressions are equal.",
+      "A is an expression and has no equality assertion."
+    ],
+    "relevant_misconceptions": [
+      "M10"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "equality symbol"
+    ],
+    "suitable_for_mastery": false,
+    "other_plausible_explanations": [
+      "Misreading the prompt.",
+      "Choosing A because it is shorter or more familiar."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M10",
+        "category": "wrong",
+        "response": "A",
+        "reasoning": "Treat the expression as sufficient information and ignore that an equation must assert equality."
+      }
+    ]
+  },
+  {
+    "id": "Q14",
+    "topic": "Fraction coefficients",
+    "question": "Solve: (1/2)x + 3 = 7.",
+    "purpose": "transfer",
+    "correct_answer": "x = 8",
+    "verified_solution_steps": [
+      "Subtract 3: (1/2)x=4.",
+      "Multiply both sides by 2: x=8."
+    ],
+    "relevant_misconceptions": [
+      "M08",
+      "M03"
+    ],
+    "difficulty": "medium",
+    "prerequisites": [
+      "fractions",
+      "inverse operations"
+    ],
+    "suitable_for_mastery": true,
+    "other_plausible_explanations": [
+      "Fraction arithmetic error.",
+      "Incorrect handling of the coefficient 1/2 after isolating it."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M08",
+        "category": "wrong",
+        "response": "x=6",
+        "reasoning": "Treat the coefficient 1/2 as something to undo by adding 2 after isolating it: x=6."
+      },
+      {
+        "misconception_id": "M03",
+        "category": "wrong",
+        "response": "x=6",
+        "reasoning": "After (1/2)x=4, add 2 instead of multiplying by 2: x=6."
+      }
+    ]
+  },
+  {
+    "id": "Q15",
+    "topic": "Like terms and expressions",
+    "question": "Simplify: 2x + 3x + 4.",
+    "purpose": "transfer",
+    "correct_answer": "5x + 4",
+    "verified_solution_steps": [
+      "2x and 3x are like terms: 2x+3x=5x.",
+      "The constant 4 stays separate.",
+      "Result: 5x+4."
+    ],
+    "relevant_misconceptions": [
+      "M05"
+    ],
+    "difficulty": "easy",
+    "prerequisites": [
+      "like/unlike terms"
+    ],
+    "suitable_for_mastery": true,
+    "other_plausible_explanations": [
+      "Combining the constant with x-terms.",
+      "Arithmetic error in 2+3."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M05",
+        "category": "correct",
+        "response": "5x+4",
+        "reasoning": "The student's unlike-term rule is not triggered; the x-terms are like terms and combine correctly."
+      }
+    ]
+  },
+  {
+    "id": "Q16",
+    "topic": "Signed distribution; transfer",
+    "question": "Solve: -2(x + 3) = 8. Show how the negative factor affects both terms.",
+    "purpose": "transfer",
+    "correct_answer": "x = -7",
+    "verified_solution_steps": [
+      "-2x-6=8",
+      "-2x=14",
+      "x=-7"
+    ],
+    "relevant_misconceptions": [
+      "M01",
+      "M02",
+      "M06"
+    ],
+    "difficulty": "medium",
+    "prerequisites": [
+      "signed integers",
+      "distribution",
+      "division"
+    ],
+    "suitable_for_mastery": true,
+    "other_plausible_explanations": [
+      "Distribution error, sign arithmetic error, or division-sign error.",
+      "M01 and M02 intentionally overlap on this item."
+    ],
+    "expected_response_predictions": [
+      {
+        "misconception_id": "M01",
+        "category": "wrong",
+        "response": "x=-5/2",
+        "reasoning": "Expand incorrectly as -2x+3=8, so -2x=5 and x=-5/2."
+      },
+      {
+        "misconception_id": "M02",
+        "category": "wrong",
+        "response": "x=-5/2",
+        "reasoning": "Multiply -2 by x but copy +3 unchanged: -2x+3=8, so x=-5/2."
+      },
+      {
+        "misconception_id": "M06",
+        "category": "wrong",
+        "response": "x=7",
+        "reasoning": "After -2x-6=8 and -2x=14, divide 14 by -2 but drop the negative sign, giving x=7."
+      }
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic>=2
+sympy
+scikit-learn
+pandas
+joblib
+python-multipart
+python-dotenv
+httpx
+pytest

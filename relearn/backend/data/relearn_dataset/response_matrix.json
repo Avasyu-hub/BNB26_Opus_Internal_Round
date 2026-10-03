@@ -1,0 +1,1026 @@
+{
+  "columns": [
+    "M01",
+    "M02",
+    "M03",
+    "M04",
+    "M05",
+    "M06",
+    "M07",
+    "M08",
+    "M09",
+    "M10",
+    "M11",
+    "M12"
+  ],
+  "rows": [
+    {
+      "item_id": "Q01",
+      "M01": {
+        "category": "wrong",
+        "response": "x=-22/3",
+        "reasoning": "Expand as -3x-4=18, so -3x=22 and x=-22/3."
+      },
+      "M02": {
+        "category": "wrong",
+        "response": "x=-22/3",
+        "reasoning": "Multiply -3 by x but copy -4 unchanged: -3x-4=18, giving x=-22/3."
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "unknown",
+        "response": null,
+        "reasoning": "A sign-arithmetic error could occur, but the misconception definition does not uniquely determine one incorrect solution for this multi-step item."
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q02",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "wrong",
+        "response": "x=19/3",
+        "reasoning": "Multiply 3 by x but copy +2 unchanged: 3x+2=21, giving x=19/3."
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q03",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "wrong",
+        "response": "x=17",
+        "reasoning": "Add 5 instead of subtracting 5: x=12+5=17."
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q04",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "wrong",
+        "response": "x=-4",
+        "reasoning": "Treat the subtraction as a sign to carry across: x=3-7=-4."
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q05",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "wrong",
+        "response": "x=11/5",
+        "reasoning": "Combine 2x and 3 as if like terms: 5x=11."
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q06",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "wrong",
+        "response": "-13",
+        "reasoning": "Treat +9 as if it were another negative: -4-9=-13."
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q07",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "wrong",
+        "response": "x=15",
+        "reasoning": "Subtract 3 instead of dividing by 3: x=18-3=15."
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "wrong",
+        "response": "x=15",
+        "reasoning": "Subtract 3 instead of dividing by 3: x=18-3=15."
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q08",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "wrong",
+        "response": "x=10",
+        "reasoning": "Add 4 instead of multiplying by 4: x=6+4=10."
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "wrong",
+        "response": "x=10",
+        "reasoning": "Add denominator 4 to 6 instead of multiplying by 4."
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q09",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "unknown",
+        "response": null,
+        "reasoning": "A sign error while moving terms is possible, but this rule alone does not uniquely determine one wrong value."
+      },
+      "M05": {
+        "category": "wrong",
+        "response": "x=9/5",
+        "reasoning": "Combine 3x and 2x as 5x and 2 and 7 as 9, giving 5x=9."
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "wrong",
+        "response": "x=9/5",
+        "reasoning": "Combine variable terms and constants across the equality: 3x+2x=5x and 2+7=9, giving 5x=9."
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q10",
+      "M01": {
+        "category": "unknown",
+        "response": null,
+        "reasoning": "The item has a positive distribution factor, so M01 is not meaningfully triggered."
+      },
+      "M02": {
+        "category": "wrong",
+        "response": "x=4",
+        "reasoning": "Multiply 2 by x but copy +3 unchanged: 2x+3+x=15, so 3x=12 and x=4."
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "correct",
+        "response": "x=3",
+        "reasoning": "2x and x are like terms, so combining them as 3x is valid."
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "wrong",
+        "response": "x=6",
+        "reasoning": "After 3x+6=15 and 3x=9, subtract 3 from 9 instead of dividing."
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q11",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "wrong",
+        "response": "6",
+        "reasoning": "Interpret 2^3 as 2*3."
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q12",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "wrong",
+        "response": "14",
+        "reasoning": "Interpret 2^3 as 2*3=6, then add 4*2=8, giving 14."
+      },
+      "M12": {
+        "category": "wrong",
+        "response": "24",
+        "reasoning": "Evaluate strictly left to right: (2^3+4)*2=(8+4)*2=24."
+      }
+    },
+    {
+      "item_id": "Q13",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "wrong",
+        "response": "A",
+        "reasoning": "Treat the expression as sufficient information and ignore that an equation must assert equality."
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q14",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "wrong",
+        "response": "x=6",
+        "reasoning": "After (1/2)x=4, add 2 instead of multiplying by 2: x=6."
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "wrong",
+        "response": "x=6",
+        "reasoning": "Treat the coefficient 1/2 as something to undo by adding 2 after isolating it: x=6."
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q15",
+      "M01": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M02": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "correct",
+        "response": "5x+4",
+        "reasoning": "The student's unlike-term rule is not triggered; the x-terms are like terms and combine correctly."
+      },
+      "M06": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    },
+    {
+      "item_id": "Q16",
+      "M01": {
+        "category": "wrong",
+        "response": "x=-5/2",
+        "reasoning": "Expand incorrectly as -2x+3=8, so -2x=5 and x=-5/2."
+      },
+      "M02": {
+        "category": "wrong",
+        "response": "x=-5/2",
+        "reasoning": "Multiply -2 by x but copy +3 unchanged: -2x+3=8, so x=-5/2."
+      },
+      "M03": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M04": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M05": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M06": {
+        "category": "wrong",
+        "response": "x=7",
+        "reasoning": "After -2x-6=8 and -2x=14, divide 14 by -2 but drop the negative sign, giving x=7."
+      },
+      "M07": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M08": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M09": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M10": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M11": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      },
+      "M12": {
+        "category": "not_applicable",
+        "response": null,
+        "reasoning": null
+      }
+    }
+  ]
+}

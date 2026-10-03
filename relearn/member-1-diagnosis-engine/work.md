@@ -1,5 +1,7 @@
 # Member 1 Work Distribution — Diagnosis Engine (Backend Brain)
-
+> **SUPERSEDED (4 Oct 2026):** This plan was revised to add a trained classifier,
+> dataset factory, diagnosed retries, transfer grading and recurrence tracking.
+> Follow `member-1-diagnosis-engine/PLAN.md` instead.
 > **Role:** Backend Architecture, Symbolic Engine & Diagnostic Pipeline  
 > **Primary Technology Stack:** Python 3.10+, FastAPI, SymPy, SQLite, LLM API (JSON mode)  
 > **Key Rule:** Complete **Stage 1 (Core)** and pass the **Core Gate** before touching any Stage 2 Wow tasks.

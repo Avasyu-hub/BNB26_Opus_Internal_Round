@@ -1,0 +1,313 @@
+[
+  {
+    "id": "M01",
+    "short_name": "Negative-factor distribution",
+    "operational_definition": "When a negative factor multiplies a parenthesized sum/difference, the student changes the sign of only one selected term.",
+    "faulty_rule_or_reasoning": "Treating the leading negative as attached to only the first term.",
+    "correct_mathematical_rule": "Distribute the factor to every term; a negative factor changes the sign of every multiplied term.",
+    "representative_example": "-2(x-3) = -2x-3",
+    "typical_incorrect_response": "-2x-3",
+    "faulty_step_by_step": "-2(x-3) -> -2x-3 (negative applied to x but not to -3).",
+    "representative_item_id": "Q01",
+    "other_item_ids": [
+      "Q10",
+      "T01"
+    ],
+    "confusable_misconceptions": [
+      "M02",
+      "M04"
+    ],
+    "diagnostic_question": "Evaluate -2(5-3) and explain each term after distribution.",
+    "contrast_case": {
+      "description": "-2(x+0) = -2x",
+      "contrast_id": "C01"
+    },
+    "transfer_question_id": "T01",
+    "contrast_accidental_case": "A different sign pattern such as -2(x+3) where both terms visibly receive -2."
+  },
+  {
+    "id": "M02",
+    "short_name": "Partial distribution",
+    "operational_definition": "A factor outside parentheses is multiplied by one term but left unchanged on another term.",
+    "faulty_rule_or_reasoning": "Multiply the factor into the first term and copy the second term unchanged.",
+    "correct_mathematical_rule": "Use the distributive property a(b+c)=ab+ac.",
+    "representative_example": "3(x+2) = 3x+2",
+    "typical_incorrect_response": "3x+2",
+    "faulty_step_by_step": "3(x+2) -> 3x+2.",
+    "representative_item_id": "Q02",
+    "other_item_ids": [
+      "Q10",
+      "T02"
+    ],
+    "confusable_misconceptions": [
+      "M01",
+      "M05"
+    ],
+    "diagnostic_question": "Compare 3(4+2) with 3*4+2; identify whether both terms were multiplied.",
+    "contrast_case": {
+      "description": "3(x+0)=3x+0",
+      "contrast_id": "C02"
+    },
+    "transfer_question_id": "T02",
+    "contrast_accidental_case": "Use a factor of 1 on a second term so the shortcut can accidentally look correct."
+  },
+  {
+    "id": "M03",
+    "short_name": "Wrong inverse operation",
+    "operational_definition": "The student uses an operation that does not undo the operation applied to the variable, such as adding when subtraction is needed.",
+    "faulty_rule_or_reasoning": "Inverse operations are treated as arbitrary changes rather than undoing each other.",
+    "correct_mathematical_rule": "Addition is undone by subtraction; multiplication by division; etc.",
+    "representative_example": "x+5=12",
+    "typical_incorrect_response": "17",
+    "faulty_step_by_step": "x+5=12 -> x=12+5=17.",
+    "representative_item_id": "Q03",
+    "other_item_ids": [
+      "Q08",
+      "T03"
+    ],
+    "confusable_misconceptions": [
+      "M07",
+      "M08"
+    ],
+    "diagnostic_question": "For x+5=12, ask what operation cancels +5 and why.",
+    "contrast_case": {
+      "description": "x+0=12 -> x=12",
+      "contrast_id": "C03"
+    },
+    "transfer_question_id": "T03",
+    "contrast_accidental_case": "No operation is needed when the added amount is zero."
+  },
+  {
+    "id": "M04",
+    "short_name": "Sign error when moving a term",
+    "operational_definition": "When moving a term across an equality, the student changes or preserves its sign incorrectly instead of performing the same inverse operation on both sides.",
+    "faulty_rule_or_reasoning": "'Move across' is treated as a sign-switching trick rather than an equality-preserving operation.",
+    "correct_mathematical_rule": "Subtract/add the same quantity from both sides; the apparent sign change follows from that operation.",
+    "representative_example": "x-7=3",
+    "typical_incorrect_response": "-4",
+    "faulty_step_by_step": "x-7=3 -> x=3-7=-4.",
+    "representative_item_id": "Q04",
+    "other_item_ids": [
+      "Q09",
+      "T04"
+    ],
+    "confusable_misconceptions": [
+      "M03",
+      "M09"
+    ],
+    "diagnostic_question": "Rewrite x-7=3 as x=3+7 using an explicit addition of 7 to both sides.",
+    "contrast_case": {
+      "description": "x-0=3 -> x=3",
+      "contrast_id": "C04"
+    },
+    "transfer_question_id": "T04",
+    "contrast_accidental_case": "Zero makes the sign issue invisible."
+  },
+  {
+    "id": "M05",
+    "short_name": "Combining unlike terms",
+    "operational_definition": "Terms with different variable structures are added as if they were like terms.",
+    "faulty_rule_or_reasoning": "Only coefficients of identical variable parts can be combined.",
+    "correct_mathematical_rule": "Combine like terms only; constants and x-terms remain distinct.",
+    "representative_example": "2x+3",
+    "typical_incorrect_response": "5x",
+    "faulty_step_by_step": "2x+3 -> 5x.",
+    "representative_item_id": "Q05",
+    "other_item_ids": [
+      "Q15",
+      "T05"
+    ],
+    "confusable_misconceptions": [
+      "M02",
+      "M09"
+    ],
+    "diagnostic_question": "Ask whether 2x and 3 represent the same kind of quantity before combining.",
+    "contrast_case": {
+      "description": "2x+3x=5x",
+      "contrast_id": "C05"
+    },
+    "transfer_question_id": "T05",
+    "contrast_accidental_case": "Use two x-terms, where the rule happens to work."
+  },
+  {
+    "id": "M06",
+    "short_name": "Integer sign arithmetic error",
+    "operational_definition": "The student applies an incorrect sign rule when adding/subtracting negative and positive integers.",
+    "faulty_rule_or_reasoning": "Negative and positive signs are handled inconsistently during arithmetic.",
+    "correct_mathematical_rule": "Use a number-line or signed-number rules consistently.",
+    "representative_example": "-4+9",
+    "typical_incorrect_response": "-13",
+    "faulty_step_by_step": "Treating the positive 9 as if it were negative: -4-9=-13.",
+    "representative_item_id": "Q06",
+    "other_item_ids": [
+      "Q01",
+      "T06"
+    ],
+    "confusable_misconceptions": [
+      "M04",
+      "M12"
+    ],
+    "diagnostic_question": "Compute -4+9 with a number line and state which direction is larger in magnitude.",
+    "contrast_case": {
+      "description": "-4-9=-13",
+      "contrast_id": "C06"
+    },
+    "transfer_question_id": "T06",
+    "contrast_accidental_case": "Two negatives produce a negative result, so the error can be masked."
+  },
+  {
+    "id": "M07",
+    "short_name": "Multiplication/addition confusion",
+    "operational_definition": "To undo multiplication, the student adds or subtracts the coefficient instead of dividing.",
+    "faulty_rule_or_reasoning": "Multiplication and addition are treated as interchangeable operations.",
+    "correct_mathematical_rule": "If ax=b and a≠0, divide both sides by a.",
+    "representative_example": "3x=18",
+    "typical_incorrect_response": "15",
+    "faulty_step_by_step": "3x=18 -> x=18-3=15.",
+    "representative_item_id": "Q07",
+    "other_item_ids": [
+      "Q10",
+      "T07"
+    ],
+    "confusable_misconceptions": [
+      "M03",
+      "M08"
+    ],
+    "diagnostic_question": "For 3x=18, compare subtracting 3 with dividing by 3 and test each result.",
+    "contrast_case": {
+      "description": "1x=18 -> x=18",
+      "contrast_id": "C07"
+    },
+    "transfer_question_id": "T07",
+    "contrast_accidental_case": "Coefficient 1 makes subtraction unnecessary and division invisible."
+  },
+  {
+    "id": "M08",
+    "short_name": "Fraction-operation error",
+    "operational_definition": "A fraction coefficient or divisor is undone using addition/subtraction or by manipulating only part of the fraction.",
+    "faulty_rule_or_reasoning": "Fractional factors are treated as isolated symbols rather than numbers multiplying/dividing the variable.",
+    "correct_mathematical_rule": "Use multiplication by the reciprocal or equivalent inverse operation on both sides.",
+    "representative_example": "x/4=6",
+    "typical_incorrect_response": "10",
+    "faulty_step_by_step": "x/4=6 -> x=6+4=10 (adding the denominator instead of multiplying by it).",
+    "representative_item_id": "Q08",
+    "other_item_ids": [
+      "Q14",
+      "T08"
+    ],
+    "confusable_misconceptions": [
+      "M03",
+      "M07"
+    ],
+    "diagnostic_question": "Ask what operation on x produced x/4 and what exact inverse undoes it.",
+    "contrast_case": {
+      "description": "x/1=6 -> x=6",
+      "contrast_id": "C08"
+    },
+    "transfer_question_id": "T08",
+    "contrast_accidental_case": "A denominator of 1 hides the fraction operation."
+  },
+  {
+    "id": "M09",
+    "short_name": "Incorrect handling of variables on both sides",
+    "operational_definition": "The student combines or moves variable terms across an equation without preserving equality.",
+    "faulty_rule_or_reasoning": "Variables on opposite sides are treated as though they can simply be added together or ignored.",
+    "correct_mathematical_rule": "Collect variable terms on one side by adding/subtracting the same term from both sides.",
+    "representative_example": "3x+2=2x+7",
+    "typical_incorrect_response": "9/5",
+    "faulty_step_by_step": "3x+2=2x+7 -> 3x+2x=5x and 2+7=9, giving 5x=9 and x=9/5.",
+    "representative_item_id": "Q09",
+    "other_item_ids": [
+      "Q05",
+      "T09"
+    ],
+    "confusable_misconceptions": [
+      "M04",
+      "M05"
+    ],
+    "diagnostic_question": "Ask: what happens if 2x is subtracted from both sides?",
+    "contrast_case": {
+      "description": "x+2=x+2 (identity)",
+      "contrast_id": "C09"
+    },
+    "transfer_question_id": "T09",
+    "contrast_accidental_case": "Same variable on both sides with identical constants can hide the need to isolate."
+  },
+  {
+    "id": "M10",
+    "short_name": "Expression/equation confusion",
+    "operational_definition": "The student treats an expression as if it asserts an equality or treats an equation as merely a calculation.",
+    "faulty_rule_or_reasoning": "Equality is viewed as a final answer format rather than a relationship between two quantities.",
+    "correct_mathematical_rule": "An expression has no equality assertion; an equation states two expressions are equal.",
+    "representative_example": "Which is an equation: 3x+2 or 3x+2=11?",
+    "typical_incorrect_response": "3x+2",
+    "faulty_step_by_step": "Selecting the expression because it 'contains the algebra' while ignoring the equality relation.",
+    "representative_item_id": "Q13",
+    "other_item_ids": [
+      "Q03",
+      "T10"
+    ],
+    "confusable_misconceptions": [
+      "M03",
+      "M05"
+    ],
+    "diagnostic_question": "Ask what information the equals sign adds and whether a value of x can be solved without an equation.",
+    "contrast_case": {
+      "description": "5+2x is an expression",
+      "contrast_id": "C10"
+    },
+    "transfer_question_id": "T10",
+    "contrast_accidental_case": "Distinguish expression, equation, and solution statement."
+  },
+  {
+    "id": "M11",
+    "short_name": "Exponent as multiplication by the exponent",
+    "operational_definition": "The student interprets a^n as a*n rather than multiplying the base by itself n times.",
+    "faulty_rule_or_reasoning": "The exponent is treated as an external multiplier.",
+    "correct_mathematical_rule": "a^n means n factors of a multiplied together for positive integer n.",
+    "representative_example": "2^3",
+    "typical_incorrect_response": "6",
+    "faulty_step_by_step": "2^3 -> 2*3=6.",
+    "representative_item_id": "Q11",
+    "other_item_ids": [
+      "Q12",
+      "T11"
+    ],
+    "confusable_misconceptions": [
+      "M12"
+    ],
+    "diagnostic_question": "Compare 2^3 with 2*3 and ask how many 2s are multiplied in the power.",
+    "contrast_case": {
+      "description": "2^1=2",
+      "contrast_id": "C11"
+    },
+    "transfer_question_id": "T11",
+    "contrast_accidental_case": "Exponent 1 makes the misconception accidentally correct."
+  },
+  {
+    "id": "M12",
+    "short_name": "Left-to-right order-of-operations error",
+    "operational_definition": "The student evaluates an expression strictly from left to right, ignoring multiplication/division precedence over addition/subtraction.",
+    "faulty_rule_or_reasoning": "All operations are assumed to have equal priority.",
+    "correct_mathematical_rule": "Apply parentheses, exponents, multiplication/division, then addition/subtraction.",
+    "representative_example": "18-2*4",
+    "typical_incorrect_response": "64",
+    "faulty_step_by_step": "(18-2)*4=64 under left-to-right evaluation.",
+    "representative_item_id": "Q12",
+    "other_item_ids": [
+      "Q11",
+      "T12"
+    ],
+    "confusable_misconceptions": [
+      "M06",
+      "M11"
+    ],
+    "diagnostic_question": "Evaluate 18-2*4 two ways and identify which operation must occur first.",
+    "contrast_case": {
+      "description": "(18-2)*1=16",
+      "contrast_id": "C12"
+    },
+    "transfer_question_id": "T12",
+    "contrast_accidental_case": "Multiplication by 1 can mask precedence issues."
+  }
+]
