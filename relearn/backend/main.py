@@ -11,8 +11,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import database as db
 from .engine.checker import check_attempt
+from .engine.matcher import match
 from .engine.parser import StepParseError, extract_math
-from .schemas import AttemptRequest, AttemptResponse, Diagnosis
+from .schemas import AttemptRequest, AttemptResponse, Candidate, Diagnosis
 
 DATA = Path(__file__).parent / "data"
 
@@ -79,12 +80,32 @@ def post_attempt(req: AttemptRequest):
 
     diagnosis, stage = None, result.status
     if result.error_step_index is not None:
-        # Placeholder until Step 4-8 (generators, model, LLM) are connected.
-        diagnosis = Diagnosis(
-            label="unknown", source="rule", confidence=0.0,
-            evidence="Error step found; diagnosis engine not connected yet.",
-        )
-        stage = "diagnosed"
+        k = result.error_step_index
+        prev_line = extract_math(question_text) if k == 0 else req.steps[k - 1]
+        student_line = req.steps[k]
+
+        matches = match(prev_line, student_line)
+        if matches:
+            first = matches[0]
+            prob = 1.0 / len(matches)
+            candidates = [Candidate(label=m["label"], prob=prob) for m in matches]
+            diagnosis = Diagnosis(
+                label=first["label"],
+                source=first["source"],
+                confidence=first["confidence"],
+                evidence=first["evidence"],
+                root_concept=first.get("root_concept"),
+                candidates=candidates,
+            )
+            stage = "diagnosed"
+        else:
+            diagnosis = Diagnosis(
+                label="unknown",
+                source="rule",
+                confidence=0.0,
+                evidence="Error step found; diagnosis engine not connected yet.",
+            )
+            stage = "diagnosed"
 
     response = AttemptResponse(
         **req.model_dump(exclude={"question"}),
@@ -96,4 +117,9 @@ def post_attempt(req: AttemptRequest):
         stage=stage,
     )
     db.save_attempt(response)
+
+    if diagnosis and diagnosis.label != "unknown":
+        new_stage = db.record_diagnosis(req.student_id, diagnosis.label, response.attempt_id)
+        response.stage = new_stage
+
     return response
