@@ -1,0 +1,9 @@
+{
+  "_note": "MOCK — Step 6 attempt payload for the W4 Fusion Card",
+  "student_id": "demo-ava",
+  "question": "Solve 2(x + 3) = 14",
+  "steps": ["2(x + 3) = 14", "2x + 3 = 14", "2x = 11", "x = 5.5"],
+  "photo_url": null,
+  "thinking_quote": "I multiplied the 2 into the bracket and then moved the 3 over.",
+  "telemetry": { "confidence": 0.84, "hesitation_ms": 7200 }
+}

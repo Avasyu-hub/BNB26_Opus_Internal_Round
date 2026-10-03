@@ -1,0 +1,47 @@
+{
+  "_note": "MOCK NUMBERS — placeholders until GET /eval/summary returns real held-out results. Do not present these as results.",
+  "headline": {
+    "dataset_size": 12400,
+    "synthetic_rows": 11560,
+    "real_rows": 840,
+    "unseen_template_accuracy": 0.892,
+    "real_trace_accuracy": 0.81,
+    "error_step_accuracy": 0.86,
+    "unknown_rate": 0.07
+  },
+  "labels": ["PARTIAL_DISTRIBUTION", "SQUARE_OF_SUM", "NEGATIVE_DISTRIBUTION", "TRANSPOSITION", "UNLIKE_TERMS", "NEG_TIMES_NEG", "ARITHMETIC_SLIP", "UNKNOWN"],
+  "confusion_matrix": [
+    [182,   4,   6,   0,   1,   0,   5,   2],
+    [  5, 171,   2,   0,   3,   0,   4,   5],
+    [  7,   1, 166,   2,   0,   6,   4,   4],
+    [  0,   0,   3, 188,   2,   1,   4,   2],
+    [  1,   2,   0,   1, 176,   0,   6,   4],
+    [  0,   0,   8,   1,   0, 165,   5,   1],
+    [  4,   3,   5,   6,   4,   3, 148,  12],
+    [  2,   3,   2,   1,   2,   1,   9, 120]
+  ],
+  "ablation": [
+    { "system": "Rules only", "accuracy": 0.71 },
+    { "system": "Model only", "accuracy": 0.84 },
+    { "system": "LLM only", "accuracy": 0.76 },
+    { "system": "Hybrid (full)", "accuracy": 0.89 }
+  ],
+  "composition": [
+    { "label": "PARTIAL_DISTRIBUTION",  "synthetic": 1650, "real": 140 },
+    { "label": "SQUARE_OF_SUM",         "synthetic": 1480, "real": 95 },
+    { "label": "NEGATIVE_DISTRIBUTION", "synthetic": 1520, "real": 120 },
+    { "label": "TRANSPOSITION",         "synthetic": 1600, "real": 150 },
+    { "label": "UNLIKE_TERMS",          "synthetic": 1450, "real": 110 },
+    { "label": "NEG_TIMES_NEG",         "synthetic": 1380, "real": 85 },
+    { "label": "ARITHMETIC_SLIP",       "synthetic": 1400, "real": 100 },
+    { "label": "UNKNOWN",               "synthetic": 1080, "real": 40 }
+  ],
+  "leave_one_out": [
+    { "held_out": "PARTIAL_DISTRIBUTION",  "routed_to_unknown": 0.78 },
+    { "held_out": "SQUARE_OF_SUM",         "routed_to_unknown": 0.71 },
+    { "held_out": "NEGATIVE_DISTRIBUTION", "routed_to_unknown": 0.66 },
+    { "held_out": "TRANSPOSITION",         "routed_to_unknown": 0.83 },
+    { "held_out": "UNLIKE_TERMS",          "routed_to_unknown": 0.74 },
+    { "held_out": "NEG_TIMES_NEG",         "routed_to_unknown": 0.69 }
+  ]
+}
