@@ -16,7 +16,6 @@ services:
   - type: web
     name: relearn-frontend
     runtime: static
-    region: oregon
     plan: free
     rootDir: relearn/member-2-student-experience
     buildCommand: npm install && npm run build

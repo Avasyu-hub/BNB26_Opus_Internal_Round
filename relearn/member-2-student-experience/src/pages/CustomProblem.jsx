@@ -209,6 +209,7 @@ export default function CustomProblem() {
 
   const customQuestionObject = useMemo(() => ({
     id: 'CUSTOM',
+    prompt: problemInput,
     latex: problemInput,
     title: 'Your custom problem',
     difficulty: 'Student problem',
