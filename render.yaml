@@ -21,10 +21,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          name: relearn-backend
-          type: web
-          property: host
+        value: https://relearn-backend-wzkd.onrender.com
       - key: VITE_USE_MOCK
         value: "false"
     routes:

@@ -7,10 +7,15 @@ function resolveApiUrl() {
   if (!rawUrl) {
     return 'http://localhost:8000';
   }
-  if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) {
-    return rawUrl;
+  let url = rawUrl.trim();
+  // If Render passed an internal service name like 'relearn-backend-wzkd' without a domain
+  if (!url.includes('.') && !url.includes('localhost')) {
+    url = `${url}.onrender.com`;
   }
-  return `https://${rawUrl}`;
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+  return `https://${url}`;
 }
 
 export const ENV = {
