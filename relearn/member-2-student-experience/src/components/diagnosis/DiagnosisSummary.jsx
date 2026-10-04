@@ -33,18 +33,18 @@ export default function DiagnosisSummary({
 
   const isCorrect = attemptResult?.isCorrect ?? (steps.length > 0 && !attemptResult?.diagnosedMisconceptions?.length);
   const firstErrorFeedback = attemptResult?.stepFeedback?.[0];
-  const misconceptionId = attemptResult?.diagnosedMisconceptions?.[0] || firstErrorFeedback?.misconceptionId || (isCorrect ? null : 'M2');
+  const misconceptionId = attemptResult?.diagnosedMisconceptions?.[0] || firstErrorFeedback?.misconceptionId || null;
   
   const misconception = misconceptionId ? MISCONCEPTIONS[misconceptionId] : null;
 
   const errorStepIndex = isCorrect 
     ? null 
-    : (firstErrorFeedback?.stepIndex !== undefined ? firstErrorFeedback.stepIndex : 0);
+    : (firstErrorFeedback?.stepIndex !== undefined ? firstErrorFeedback.stepIndex : null);
 
-  const evidence = firstErrorFeedback?.feedback || misconception?.description || 'Review this step calculation';
-  const marginNote = misconceptionId === 'M2' ? '2 × 3 is missing!' : 'Check this line!';
+  const evidence = firstErrorFeedback?.feedback || attemptResult?.evidence || misconception?.description || 'Review this step calculation';
+  const marginNote = 'Check this line!';
   const source = attemptResult?.source || 'rule'; // 'rule' | 'llm' | 'unknown'
-  const confidence = attemptResult?.confidence || 62;
+  const confidence = attemptResult?.confidence ?? 0;
 
   const renderSourceChip = () => {
     if (source === 'rule') {
@@ -52,6 +52,14 @@ export default function DiagnosisSummary({
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-mint text-leaf border border-leaf/30 shadow-2xs">
           <CheckCircle2 className="w-3.5 h-3.5" strokeWidth={2.2} />
           <span>Found by checking your steps</span>
+        </span>
+      );
+    }
+    if (source === 'model') {
+      return (
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky text-ocean border border-sky shadow-2xs">
+          <BrainCircuit className="w-3.5 h-3.5" strokeWidth={2} />
+          <span>Recognised by our trained model &middot; {confidence}% sure</span>
         </span>
       );
     }

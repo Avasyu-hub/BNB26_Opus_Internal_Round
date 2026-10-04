@@ -14,7 +14,7 @@ import {
 import MathView from '../components/MathView';
 import StepInput from '../components/practice/StepInput';
 import ErrorStepCard from '../components/diagnosis/ErrorStepCard';
-import { submitRetry } from '../api';
+import { submitRetry, MISCONCEPTIONS } from '../api';
 
 export default function Retry({
   originalQuestion,
@@ -23,39 +23,44 @@ export default function Retry({
   onPassRetry,
   onShowAlternateIntervention,
 }) {
-  // Retry problem with same misconception and fresh numbers
+  // Retry problem from the question bank: same misconception, fresh numbers
   const retryQuestion = {
-    id: 'retry_q1',
+    id: originalQuestion?.retryQuestion?.id || 'retry_q1',
+    prompt: originalQuestion?.retryQuestion?.prompt,
+    verb: originalQuestion?.retryQuestion?.verb || 'Solve',
     topicName: originalQuestion?.topicName || 'Brackets',
-    title: 'Retry: Linear equation distribution',
-    latex: '4(x + 2) = 24',
-    difficulty: 'Medium',
-    expectedAnswer: 'x = 4',
+    title: `Retry: ${originalQuestion?.topicName || 'same idea'}`,
+    latex: originalQuestion?.retryQuestion?.latex || '4(x + 2) = 24',
+    difficulty: originalQuestion?.difficulty || 'Medium',
+    expectedAnswer: originalQuestion?.retryQuestion?.expectedAnswer || 'x = 4',
   };
+  const label = MISCONCEPTIONS[misconceptionId]?.label;
 
   const [outcome, setOutcome] = useState(null); // null | 'pass' | 'fail_1' | 'fail_2'
   const [retrySteps, setRetrySteps] = useState(['']);
   const [failedStepIndex, setFailedStepIndex] = useState(0);
+  const [failEvidence, setFailEvidence] = useState('');
 
-  const handleStepSubmit = async (attemptData, normalizedSteps) => {
+  // StepInput calls this instead of /attempt, so the backend grades the retry:
+  // it passes only if the answer is right AND the misconception is gone.
+  const submitThisRetry = (payload) =>
+    submitRetry({ retryQuestionId: retryQuestion.id, label, steps: payload.steps });
+
+  const handleStepSubmit = async (result, normalizedSteps) => {
     setRetrySteps(normalizedSteps);
-
-    // Evaluate retry logic
-    const firstStep = normalizedSteps[0] || '';
-    const hasDistError = firstStep.includes('4x + 2 = 24') || firstStep.includes('4x+2=24');
-
-    if (!hasDistError && (firstStep.includes('4x + 8 = 24') || normalizedSteps.some(s => s.includes('x = 4') || s.includes('x=4')))) {
-      // PASS
+    if (result.outcome === 'pass') {
       setOutcome('pass');
-    } else {
-      // FAIL
-      setFailedStepIndex(0);
-      if (retryCount >= 1) {
-        setOutcome('fail_2');
-      } else {
-        setOutcome('fail_1');
-      }
+      return;
     }
+    if (result.outcome === 'incomplete') {
+      setFailEvidence(result.message);
+      setFailedStepIndex(normalizedSteps.length - 1);
+      setOutcome(retryCount >= 1 ? 'fail_2' : 'fail_1');
+      return;
+    }
+    setFailedStepIndex(result.errorStepIndex ?? 0);
+    setFailEvidence(result.evidence);
+    setOutcome(result.outcome === 'fail_2' || retryCount >= 1 ? 'fail_2' : 'fail_1');
   };
 
   // Step indicator stages
@@ -123,7 +128,7 @@ export default function Retry({
         <div className="space-y-1">
           <div className="flex items-center gap-3">
             <span className="text-h3 font-medium text-slate">
-              Solve
+              {retryQuestion.verb}
             </span>
             <div className="text-2xl sm:text-3xl font-display font-bold text-navy">
               <MathView math={retryQuestion.latex} className="text-2xl sm:text-3xl font-bold" />
@@ -145,6 +150,7 @@ export default function Retry({
           question={retryQuestion}
           initialSteps={retrySteps}
           onSubmitAttempt={handleStepSubmit}
+          submitFn={submitThisRetry}
         />
       )}
 
@@ -205,8 +211,8 @@ export default function Retry({
           <ErrorStepCard
             steps={retrySteps}
             error_step_index={failedStepIndex}
-            evidence="Multiplied 4 by x, but omitted 4 * 2"
-            marginNote="4 × 2 is missing!"
+            evidence={failEvidence || 'This step does not follow from the line before it.'}
+            marginNote="Check this line!"
             animate={true}
           />
 

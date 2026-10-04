@@ -16,6 +16,8 @@ import { getIntervention, MISCONCEPTIONS } from '../api';
 export default function Intervention({
   question,
   misconceptionId = 'M2',
+  evidence = '',
+  language = 'en',
   attemptNumber = 1,
   onProceedToRetry,
 }) {
@@ -44,7 +46,7 @@ export default function Intervention({
     setLoading(true);
     setError(null);
     try {
-      const res = await getIntervention({ misconceptionId, attempt: attemptNumber });
+      const res = await getIntervention({ misconceptionId, evidence, language, attempt: attemptNumber });
       setData(res);
     } catch (err) {
       setError(err.message || 'Failed to load explanation');
@@ -55,7 +57,7 @@ export default function Intervention({
 
   useEffect(() => {
     loadExplanation();
-  }, [misconceptionId, attemptNumber]);
+  }, [misconceptionId, attemptNumber, language]);
 
   // Enable button after animation finishes OR after 5 seconds
   useEffect(() => {
@@ -86,14 +88,14 @@ export default function Intervention({
       takeaway: 'Multiply EVERY term inside the bracket by the number outside.',
     },
     M3: {
-      yours: '3x + 4 = 19 \\implies 3x = \\color{#E5484D}{19}',
-      correct: '3x + 4 = 19 \\implies 3x = \\mathbf{\\color{#22B573}{19 - 4}}',
-      takeaway: 'Whatever operation you do to the left side, do identically to the right side.',
+      yours: '-(x + 4) \\implies -x \\color{#E5484D}{+ 4}',
+      correct: '-(x + 4) \\implies -x \\mathbf{\\color{#22B573}{- 4}}',
+      takeaway: 'A minus in front of a bracket changes the sign of EVERY term inside it.',
     },
     M4: {
-      yours: '\\frac{2x + 6}{2} \\implies x + \\color{#E5484D}{6}',
-      correct: '\\frac{2x + 6}{2} \\implies x + \\mathbf{\\color{#22B573}{3}}',
-      takeaway: 'Division divides EVERY term in the numerator polynomial.',
+      yours: '(x + 3)^2 \\implies x^2 \\color{#E5484D}{+ 9}',
+      correct: '(x + 3)^2 \\implies x^2 \\mathbf{\\color{#22B573}{+ 6x}} + 9',
+      takeaway: '(a + b)^2 is (a + b)(a + b): the two middle terms 2ab never disappear.',
     },
     M5: {
       yours: '3x + 5 \\implies \\color{#E5484D}{8x}',
@@ -101,9 +103,9 @@ export default function Intervention({
       takeaway: 'Only add like terms (terms with identical variable powers).',
     },
     M6: {
-      yours: '4 + 2x = 10 \\implies \\color{#E5484D}{6x} = 10',
-      correct: '4 + 2x = 10 \\implies \\mathbf{\\color{#22B573}{2x = 6}}',
-      takeaway: 'Subtract or add constant terms before dividing variable coefficients.',
+      yours: '(-2)(-3x) \\implies \\color{#E5484D}{-6x}',
+      correct: '(-2)(-3x) \\implies \\mathbf{\\color{#22B573}{6x}}',
+      takeaway: 'A negative times a negative is always positive.',
     },
   }[misconceptionId] || {
     yours: '2(x + 3) \\implies 2x + \\color{#E5484D}{3}',
@@ -180,14 +182,24 @@ export default function Intervention({
               </button>
             </div>
           ) : (
-            <div className="space-y-3 text-body text-navy leading-relaxed">
-              <p>
-                When a number sits right outside brackets like <MathView math={`${parsedValues.a}(${parsedValues.variable} + ${parsedValues.b})`} />, it multiplies <strong>everything</strong> inside.
-              </p>
-              <p className="text-slate">
-                Think of it as finding the total area of two adjacent rooms: width {parsedValues.a} by length {parsedValues.variable} gives <MathView math={`${parsedValues.a}${parsedValues.variable}`} />, and width {parsedValues.a} by length {parsedValues.b} gives <MathView math={`${parsedValues.a * parsedValues.b}`} />.
-              </p>
-            </div>
+            data?.explanation ? (
+              <div className="space-y-3 text-body text-navy leading-relaxed">
+                <p>{data.explanation}</p>
+              </div>
+            ) : misconceptionId === 'M2' ? (
+              <div className="space-y-3 text-body text-navy leading-relaxed">
+                <p>
+                  When a number sits right outside brackets like <MathView math={`${parsedValues.a}(${parsedValues.variable} + ${parsedValues.b})`} />, it multiplies <strong>everything</strong> inside.
+                </p>
+                <p className="text-slate">
+                  Think of it as finding the total area of two adjacent rooms: width {parsedValues.a} by length {parsedValues.variable} gives <MathView math={`${parsedValues.a}${parsedValues.variable}`} />, and width {parsedValues.a} by length {parsedValues.b} gives <MathView math={`${parsedValues.a * parsedValues.b}`} />.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3 text-body text-navy leading-relaxed">
+                <p>{misconception.description}</p>
+              </div>
+            )
           )}
 
           {/* YOUR STEP VS THE CORRECT STEP COMPARISON */}
@@ -206,7 +218,7 @@ export default function Intervention({
                     <MathView math={studentComparison.yours} />
                   </div>
                 </div>
-                <span className="text-xs text-[#E5484D] font-medium font-pen">Missed multiplier</span>
+                <span className="text-xs text-[#E5484D] font-medium font-pen">The mistake</span>
               </div>
 
               {/* Correct */}

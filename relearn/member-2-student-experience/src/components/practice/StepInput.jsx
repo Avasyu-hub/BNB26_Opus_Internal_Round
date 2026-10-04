@@ -16,6 +16,7 @@ export default function StepInput({
   question,
   initialSteps = [''],
   onSubmitAttempt,
+  submitFn = submitAttempt, // which endpoint to call (Retry passes submitRetry)
   photoInput = null,       // W1 slot
   explanationBox = null,   // W2 slot
   telemetryHooks = null,   // W3 slot
@@ -150,10 +151,11 @@ export default function StepInput({
     try {
       const payload = {
         question_id: question?.id || 'q1',
+        question: question?.prompt,
         steps: normalized,
         input_mode: 'typed',
       };
-      const result = await submitAttempt(payload);
+      const result = await submitFn(payload);
       if (onSubmitAttempt) {
         onSubmitAttempt(result, normalized);
       }

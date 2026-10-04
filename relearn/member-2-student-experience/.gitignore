@@ -53,3 +53,6 @@ Thumbs.db
 # Misc
 .eslintcache
 *.local
+
+# Dev config with no secrets: points the app at the local backend
+!.env.development

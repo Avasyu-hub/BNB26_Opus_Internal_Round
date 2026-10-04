@@ -2,6 +2,23 @@ import { ENV } from '../config/env';
 import { MOCK_QUESTIONS, TOPICS } from './mocks/questions';
 import { MISCONCEPTIONS } from './mocks/misconceptions';
 import { MOCK_HISTORY, MOCK_CLASS_SUMMARY, MOCK_EVALUATION } from './mocks/analytics';
+import {
+  adaptQuestion, buildAttemptPayload, adaptAttemptResponse, buildInterventionPayload,
+  adaptInterventionResponse, buildRetryPayload, adaptRetryResponse, buildTransferPayload,
+  adaptTransferResponse, adaptHistoryRow,
+} from './backendAdapter';
+
+/** Student id used for every backend call (one learner profile per id). */
+export function getStudentId() {
+  try {
+    return localStorage.getItem('relearn_student_id') || 'student_1';
+  } catch {
+    return 'student_1';
+  }
+}
+export function setStudentId(id) {
+  try { localStorage.setItem('relearn_student_id', id); } catch { /* ignore */ }
+}
 
 /**
  * Standard HTTP helper when running against real backend
@@ -33,7 +50,8 @@ export async function getQuestions() {
       setTimeout(() => resolve([...MOCK_QUESTIONS]), 150);
     });
   }
-  return apiFetch('/questions');
+  const questions = await apiFetch('/questions');
+  return questions.map(adaptQuestion);
 }
 
 /**
@@ -75,10 +93,11 @@ export async function submitAttempt(payload) {
       }, 300);
     });
   }
-  return apiFetch('/attempts', {
+  const response = await apiFetch('/attempt', {
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: JSON.stringify(buildAttemptPayload(payload, getStudentId())),
   });
+  return adaptAttemptResponse(response);
 }
 
 /**
@@ -144,7 +163,11 @@ export async function getIntervention(payload) {
       }, 200);
     });
   }
-  return apiFetch(`/interventions?misconceptionId=${misconceptionId}`);
+  const response = await apiFetch('/intervention', {
+    method: 'POST',
+    body: JSON.stringify(buildInterventionPayload(payload)),
+  });
+  return adaptInterventionResponse(response, misconceptionId);
 }
 
 /**
@@ -155,18 +178,23 @@ export async function submitRetry(payload) {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          retryId: `retry_${Date.now()}`,
+          outcome: 'pass',
           isCorrect: true,
+          stage: 'retry_passed',
+          errorStepIndex: null,
+          evidence: '',
+          retryCount: 1,
           message: 'Excellent! You applied the distributive property correctly.',
           readyForTransfer: true,
         });
       }, 250);
     });
   }
-  return apiFetch('/retries', {
+  const response = await apiFetch('/retry', {
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: JSON.stringify(buildRetryPayload({ studentId: getStudentId(), ...payload })),
   });
+  return adaptRetryResponse(response);
 }
 
 /**
@@ -177,30 +205,35 @@ export async function submitTransfer(payload) {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          transferId: `transfer_${Date.now()}`,
+          stage: 'transfer_passed',
           isCorrect: true,
-          score: 100,
-          masteryStatus: 'Mastered',
+          verified: true,
+          streak: 2,
+          nextQuestionId: null,
+          bridge: null,
+          feedback: 'Transfer verified ✓',
         });
       }, 250);
     });
   }
-  return apiFetch('/transfer', {
+  const response = await apiFetch('/transfer', {
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: JSON.stringify(buildTransferPayload({ studentId: getStudentId(), ...payload })),
   });
+  return adaptTransferResponse(response);
 }
 
 /**
  * Get student practice and misconception remediation history
  */
-export async function getHistory(studentId = 'student_1') {
+export async function getHistory(studentId = getStudentId()) {
   if (ENV.USE_MOCK) {
     return new Promise((resolve) => {
       setTimeout(() => resolve([...MOCK_HISTORY]), 150);
     });
   }
-  return apiFetch(`/history?studentId=${encodeURIComponent(studentId)}`);
+  const rows = await apiFetch(`/student/${encodeURIComponent(studentId)}/history`);
+  return rows.map(adaptHistoryRow);
 }
 
 /**
@@ -212,7 +245,7 @@ export async function getClassSummary() {
       setTimeout(() => resolve({ ...MOCK_CLASS_SUMMARY }), 150);
     });
   }
-  return apiFetch('/teacher/summary');
+  return apiFetch('/class/summary');
 }
 
 /**
@@ -224,7 +257,7 @@ export async function getEvaluation() {
       setTimeout(() => resolve({ ...MOCK_EVALUATION }), 150);
     });
   }
-  return apiFetch('/evaluation');
+  return apiFetch('/eval/summary');
 }
 
 export { MISCONCEPTIONS, TOPICS, MOCK_QUESTIONS };
