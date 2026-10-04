@@ -2,7 +2,7 @@ fastapi
 uvicorn[standard]
 pydantic>=2
 sympy
-scikit-learn
+scikit-learn==1.8.0
 pandas
 joblib
 python-multipart

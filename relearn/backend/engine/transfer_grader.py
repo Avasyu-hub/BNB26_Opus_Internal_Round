@@ -20,6 +20,20 @@ UNIT_REGEX = re.compile(
 )
 
 
+# Whole words only: "no" must not match inside "know" or "not".
+REJECTS_COMBINING = re.compile(
+    r"\b(no|cannot|can't|can not|impossible|incompatible|mismatch(ed)?|unlike|"
+    r"not possible|not be (added|combined)|remains? unchanged|"
+    r"different (units?|dimensions?|physical quantit(y|ies)|kinds?))\b"
+)
+UNSURE_TEXT = re.compile(r"\b(not sure|don't know|dont know|no idea|maybe|i think so|guess)\b")
+# Words that turn a positive number into a negative change ("12 degrees colder").
+NEGATING_WORDS = re.compile(
+    r"\b(colder|cooler|lower|below|behind|backwards?|down|decrease[sd]?|less|loss|lost|drop(ped)?|fell)\b",
+    re.IGNORECASE,
+)
+
+
 def _clean_str(text: str) -> str:
     return re.sub(r"\s+", " ", text.strip().lower())
 
@@ -102,6 +116,10 @@ def grade_number(student: str, canonical: str) -> Tuple[bool, str]:
     """Grade signed numbers with optional units (e.g. '-5', '−5', '-5 m'). Signs strictly matter."""
     s_num = _extract_number(student)
     c_num = _extract_number(canonical)
+    # "12 degrees colder" means -12. Only flip when the student gave no explicit sign.
+    if s_num is not None and s_num > 0 and NEGATING_WORDS.search(student) \
+            and not re.search(r"[-+\u2212]\s*\d", student):
+        s_num = -s_num
 
     if s_num is None or c_num is None:
         return False, "Could not parse numeric value"
@@ -154,13 +172,10 @@ def grade_text(student: str, canonical: str, rubric: str = "") -> Tuple[bool, st
     if s_clean.startswith("yes") or s_clean == "8" or "can be added" in s_clean:
         return False, "Incorrectly claimed unlike dimensions/units can be combined"
 
-    negative_signals = [
-        "no", "cannot", "can't", "impossible", "incompatible",
-        "mismatch", "different unit", "different dimension", "unlike", "distinct",
-        "remains unchanged", "not possible", "cannot be combined", "cannot be added",
-        "different physical", "cannot combine",
-    ]
-    if any(sig in s_clean for sig in negative_signals):
+    # Uncertain answers never pass, even if they contain a keyword.
+    if UNSURE_TEXT.search(s_clean):
+        return False, "Answer is unsure"
+    if REJECTS_COMBINING.search(s_clean):
         return True, "Correctly recognized incompatible dimensions or units"
 
     return False, "Answer does not satisfy conceptual rubric"

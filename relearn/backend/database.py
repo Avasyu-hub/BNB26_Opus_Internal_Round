@@ -32,7 +32,9 @@ CREATE TABLE IF NOT EXISTS learner_profile (
     PRIMARY KEY (student_id, misconception_id)
 );
 """
-RESOLVED_STAGES = ("retry_passed", "transfer_passed")
+# A misconception the student had already fixed in algebra. If it appears again
+# from any of these stages, that is a recurrence.
+RESOLVED_STAGES = ("retry_passed", "transfer_in_progress", "transfer_passed")
 
 
 def _now() -> str:
@@ -85,10 +87,14 @@ def record_diagnosis(student_id: str, misconception_id: str, attempt_id: str) ->
             )
         else:
             stage = "recurred" if row["stage"] in RESOLVED_STAGES else "diagnosed"
+            # A new mistake breaks any transfer streak (passes must be consecutive).
+            # A recurrence also starts a fresh retry cycle.
             conn.execute(
-                "UPDATE learner_profile SET stage=?, occurrence_count=occurrence_count+1, last_attempt_id=?, updated_at=? "
-                "WHERE student_id=? AND misconception_id=?",
-                (stage, attempt_id, _now(), student_id, misconception_id),
+                "UPDATE learner_profile SET stage=?, occurrence_count=occurrence_count+1, "
+                "consecutive_transfer_count=0, "
+                "retry_count=CASE WHEN ?='recurred' THEN 0 ELSE retry_count END, "
+                "last_attempt_id=?, updated_at=? WHERE student_id=? AND misconception_id=?",
+                (stage, stage, attempt_id, _now(), student_id, misconception_id),
             )
         conn.execute("UPDATE attempts SET stage=? WHERE attempt_id=?", (stage, attempt_id))
         conn.commit()

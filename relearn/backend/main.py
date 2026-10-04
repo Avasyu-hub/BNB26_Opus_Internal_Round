@@ -248,28 +248,20 @@ def post_retry(req: RetryRequest):
 
     # If steps are algebraically valid from start to finish
     if result.status == "correct":
-        # Check that original misconception is absent from all step transitions
-        error_found = False
-        prev = extract_math(retry_prompt)
-        for step in req.steps:
-            diag = _safe_diagnose(prev, step)
-            if diag.label == target_misconception:
-                error_found = True
-                break
-            prev = step
-
-        if not error_found:
-            retry_count = db.record_retry(req.student_id, target_misconception, "retry_passed")
-            return RetryResponse(
-                stage="retry_passed",
-                error_step_index=None,
-                diagnosis=None,
-                retry_count=retry_count,
-                isCorrect=True,
-                flagged_for_teacher=False,
-                message="Excellent! You solved the retry problem correctly and eliminated the misconception.",
-                readyForTransfer=True,
-            )
+        # The checker proved every step is mathematically valid, so the
+        # misconception cannot be present. (Re-diagnosing correct steps would
+        # call the LLM for every line and could wrongly fail a correct retry.)
+        retry_count = db.record_retry(req.student_id, target_misconception, "retry_passed")
+        return RetryResponse(
+            stage="retry_passed",
+            error_step_index=None,
+            diagnosis=None,
+            retry_count=retry_count,
+            isCorrect=True,
+            flagged_for_teacher=False,
+            message="Excellent! You solved the retry problem correctly and eliminated the misconception.",
+            readyForTransfer=True,
+        )
 
     k = result.error_step_index if result.error_step_index is not None else 0
     prev_line = extract_math(retry_prompt) if k == 0 else req.steps[k - 1]
