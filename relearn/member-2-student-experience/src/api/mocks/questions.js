@@ -8,13 +8,13 @@ export const TOPICS = [
   {
     id: 'squaring-brackets',
     name: 'Squaring brackets',
-    misconceptionId: 'M2',
+    misconceptionId: 'M4',
     typicalMistake: '(x + 3)^2 \\implies x^2 + \\color{#E5484D}{9}',
   },
   {
     id: 'minus-signs-brackets',
     name: 'Minus signs and brackets',
-    misconceptionId: 'M1',
+    misconceptionId: 'M3',
     typicalMistake: '5 - (x + 3) \\implies 5 - x \\color{#E5484D}{+ 3}',
   },
   {
@@ -33,7 +33,7 @@ export const TOPICS = [
     id: 'multiplying-negatives',
     name: 'Multiplying negatives',
     misconceptionId: 'M6',
-    typicalMistake: '-3(x - 4) \\implies -3x \\color{#E5484D}{- 12}',
+    typicalMistake: '(-2)(-3x) \\implies \\color{#E5484D}{-6x}',
   },
 ];
 

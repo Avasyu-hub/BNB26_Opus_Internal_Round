@@ -10,12 +10,16 @@ import {
   BookOpen
 } from 'lucide-react';
 import MathView from '../components/MathView';
-import { AnimationPlayer } from '../animations';
+import VisualProof from '../visuals/components/animations/VisualProof';
 import { getIntervention, MISCONCEPTIONS } from '../api';
+import { splitPrompt } from '../api/backendAdapter';
+import { studentNumbers, stepComparison } from '../api/studentNumbers';
 
 export default function Intervention({
   question,
   misconceptionId = 'M2',
+  evidence = '',
+  language = 'en',
   attemptNumber = 1,
   onProceedToRetry,
 }) {
@@ -40,11 +44,21 @@ export default function Intervention({
     return { a: 2, b: 3, variable: 'x', sign: '+' };
   }, [question]);
 
+  // The student's own numbers, e.g. 3(x+4) -> factor 3, term 4: used by the
+  // explanation template (Member 4) and by the visual proof (Member 3).
+  const label = MISCONCEPTIONS[misconceptionId]?.label;
+  const numbers = useMemo(
+    () => studentNumbers(label, splitPrompt(question?.prompt || '').math),
+    [label, question],
+  );
+
   const loadExplanation = async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await getIntervention({ misconceptionId, attempt: attemptNumber });
+      const res = await getIntervention({
+        misconceptionId, label, evidence, language, attempt: attemptNumber, studentNumbers: numbers.template,
+      });
       setData(res);
     } catch (err) {
       setError(err.message || 'Failed to load explanation');
@@ -55,7 +69,7 @@ export default function Intervention({
 
   useEffect(() => {
     loadExplanation();
-  }, [misconceptionId, attemptNumber]);
+  }, [misconceptionId, attemptNumber, language]);
 
   // Enable button after animation finishes OR after 5 seconds
   useEffect(() => {
@@ -74,7 +88,18 @@ export default function Intervention({
   const misconception = MISCONCEPTIONS[misconceptionId] || MISCONCEPTIONS.M2;
 
   // Visual comparison items
-  const studentComparison = {
+  const ownComparison = stepComparison(label, splitPrompt(question?.prompt || '').math);
+  const studentComparison = ownComparison ? {
+    ...ownComparison,
+    takeaway: ({
+      M1: 'Moving any term across the equals sign always flips its sign.',
+      M2: 'Multiply EVERY term inside the bracket by the number outside.',
+      M3: 'A minus in front of a bracket changes the sign of EVERY term inside it.',
+      M4: '(a + b)^2 is (a + b)(a + b): the middle term 2ab never disappears.',
+      M5: 'Only add like terms (terms with the same variable part).',
+      M6: 'A negative times a negative is always positive.',
+    })[misconceptionId] || '',
+  } : {
     M1: {
       yours: '2x + 5 = 15 \\implies 2x = 15 \\color{#E5484D}{+ 5}',
       correct: '2x + 5 = 15 \\implies 2x = 15 \\mathbf{\\color{#22B573}{- 5}}',
@@ -86,14 +111,14 @@ export default function Intervention({
       takeaway: 'Multiply EVERY term inside the bracket by the number outside.',
     },
     M3: {
-      yours: '3x + 4 = 19 \\implies 3x = \\color{#E5484D}{19}',
-      correct: '3x + 4 = 19 \\implies 3x = \\mathbf{\\color{#22B573}{19 - 4}}',
-      takeaway: 'Whatever operation you do to the left side, do identically to the right side.',
+      yours: '-(x + 4) \\implies -x \\color{#E5484D}{+ 4}',
+      correct: '-(x + 4) \\implies -x \\mathbf{\\color{#22B573}{- 4}}',
+      takeaway: 'A minus in front of a bracket changes the sign of EVERY term inside it.',
     },
     M4: {
-      yours: '\\frac{2x + 6}{2} \\implies x + \\color{#E5484D}{6}',
-      correct: '\\frac{2x + 6}{2} \\implies x + \\mathbf{\\color{#22B573}{3}}',
-      takeaway: 'Division divides EVERY term in the numerator polynomial.',
+      yours: '(x + 3)^2 \\implies x^2 \\color{#E5484D}{+ 9}',
+      correct: '(x + 3)^2 \\implies x^2 \\mathbf{\\color{#22B573}{+ 6x}} + 9',
+      takeaway: '(a + b)^2 is (a + b)(a + b): the two middle terms 2ab never disappear.',
     },
     M5: {
       yours: '3x + 5 \\implies \\color{#E5484D}{8x}',
@@ -101,9 +126,9 @@ export default function Intervention({
       takeaway: 'Only add like terms (terms with identical variable powers).',
     },
     M6: {
-      yours: '4 + 2x = 10 \\implies \\color{#E5484D}{6x} = 10',
-      correct: '4 + 2x = 10 \\implies \\mathbf{\\color{#22B573}{2x = 6}}',
-      takeaway: 'Subtract or add constant terms before dividing variable coefficients.',
+      yours: '(-2)(-3x) \\implies \\color{#E5484D}{-6x}',
+      correct: '(-2)(-3x) \\implies \\mathbf{\\color{#22B573}{6x}}',
+      takeaway: 'A negative times a negative is always positive.',
     },
   }[misconceptionId] || {
     yours: '2(x + 3) \\implies 2x + \\color{#E5484D}{3}',
@@ -135,11 +160,13 @@ export default function Intervention({
         {/* LEFT COLUMN (6 / 12): Animation Player */}
         <div className="lg:col-span-6 space-y-4">
           <div className="p-2 rounded-[24px] bg-soft-gradient border border-[#E3EEF7] shadow-[0_10px_30px_-12px_rgba(30,111,217,0.18)]">
-            <AnimationPlayer
-              id={misconceptionId}
-              values={parsedValues}
-              onComplete={handleAnimationComplete}
-            />
+            <div className="rounded-[18px] bg-slate-950 p-3 sm:p-4">
+              <VisualProof
+                misconceptionId={label}
+                params={numbers.animation}
+                onComplete={handleAnimationComplete}
+              />
+            </div>
           </div>
 
           <div className="px-2 text-center sm:text-left">
@@ -180,14 +207,24 @@ export default function Intervention({
               </button>
             </div>
           ) : (
-            <div className="space-y-3 text-body text-navy leading-relaxed">
-              <p>
-                When a number sits right outside brackets like <MathView math={`${parsedValues.a}(${parsedValues.variable} + ${parsedValues.b})`} />, it multiplies <strong>everything</strong> inside.
-              </p>
-              <p className="text-slate">
-                Think of it as finding the total area of two adjacent rooms: width {parsedValues.a} by length {parsedValues.variable} gives <MathView math={`${parsedValues.a}${parsedValues.variable}`} />, and width {parsedValues.a} by length {parsedValues.b} gives <MathView math={`${parsedValues.a * parsedValues.b}`} />.
-              </p>
-            </div>
+            data?.explanation ? (
+              <div className="space-y-3 text-body text-navy leading-relaxed">
+                <p>{data.explanation}</p>
+              </div>
+            ) : misconceptionId === 'M2' ? (
+              <div className="space-y-3 text-body text-navy leading-relaxed">
+                <p>
+                  When a number sits right outside brackets like <MathView math={`${parsedValues.a}(${parsedValues.variable} + ${parsedValues.b})`} />, it multiplies <strong>everything</strong> inside.
+                </p>
+                <p className="text-slate">
+                  Think of it as finding the total area of two adjacent rooms: width {parsedValues.a} by length {parsedValues.variable} gives <MathView math={`${parsedValues.a}${parsedValues.variable}`} />, and width {parsedValues.a} by length {parsedValues.b} gives <MathView math={`${parsedValues.a * parsedValues.b}`} />.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3 text-body text-navy leading-relaxed">
+                <p>{misconception.description}</p>
+              </div>
+            )
           )}
 
           {/* YOUR STEP VS THE CORRECT STEP COMPARISON */}
@@ -206,7 +243,7 @@ export default function Intervention({
                     <MathView math={studentComparison.yours} />
                   </div>
                 </div>
-                <span className="text-xs text-[#E5484D] font-medium font-pen">Missed multiplier</span>
+                <span className="text-xs text-[#E5484D] font-medium font-pen">The mistake</span>
               </div>
 
               {/* Correct */}

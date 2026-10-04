@@ -1,6 +1,29 @@
+# Python bytecode & cache
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 .pytest_cache/
+.coverage
+htmlcov/
+
+# Database files
 *.db
+*.sqlite3
+
+# Environment
 .env
+.env.local
+.env.*.local
+!.env.example
+!.env.development
+
+# Virtual environments
 .venv/
+venv/
+ENV/
+env/
+
+# Node / frontend builds
+node_modules/
+dist/
+build/

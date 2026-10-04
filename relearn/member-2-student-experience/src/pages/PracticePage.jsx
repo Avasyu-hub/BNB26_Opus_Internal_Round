@@ -6,12 +6,15 @@ import StepInput from '../components/practice/StepInput';
 import DiagnosisSummary from '../components/diagnosis/DiagnosisSummary';
 import Intervention from './Intervention';
 import Retry from './Retry';
+import Transfer from './Transfer';
 import { getQuestions, MOCK_QUESTIONS } from '../api';
+import { useApp } from '../context/AppContext';
 
 export default function PracticePage() {
   const { questionId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { language } = useApp();
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -79,7 +82,9 @@ export default function PracticePage() {
     );
   }
 
-  const misconceptionId = attemptResult?.diagnosedMisconceptions?.[0] || 'M2';
+  // The misconception this practice question targets, unless the diagnosis found another one.
+  const misconceptionId = attemptResult?.diagnosedMisconceptions?.[0]
+    || question?.targetMisconceptions?.[0] || 'M2';
 
   return (
     <div className="space-y-8 pb-16 font-body">
@@ -108,7 +113,7 @@ export default function PracticePage() {
             <div className="space-y-1">
               <div className="flex items-center gap-3">
                 <span className="text-h3 font-medium text-slate">
-                  Solve
+                  {question?.verb || 'Solve'}
                 </span>
                 <div className="text-2xl sm:text-3xl font-display font-bold text-navy">
                   <MathView math={question?.latex || '2(x + 3) = 14'} className="text-2xl sm:text-3xl font-bold" />
@@ -152,6 +157,8 @@ export default function PracticePage() {
         <Intervention
           question={question}
           misconceptionId={misconceptionId}
+          evidence={attemptResult?.evidence || ''}
+          language={language}
           attemptNumber={attemptNumber}
           onProceedToRetry={handleProceedToRetry}
         />
@@ -168,24 +175,12 @@ export default function PracticePage() {
         />
       )}
 
-      {/* STAGE: TRANSFER (STEP 9 PLACEHOLDER) */}
+      {/* STAGE: TRANSFER (STEP 9 ★ HERO) */}
       {stage === 'transfer' && (
-        <div className="bg-white rounded-[20px] border border-[#E3EEF7] shadow-[0_10px_30px_-12px_rgba(30,111,217,0.18)] p-8 text-center space-y-4 max-w-2xl mx-auto">
-          <div className="w-14 h-14 rounded-2xl bg-mint text-leaf flex items-center justify-center mx-auto shadow-xs">
-            <Sparkles className="w-7 h-7" strokeWidth={2} />
-          </div>
-          <h2 className="text-h2 font-display text-navy">
-            Cross-Domain Transfer Challenge
-          </h2>
-          <p className="text-body text-slate">
-            Step 9 &mdash; Cross-domain transfer tasks in Physics, Geometry, and Python code will be mounted here.
-          </p>
-          <div className="pt-4">
-            <Link to="/practice" className="btn-primary">
-              <span>Return to practice list</span>
-            </Link>
-          </div>
-        </div>
+        <Transfer
+          question={question}
+          misconceptionId={misconceptionId}
+        />
       )}
     </div>
   );

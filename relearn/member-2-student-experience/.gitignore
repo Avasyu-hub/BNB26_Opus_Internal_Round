@@ -1,12 +1,14 @@
-# Environment variables and secrets
-.env
-.env.*
-!.env.example
-
 # Dependencies
 node_modules/
 /.pnp
 .pnp.js
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+!.env.development
 
 # Production build outputs
 dist/
