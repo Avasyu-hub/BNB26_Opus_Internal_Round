@@ -1,5 +1,5 @@
 services:
-  # 1. FastAPI Backend + Scikit-Learn Model (Port $PORT)
+  # 1. FastAPI Backend + Scikit-Learn Model
   - type: web
     name: relearn-backend
     runtime: python
@@ -12,9 +12,10 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.9
 
-  # 2. Vite React Frontend (Static Site on CDN)
-  - type: static
+  # 2. Vite React Frontend (Static Site on Global CDN)
+  - type: web
     name: relearn-frontend
+    runtime: static
     rootDir: relearn/member-2-student-experience
     buildCommand: npm install && npm run build
     staticPublishPath: dist
