@@ -13,10 +13,8 @@ services:
         value: 3.11.9
 
   # 2. Vite React Frontend (Static Site on CDN)
-  - type: web
+  - type: static
     name: relearn-frontend
-    runtime: static
-    plan: free
     rootDir: relearn/member-2-student-experience
     buildCommand: npm install && npm run build
     staticPublishPath: dist
