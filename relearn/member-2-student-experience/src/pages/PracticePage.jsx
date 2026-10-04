@@ -149,6 +149,8 @@ export default function PracticePage() {
           steps={studentSteps}
           onEditWorking={handleEditWorking}
           onShowWhy={handleShowWhy}
+          onTakeChallenge={() => updateStage('transfer', 1)}
+          transferDomain={question?.transferQuestion?.domain}
         />
       )}
 
