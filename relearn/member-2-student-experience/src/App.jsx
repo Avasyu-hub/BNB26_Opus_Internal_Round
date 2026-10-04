@@ -4,6 +4,7 @@ import { AppProvider } from './context/AppContext';
 import AppLayout from './components/AppLayout';
 import Landing from './pages/Landing';
 import QuestionSelection from './pages/QuestionSelection';
+import CustomProblem from './pages/CustomProblem';
 import PracticePage from './pages/PracticePage';
 import ProfilePage from './pages/ProfilePage';
 import TeacherPage from './pages/TeacherPage';
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Landing />} />
             <Route path="practice" element={<QuestionSelection />} />
+            <Route path="practice/custom" element={<CustomProblem />} />
             <Route path="practice/:questionId" element={<PracticePage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="teacher" element={<TeacherPage />} />
