@@ -378,3 +378,20 @@ def get_eval_summary():
         return json.loads(results.read_text(encoding="utf-8"))
     raise HTTPException(404, detail="No evaluation results yet. Run: python -m backend.eval.run_eval")
 
+
+# Mount built React frontend SPA if dist exists (enables all-in-one deployment)
+FRONTEND_DIST = Path(__file__).resolve().parent.parent / "member-2-student-experience" / "dist"
+if FRONTEND_DIST.exists():
+    from fastapi.staticfiles import StaticFiles
+    from starlette.responses import FileResponse
+
+    if (FRONTEND_DIST / "assets").exists():
+        app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        file_path = FRONTEND_DIST / full_path
+        if file_path.is_file():
+            return FileResponse(file_path)
+        return FileResponse(FRONTEND_DIST / "index.html")
+
