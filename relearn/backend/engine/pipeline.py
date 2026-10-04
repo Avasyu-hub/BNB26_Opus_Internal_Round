@@ -80,10 +80,24 @@ def match_by_answer(prev_line: str, student_line: str) -> list[str]:
     return labels
 
 
+def _as_equation(line: str) -> str:
+    """'(x+5)^2' -> '(x+5)^2=0'. For a chain like '8+8=16' use the last part."""
+    return line.split("=")[-1] + "=0"
+
+
 def diagnose(prev_line: str, student_line: str):
+    # Expression questions ("Expand (x+5)^2", "Simplify 3x+5", "Calculate (-3)*(-4)")
+    # have no '='. The generators, matcher and model all work on equations, so
+    # both lines are rewritten as "<expression>=0". Answer matching is skipped
+    # for expressions, because "solutions of E=0" mean nothing there.
+    expression_mode = "=" not in prev_line or "=" not in student_line
+    if expression_mode:
+        prev_line, student_line = _as_equation(prev_line), _as_equation(student_line)
+
     candidates = predict(prev_line, student_line, top_k=3)  # [] if no model saved
     rules = match(prev_line, student_line)
     trace = {
+        "expression_mode": expression_mode,
         "model": candidates[0] if candidates else None,
         "rule_labels": [r["label"] for r in rules],
         "llm": None,
@@ -103,7 +117,7 @@ def diagnose(prev_line: str, student_line: str):
 
     # 2b. Answer match: the student skipped the working but landed exactly on
     #     the answer a misconception produces.
-    by_answer = match_by_answer(prev_line, student_line)
+    by_answer = [] if expression_mode else match_by_answer(prev_line, student_line)
     trace["answer_labels"] = by_answer
     if by_answer:
         prob = {c["label"]: c["prob"] for c in candidates}

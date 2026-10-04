@@ -139,3 +139,35 @@ def test_attempt_never_500s_when_pipeline_crashes(monkeypatch):
                                           "question": "Solve 2(x+3)=14", "steps": ["2x+3=14"]})
     assert r.status_code == 200
     assert r.json()["diagnosis"]["label"] == "unknown"
+
+
+# ---------- expression questions (Member 4: "Expand", "Simplify", "Calculate") ----------
+@pytest.mark.parametrize("prev,student,label", [
+    ("(x+5)^2", "x^2+25", "SQUARE_OF_SUM"),
+    ("(2x+3)^2", "4x^2+9", "SQUARE_OF_SUM"),
+    ("3x+5", "8x", "UNLIKE_TERMS"),
+    ("(-3)*(-4)", "-12", "NEG_TIMES_NEG"),
+    ("(-4)*(-3x)", "-12x", "NEG_TIMES_NEG"),
+    ("-(x+8)", "-x+8", "NEGATIVE_DISTRIBUTION"),
+])
+def test_expression_questions_are_diagnosed(prev, student, label):
+    d, trace = pipeline.diagnose(prev, student)
+    assert d["label"] == label and d["source"] == "rule"
+    assert trace["expression_mode"] is True
+
+
+@pytest.mark.parametrize("question,steps,label", [
+    ("Expand (x+5)^2", ["x^2+25"], "SQUARE_OF_SUM"),
+    ("Simplify 3x+5", ["8x"], "UNLIKE_TERMS"),
+    ("Calculate (-3)*(-4)", ["-12"], "NEG_TIMES_NEG"),
+    ("Simplify -(x+8)", ["-x+8"], "NEGATIVE_DISTRIBUTION"),
+])
+def test_attempt_with_expression_questions(question, steps, label):
+    from fastapi.testclient import TestClient
+    from backend.main import app
+
+    with TestClient(app) as client:
+        r = client.post("/attempt", json={"student_id": "s_expr", "question_id": "X",
+                                          "question": question, "steps": steps})
+    assert r.status_code == 200
+    assert r.json()["diagnosis"]["label"] == label
