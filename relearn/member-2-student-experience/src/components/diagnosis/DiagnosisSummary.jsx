@@ -20,6 +20,8 @@ export default function DiagnosisSummary({
   steps = [],
   onEditWorking,
   onShowWhy,
+  onTakeChallenge,         // correct answer: go straight to the cross-domain transfer test
+  transferDomain = null,   // 'geometry' | 'physics' | 'programming'
   photoThumbnail = null,     // W1 slot
   explanationText = null,    // W2 slot
   confidenceLabel = null,    // W3 slot
@@ -184,7 +186,7 @@ export default function DiagnosisSummary({
                   <span>Concept Mastery Path</span>
                 </div>
                 <p className="text-xs text-slate">
-                  Linear Equations &rarr; {misconception?.category || 'Distribution'} &rarr; Geometry Transfer
+                  Linear Equations &rarr; {misconception?.category || 'Distribution'} &rarr; {({ geometry: 'Geometry', physics: 'Physics', programming: 'Code', code: 'Code' })[transferDomain] || 'New subject'} Transfer
                 </p>
               </div>
             )}
@@ -192,14 +194,26 @@ export default function DiagnosisSummary({
 
           {/* Action Buttons */}
           <div className="pt-3 border-t border-[#E3EEF7] flex flex-col sm:flex-row items-center gap-3">
-            <button
-              type="button"
-              onClick={onShowWhy}
-              className="btn-primary w-full sm:flex-1 justify-center shadow-md"
-            >
-              <span>Show me why</span>
-              <ArrowRight className="w-4 h-4" strokeWidth={2} />
-            </button>
+            {isCorrect && onTakeChallenge ? (
+              // Strong in algebra: check the same idea in physics / geometry / code
+              <button
+                type="button"
+                onClick={onTakeChallenge}
+                className="btn-primary w-full sm:flex-1 justify-center shadow-md"
+              >
+                <span>Take the challenge</span>
+                <ArrowRight className="w-4 h-4" strokeWidth={2} />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={onShowWhy}
+                className="btn-primary w-full sm:flex-1 justify-center shadow-md"
+              >
+                <span>Show me why</span>
+                <ArrowRight className="w-4 h-4" strokeWidth={2} />
+              </button>
+            )}
 
             <button
               type="button"
