@@ -26,7 +26,7 @@ class Diagnosis(BaseModel):
 
 
 class AttemptRequest(BaseModel):
-    student_id: str
+    student_id: str = "student_1"
     question_id: str
     question: Optional[str] = None  # if missing, looked up from the question bank
     steps: list[str] = Field(min_length=1)
@@ -44,3 +44,44 @@ class AttemptResponse(AttemptRequest):
     check_status: str  # correct | step_error | incomplete | cannot_verify
     diagnosis: Optional[Diagnosis] = None
     stage: str         # diagnosed | correct | incomplete | cannot_verify
+    isCorrect: Optional[bool] = None
+    diagnosedMisconceptions: list[str] = []
+    stepFeedback: list[dict] = []
+
+
+class RetryRequest(BaseModel):
+    student_id: str = "student_1"
+    question_id: str
+    misconception_id: Optional[str] = None
+    steps: list[str] = Field(min_length=1)
+
+
+class RetryResponse(BaseModel):
+    stage: Literal["retry_passed", "retry_failed_same", "retry_failed_new", "teacher_flagged", "incomplete"]
+    error_step_index: Optional[int] = None
+    diagnosis: Optional[Diagnosis] = None
+    retry_count: int
+    isCorrect: bool
+    flagged_for_teacher: bool = False
+    message: str
+    readyForTransfer: bool
+
+
+class TransferRequest(BaseModel):
+    student_id: str = "student_1"
+    question_id: str
+    misconception_id: Optional[str] = None
+    answer: str
+
+
+class TransferResponse(BaseModel):
+    stage: Literal["transfer_passed", "transfer_in_progress", "transfer_failed"]
+    isCorrect: bool
+    streak: int
+    consecutive_transfer_count: int
+    next_question_id: Optional[str] = None
+    transfer_verified: bool
+    bridge_explanation: Optional[str] = None
+    feedback: str
+
+
