@@ -344,17 +344,17 @@
   {
     "question_id": "UT_03",
     "misconception_id": "UNLIKE_TERMS",
-    "prompt": "Simplify 5x+3y+2",
+    "prompt": "Simplify 7x+2",
     "root_concept": "LIKE_TERMS",
     "retry_question": {
       "question_id": "UT_03_R1",
-      "prompt": "Simplify 2x+5x+3",
-      "canonical_answer": "7x + 3"
+      "prompt": "Simplify 5x+3",
+      "canonical_answer": "5x+3"
     },
     "transfer_question": {
       "question_id": "UT_03_T1",
       "domain": "physics",
-      "scenario": "An aircraft logs 5 km/h eastward (x), 3 liters of fuel consumed (y), and a 2-degree temperature rise. Can 5x + 3y + 2 be simplified into a single combined coefficient like 10xy?",
+      "scenario": "An aircraft logs 7 km/h eastward (x) and a 2-degree temperature rise. Can 7x + 2 be simplified into a single combined coefficient like 9x?",
       "canonical_answer": "No; unlike quantities cannot be combined into a single term.",
       "rubric": "Terms representing distinct variables and physical dimensions must remain separate.",
       "answer_type": "text"
@@ -367,8 +367,8 @@
     "root_concept": "LIKE_TERMS",
     "retry_question": {
       "question_id": "UT_04_R1",
-      "prompt": "Simplify 3a+4b",
-      "canonical_answer": "3a + 4b"
+      "prompt": "Simplify 9x+4",
+      "canonical_answer": "9x+4"
     },
     "transfer_question": {
       "question_id": "UT_04_T1",
@@ -392,16 +392,17 @@
     "transfer_question": {
       "question_id": "NN_01_T1",
       "domain": "physics",
-      "scenario": "Temperature rate is -3\u00b0C/hr. Compare temperature at delta t = -4 hr (4 hours ago). How many degrees warmer was it?",
-      "canonical_answer": "+12 (12\u00b0C warmer)",
-      "rubric": "Rate of change (-3 \u00b0C/hr) multiplied by negative time displacement (-4 hr) gives (-3)*(-4) = +12\u00b0C",
+      "scenario": "Temperature rate is -3°C/hr. Compare temperature at delta t = -4 hr (4 hours ago). How many degrees warmer was it?",
+      "canonical_answer": "+12 (12°C warmer)",
+      "rubric": "Rate of change (-3 °C/hr) multiplied by negative time displacement (-4 hr) gives (-3)*(-4) = +12°C",
       "answer_type": "number"
     }
   },
   {
     "question_id": "NN_02",
     "misconception_id": "NEG_TIMES_NEG",
-    "prompt": "Solve -2(-x-5)=16",
+    "prompt": "Solve (-2)(-4x)=16",
+    "canonical_answer": "x=2",
     "root_concept": "INTEGER_RULES",
     "retry_question": {
       "question_id": "NN_02_R1",
