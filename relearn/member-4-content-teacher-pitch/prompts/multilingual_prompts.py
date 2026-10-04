@@ -10,19 +10,19 @@ MULTILINGUAL_EXPLANATIONS: Dict[str, Dict[str, str]] = {
         "en": (
             "When multiplying a factor across parentheses like {factor}({term1} + {term2}), "
             "the multiplier must scale every term inside the group. In your working, {factor} was "
-            "distributed to {term1} to produce {factor}{term1}, but {term2} was left unmultiplied instead of {product}. "
+            "distributed to {term1} to produce {factor_term1}, but {term2} was left unmultiplied instead of {product}. "
             "Geometrically, think of a rectangle with width {factor} split into two parts: you accounted for one section "
             "but omitted the area of the second piece."
         ),
         "hi": (
             "जब आप कोष्ठक (parentheses) के बाहर किसी संख्या {factor} से गुणा करते हैं, जैसे {factor}({term1} + {term2}), "
-            "तो उस संख्या का गुणा कोष्ठक के अंदर के प्रत्येक पद से होना चाहिए। आपने {factor} को {term1} से गुणा करके {factor}{term1} लिखा, "
+            "तो उस संख्या का गुणा कोष्ठक के अंदर के प्रत्येक पद से होना चाहिए। आपने {factor} को {term1} से गुणा करके {factor_term1} लिखा, "
             "परंतु {term2} को बिना गुणा किए छोड़ दिया जबकि यह {product} होना चाहिए था। "
             "क्षेत्रफल मॉडल (Area Model) के अनुसार, इसका अर्थ है कि आपने आयत के एक हिस्से का क्षेत्रफल छोड़ दिया।"
         ),
         "bn": (
             "যখন বন্ধনীর (parentheses) বাইরে কোনো সংখ্যা {factor} দিয়ে গুণ করা হয়, যেমন {factor}({term1} + {term2}), "
-            "তখন বন্ধনীর ভেতরের প্রতিটি পদের সাথেই গুণ করতে হয়। আপনি {factor} কে {term1} দিয়ে গুণ করে {factor}{term1} লিখেছেন, "
+            "তখন বন্ধনীর ভেতরের প্রতিটি পদের সাথেই গুণ করতে হয়। আপনি {factor} কে {term1} দিয়ে গুণ করে {factor_term1} লিখেছেন, "
             "কিন্তু {term2} কে গুণ না করে রেখে দিয়েছেন, যা হওয়া উচিত ছিল {product}। "
             "জ্যামিতিক ক্ষেত্রফল মডেল দিয়ে দেখলে বোঝা যায়, আপনি আয়তক্ষেত্রের দ্বিতীয় অংশের ক্ষেত্রফলটি বাদ দিয়ে ফেলেছেন।"
         ),
@@ -118,6 +118,30 @@ MULTILINGUAL_EXPLANATIONS: Dict[str, Dict[str, str]] = {
 }
 
 
+def _derived_params(params: Dict[str, Any]) -> Dict[str, Any]:
+    """Values computed from the student's numbers, e.g. factor 2 and term1 '3x' -> '6x'."""
+    out = dict(params)
+    if "factor" in out and "term1" in out:
+        term = str(out["term1"])
+        coeff, var = (term[:-1], term[-1]) if term[-1:].isalpha() else (term, "")
+        try:
+            n = int(coeff) if coeff not in ("", "+") else 1
+            n = -1 if coeff == "-" else n
+            out["factor_term1"] = f"{int(out['factor']) * n}{var}"
+        except ValueError:
+            out["factor_term1"] = f"{out['factor']}{term}"
+    return out
+
+
+def _tidy_signs(text: str) -> str:
+    """Make negative numbers read naturally: 'x + -6' -> 'x - 6', '+-7' -> '-7', '--6' -> '6'."""
+    import re
+    text = re.sub(r"\+\s+-\s*(\d)", r"- \1", text)   # x + -6 -> x - 6
+    text = re.sub(r"\+-(\d)", r"-\1", text)            # +-7    -> -7
+    text = re.sub(r"(?<![\w)])--(\d)", r"\1", text)  # --6   -> 6
+    return text
+
+
 def get_localized_explanation(
     label: str,
     language: str,
@@ -128,8 +152,9 @@ def get_localized_explanation(
     templates = MULTILINGUAL_EXPLANATIONS.get(label, {})
     template = templates.get(lang, templates.get("en", "Mathematical equivalence was violated at this step."))
 
+    params = _derived_params(params)
     try:
-        return template.format(**params)
+        return _tidy_signs(template.format(**params))
     except KeyError:
         # Fallback with safe defaults
         return templates.get("en", "Mathematical equivalence was violated at this step.")

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { 
   Plus, 
   X, 
@@ -28,6 +28,15 @@ export default function StepInput({
   const [showKeypad, setShowKeypad] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rowErrors, setRowErrors] = useState({});
+  // Row to focus once React has updated the page (no timers: fast typing after
+  // Enter must land in the new row, not the old one).
+  const [focusRow, setFocusRow] = useState(null);
+  useLayoutEffect(() => {
+    if (focusRow !== null) {
+      inputRefs.current[focusRow]?.focus();
+      setFocusRow(null);
+    }
+  }, [focusRow, steps]);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const inputRefs = useRef([]);
@@ -70,21 +79,12 @@ export default function StepInput({
       const updated = [...steps];
       updated.splice(index + 1, 0, '');
       setSteps(updated);
-      setTimeout(() => {
-        if (inputRefs.current[index + 1]) {
-          inputRefs.current[index + 1].focus();
-        }
-      }, 30);
+      setFocusRow(index + 1);
     } else if (e.key === 'Backspace' && steps[index] === '' && steps.length > 1) {
       e.preventDefault();
       const updated = steps.filter((_, i) => i !== index);
       setSteps(updated);
-      const prevIndex = Math.max(0, index - 1);
-      setTimeout(() => {
-        if (inputRefs.current[prevIndex]) {
-          inputRefs.current[prevIndex].focus();
-        }
-      }, 30);
+      setFocusRow(Math.max(0, index - 1));
     } else if (e.key === 'ArrowUp' && index > 0) {
       e.preventDefault();
       inputRefs.current[index - 1]?.focus();
@@ -96,9 +96,7 @@ export default function StepInput({
 
   const addRow = () => {
     setSteps([...steps, '']);
-    setTimeout(() => {
-      inputRefs.current[steps.length]?.focus();
-    }, 30);
+    setFocusRow(steps.length);
   };
 
   const removeRow = (index) => {
@@ -131,6 +129,9 @@ export default function StepInput({
 
     // Validate and normalize
     const normalized = steps.map(normalizeStep).filter((s) => s.length > 0);
+    // Which on-screen row each submitted line came from (empty rows are skipped),
+    // so a backend error on line N is shown under the right row.
+    const rowOf = steps.map((s, i) => [normalizeStep(s), i]).filter(([s]) => s.length > 0).map(([, i]) => i);
     const errors = {};
 
     // Simple syntax balance check for raw brackets before sending
@@ -161,6 +162,15 @@ export default function StepInput({
       }
     } catch (err) {
       console.error(err);
+      const detail = err.detail;
+      if (err.status === 422 && detail && typeof detail.line_index === 'number' && detail.line_index >= 0) {
+        // The backend could not read one line: show its message under that row.
+        setRowErrors({ [rowOf[detail.line_index] ?? 0]: detail.message || "We couldn't read this line." });
+      } else if (err.status === 422 && detail?.message) {
+        setRowErrors({ 0: detail.message });
+      } else {
+        setRowErrors({ 0: "Couldn't reach the checker. Is the backend running? Try again." });
+      }
     } finally {
       setIsSubmitting(false);
     }

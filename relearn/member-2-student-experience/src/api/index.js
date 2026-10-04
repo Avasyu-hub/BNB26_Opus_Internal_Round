@@ -5,7 +5,7 @@ import { MOCK_HISTORY, MOCK_CLASS_SUMMARY, MOCK_EVALUATION } from './mocks/analy
 import {
   adaptQuestion, buildAttemptPayload, adaptAttemptResponse, buildInterventionPayload,
   adaptInterventionResponse, buildRetryPayload, adaptRetryResponse, buildTransferPayload,
-  adaptTransferResponse, adaptHistoryRow,
+  adaptTransferResponse, adaptHistoryRow, adaptProfile,
 } from './backendAdapter';
 
 /** Student id used for every backend call (one learner profile per id). */
@@ -35,7 +35,14 @@ async function apiFetch(endpoint, options = {}) {
 
   if (!response.ok) {
     const errorBody = await response.text();
-    throw new Error(`API Error ${response.status}: ${errorBody || response.statusText}`);
+    const error = new Error(`API Error ${response.status}: ${errorBody || response.statusText}`);
+    error.status = response.status;
+    try {
+      error.detail = JSON.parse(errorBody).detail; // 422: { line_index, line, message }
+    } catch {
+      error.detail = null;
+    }
+    throw error;
   }
 
   return response.json();
@@ -234,6 +241,17 @@ export async function getHistory(studentId = getStudentId()) {
   }
   const rows = await apiFetch(`/student/${encodeURIComponent(studentId)}/history`);
   return rows.map(adaptHistoryRow);
+}
+
+/**
+ * Learner profile for the misconception graph (one row per misconception the student met)
+ */
+export async function getProfile(studentId = getStudentId()) {
+  if (ENV.USE_MOCK) {
+    return { misconceptions: [{ misconception_id: 'PARTIAL_DISTRIBUTION', status: 'detected', occurrence_count: 1 }] };
+  }
+  const rows = await apiFetch(`/student/${encodeURIComponent(studentId)}/profile`);
+  return adaptProfile(rows);
 }
 
 /**

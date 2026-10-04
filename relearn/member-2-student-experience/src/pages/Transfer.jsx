@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, XCircle, Sparkles, Ruler, Atom, Code, Loader2 } from 'lucide-react';
 import { getQuestions, submitTransfer, MISCONCEPTIONS } from '../api';
+import LearnerGraph from '../components/progress/LearnerGraph';
 
 const DOMAIN = {
   geometry: { name: 'Geometry', Icon: Ruler },
@@ -108,6 +109,7 @@ export default function Transfer({ question, misconceptionId = 'M2' }) {
         <div className="pt-2">
           <Link to="/practice" className="btn-primary"><span>Back to practice</span><ArrowRight className="w-4 h-4" strokeWidth={2} /></Link>
         </div>
+        <div className="text-left pt-2"><LearnerGraph refreshKey={result.stage} height={380} /></div>
       </motion.div>
     );
   }
@@ -148,6 +150,7 @@ export default function Transfer({ question, misconceptionId = 'M2' }) {
         <div className="flex flex-wrap gap-3 justify-end pt-1">
           <Link to="/practice" className="btn-secondary"><span>Back to practice</span></Link>
         </div>
+        <LearnerGraph refreshKey={result.stage} height={380} />
       </motion.div>
     );
   }

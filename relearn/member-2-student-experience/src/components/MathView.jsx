@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import katex from 'katex';
+import 'katex/dist/katex.min.css'; // without this, every formula also shows as plain text
 
 /**
  * MathView component to render LaTeX expressions cleanly with KaTeX

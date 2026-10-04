@@ -1,0 +1,10 @@
+{
+  "student_id": "demo-ava",
+  "_note": "MOCK — shape expected from Member 1's learner profile. `status` is optional; if absent the graph replays `events`.",
+  "misconceptions": {
+    "PARTIAL_DISTRIBUTION":  { "occurrence_count": 1, "events": [{ "stage": "diagnosed" }, { "stage": "retry_passed" }, { "stage": "transfer_passed" }] },
+    "NEGATIVE_DISTRIBUTION": { "occurrence_count": 2, "events": [{ "stage": "diagnosed" }, { "stage": "retry_passed" }, { "stage": "diagnosed" }] },
+    "TRANSPOSITION":         { "occurrence_count": 1, "events": [{ "stage": "diagnosed" }, { "stage": "retry_passed" }, { "stage": "transfer_failed" }] },
+    "UNLIKE_TERMS":          { "occurrence_count": 1, "events": [{ "stage": "diagnosed" }] }
+  }
+}

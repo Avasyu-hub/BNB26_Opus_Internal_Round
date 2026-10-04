@@ -1,0 +1,18 @@
+{
+  "student_id": "demo-ava",
+  "_note": "MOCK — replace with GET /student/{id}/history (Member 1)",
+  "attempts": [
+    { "attempt": 1,  "timestamp": "2026-10-03T10:00:00Z", "misconception_id": "PARTIAL_DISTRIBUTION", "stage": "diagnosed",       "context": "algebra" },
+    { "attempt": 2,  "timestamp": "2026-10-03T10:03:00Z", "misconception_id": "PARTIAL_DISTRIBUTION", "stage": "retry_passed",    "context": "algebra" },
+    { "attempt": 2,  "timestamp": "2026-10-03T10:03:01Z", "misconception_id": "NEGATIVE_DISTRIBUTION", "stage": "diagnosed",      "context": "algebra" },
+    { "attempt": 3,  "timestamp": "2026-10-03T10:06:00Z", "misconception_id": "PARTIAL_DISTRIBUTION", "stage": "transfer_failed", "context": "physics" },
+    { "attempt": 4,  "timestamp": "2026-10-03T10:09:00Z", "misconception_id": "NEGATIVE_DISTRIBUTION", "stage": "retry_passed",   "context": "algebra" },
+    { "attempt": 5,  "timestamp": "2026-10-03T10:12:00Z", "misconception_id": "PARTIAL_DISTRIBUTION", "stage": "retry_passed",    "context": "algebra" },
+    { "attempt": 6,  "timestamp": "2026-10-03T10:15:00Z", "misconception_id": "PARTIAL_DISTRIBUTION", "stage": "transfer_passed", "context": "physics" },
+    { "attempt": 7,  "timestamp": "2026-10-03T10:18:00Z", "misconception_id": "NEGATIVE_DISTRIBUTION", "stage": "transfer_passed", "context": "geometry" },
+    { "attempt": 8,  "timestamp": "2026-10-03T10:21:00Z", "misconception_id": "TRANSPOSITION",        "stage": "diagnosed",       "context": "algebra" },
+    { "attempt": 9,  "timestamp": "2026-10-03T10:24:00Z", "misconception_id": "TRANSPOSITION",        "stage": "retry_passed",    "context": "algebra" },
+    { "attempt": 10, "timestamp": "2026-10-03T10:27:00Z", "misconception_id": "NEGATIVE_DISTRIBUTION", "stage": "diagnosed",      "context": "algebra" },
+    { "attempt": 11, "timestamp": "2026-10-03T10:30:00Z", "misconception_id": "TRANSPOSITION",        "stage": "transfer_failed", "context": "physics" }
+  ]
+}

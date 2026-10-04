@@ -127,18 +127,18 @@ export function adaptAttemptResponse(r) {
     source: label === 'unknown' ? 'unknown' : d?.source || 'unknown', // rule | model | llm | unknown
     confidence: percent(d?.confidence),
     rootConcept: d?.root_concept || null,
-    candidates: (d?.candidates || []).map((c) => ({ ...c, uiId: LABEL_TO_UI[c.label] || null })),
+    candidates: (d?.candidates || []).map((c) => ({ ...c, score: c.prob, uiId: LABEL_TO_UI[c.label] || null })),
     stage: r.stage,
     raw: r,
   };
 }
 
 /** POST /intervention body (Member 4's route) */
-export function buildInterventionPayload({ misconceptionId, label, evidence, language }) {
+export function buildInterventionPayload({ misconceptionId, label, evidence, language, studentNumbers }) {
   return {
     label: label || UI_TO_LABEL[misconceptionId] || 'PARTIAL_DISTRIBUTION',
     evidence: evidence || '',
-    student_numbers: {},
+    student_numbers: studentNumbers || {}, // e.g. { factor: 3, term1: 'x', term2: 4, product: 12 }
     language: language || 'en',
   };
 }
@@ -207,5 +207,29 @@ export function adaptHistoryRow(row) {
     status: row.stage,
     diagnosedMisconceptions: uiId && uiId !== 'SLIP' ? [uiId] : [],
     steps: steps.map((s, i) => ({ stepNumber: i + 1, rawInput: s })),
+  };
+}
+
+// Backend learner-profile stage -> Member 3's graph node state
+const STAGE_TO_NODE_STATE = {
+  diagnosed: 'detected',
+  retry_failed_same: 'detected',
+  retry_failed_new: 'detected',
+  retry_passed: 'resolved_algebra',
+  transfer_in_progress: 'transfer_in_progress',
+  transfer_passed: 'transfer_verified',
+  transfer_failed: 'transfer_failed',
+  recurred: 'recurred',
+  teacher_flagged: 'teacher_flagged',
+};
+
+/** GET /student/{id}/profile rows -> the `profile` prop MisconceptionGraph expects */
+export function adaptProfile(rows = []) {
+  return {
+    misconceptions: rows.map((r) => ({
+      misconception_id: r.misconception_id,
+      status: STAGE_TO_NODE_STATE[r.stage] || 'detected',
+      occurrence_count: r.occurrence_count ?? 1,
+    })),
   };
 }

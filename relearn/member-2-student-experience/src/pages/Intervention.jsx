@@ -10,8 +10,10 @@ import {
   BookOpen
 } from 'lucide-react';
 import MathView from '../components/MathView';
-import { AnimationPlayer } from '../animations';
+import VisualProof from '../visuals/components/animations/VisualProof';
 import { getIntervention, MISCONCEPTIONS } from '../api';
+import { splitPrompt } from '../api/backendAdapter';
+import { studentNumbers, stepComparison } from '../api/studentNumbers';
 
 export default function Intervention({
   question,
@@ -42,11 +44,21 @@ export default function Intervention({
     return { a: 2, b: 3, variable: 'x', sign: '+' };
   }, [question]);
 
+  // The student's own numbers, e.g. 3(x+4) -> factor 3, term 4: used by the
+  // explanation template (Member 4) and by the visual proof (Member 3).
+  const label = MISCONCEPTIONS[misconceptionId]?.label;
+  const numbers = useMemo(
+    () => studentNumbers(label, splitPrompt(question?.prompt || '').math),
+    [label, question],
+  );
+
   const loadExplanation = async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await getIntervention({ misconceptionId, evidence, language, attempt: attemptNumber });
+      const res = await getIntervention({
+        misconceptionId, label, evidence, language, attempt: attemptNumber, studentNumbers: numbers.template,
+      });
       setData(res);
     } catch (err) {
       setError(err.message || 'Failed to load explanation');
@@ -76,7 +88,18 @@ export default function Intervention({
   const misconception = MISCONCEPTIONS[misconceptionId] || MISCONCEPTIONS.M2;
 
   // Visual comparison items
-  const studentComparison = {
+  const ownComparison = stepComparison(label, splitPrompt(question?.prompt || '').math);
+  const studentComparison = ownComparison ? {
+    ...ownComparison,
+    takeaway: ({
+      M1: 'Moving any term across the equals sign always flips its sign.',
+      M2: 'Multiply EVERY term inside the bracket by the number outside.',
+      M3: 'A minus in front of a bracket changes the sign of EVERY term inside it.',
+      M4: '(a + b)^2 is (a + b)(a + b): the middle term 2ab never disappears.',
+      M5: 'Only add like terms (terms with the same variable part).',
+      M6: 'A negative times a negative is always positive.',
+    })[misconceptionId] || '',
+  } : {
     M1: {
       yours: '2x + 5 = 15 \\implies 2x = 15 \\color{#E5484D}{+ 5}',
       correct: '2x + 5 = 15 \\implies 2x = 15 \\mathbf{\\color{#22B573}{- 5}}',
@@ -137,11 +160,13 @@ export default function Intervention({
         {/* LEFT COLUMN (6 / 12): Animation Player */}
         <div className="lg:col-span-6 space-y-4">
           <div className="p-2 rounded-[24px] bg-soft-gradient border border-[#E3EEF7] shadow-[0_10px_30px_-12px_rgba(30,111,217,0.18)]">
-            <AnimationPlayer
-              id={misconceptionId}
-              values={parsedValues}
-              onComplete={handleAnimationComplete}
-            />
+            <div className="rounded-[18px] bg-slate-950 p-3 sm:p-4">
+              <VisualProof
+                misconceptionId={label}
+                params={numbers.animation}
+                onComplete={handleAnimationComplete}
+              />
+            </div>
           </div>
 
           <div className="px-2 text-center sm:text-left">

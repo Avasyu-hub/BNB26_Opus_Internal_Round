@@ -13,6 +13,7 @@ import {
 import ErrorStepCard from './ErrorStepCard';
 import MathView from '../MathView';
 import { MISCONCEPTIONS } from '../../api';
+import DiagnosisConfidenceBars from '../../visuals/components/diagnosis/DiagnosisConfidenceBars';
 
 export default function DiagnosisSummary({
   attemptResult,
@@ -153,6 +154,11 @@ export default function DiagnosisSummary({
                 </span>
               </div>
             </div>
+          )}
+
+          {/* Member 3: what else the trained model considered (live differentiation) */}
+          {!isCorrect && attemptResult?.candidates?.length > 0 && (
+            <DiagnosisConfidenceBars diagnosis={{ candidates: attemptResult.candidates }} showRawIds={false} />
           )}
 
           {/* Shell Slots (photo, explanation, confidence) */}
