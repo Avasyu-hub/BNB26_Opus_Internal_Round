@@ -4,6 +4,17 @@
 
 ---
 
+## 🌐 Live Deployment Links
+
+| Service | Live URL | Status |
+|---|---|---|
+| **Live Web Application (Frontend)** | [https://relearn-frontend.onrender.com](https://relearn-frontend.onrender.com) | ![Live](https://img.shields.io/badge/Status-Online-success?style=flat-square) |
+| **FastAPI Backend & ML Model API** | [https://relearn-backend-wzkd.onrender.com](https://relearn-backend-wzkd.onrender.com) | ![Live](https://img.shields.io/badge/Status-Online-success?style=flat-square) |
+| **Interactive API Docs (Swagger UI)** | [https://relearn-backend-wzkd.onrender.com/docs](https://relearn-backend-wzkd.onrender.com/docs) | ![Swagger](https://img.shields.io/badge/API-Swagger_UI-blue?style=flat-square) |
+| **API Health Check** | [https://relearn-backend-wzkd.onrender.com/health](https://relearn-backend-wzkd.onrender.com/health) | ![Health](https://img.shields.io/badge/Health-200_OK-brightgreen?style=flat-square) |
+
+---
+
 ## 1. Project Overview & Problem
 
 Most ed-tech practice applications simply evaluate final answers: when a student answers incorrectly, the platform displays the correct algorithmic steps. The student copies the mechanical fix, passes the immediate identical drill, and the underlying flawed mental model survives — inevitably resurfacing when the student encounters isomorphic structures in physics formulas, coordinate geometry, or software engineering where nobody connects the failure back to algebra.
