@@ -372,8 +372,9 @@ def post_transfer(req: TransferRequest):
 @app.get("/eval/summary")
 @app.get("/evaluation")
 def get_eval_summary():
-    report_file = Path(__file__).parent / "model" / "training_report.json"
-    if report_file.exists():
-        return json.loads(report_file.read_text(encoding="utf-8"))
-    return {}
+    """Evaluation results in Member 3's panel format (python -m backend.eval.run_eval)."""
+    results = Path(__file__).parent / "eval" / "eval_results.json"
+    if results.exists():
+        return json.loads(results.read_text(encoding="utf-8"))
+    raise HTTPException(404, detail="No evaluation results yet. Run: python -m backend.eval.run_eval")
 
