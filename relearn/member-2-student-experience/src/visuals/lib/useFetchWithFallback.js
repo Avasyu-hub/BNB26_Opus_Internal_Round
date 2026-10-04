@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { ENV } from '../../config/env.js';
 
-export const API_BASE = import.meta.env?.VITE_API_BASE || import.meta.env?.VITE_API_URL || 'http://localhost:8000';
+export const API_BASE = ENV.API_URL;
 
 /**
  * Fetches `path` from the backend; on any failure falls back to `mock`.
